@@ -1,0 +1,34 @@
+<nav id="primary-menu" class="style-5 style-6">
+    <ul>
+        <li><a href="#"><div><i class="icon-paper-plane"></i>Créer un groupe de voyage</div></a>
+        <li><a href="#"><div><i class="icon-home"></i>Accueillir des voyageuses</div></a></li>
+        <li><a href="#"><div><i class="icon-pencil2"></i>Blog</div></a></li>
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <i class="icon-caret-down" style="font-size: 15px; color:#5d3e51!important;"></i>
+            <li>
+                <a href="#">
+                    <div ><i class="icon-user2"></i>Bienvenue {{app.user.username}} </div>
+                </a>
+                <ul>
+                    <li><a href="#"><div><i class="icon-dashboard"></i>Ton tableau de bord</div></a>
+                    </li>
+                    <li><a href="#"><div><i class="icon-line2-plane"></i>Tes voyages</div></a>
+                    </li>
+                    <li><a href="#"><div><i class="icon-line2-logout"></i>Déconnexion</div></a>
+                    </li>
+                </ul>
+            </li>
+                {# {{format_avatar(app.user)}} #}
+        {% else %}
+            <li class="bgcolor">
+            	<a href="#">
+            		<div>
+            			<i class="icon-users2"></i>
+            			Se connecter
+            		</div>
+            	</a>
+            </li>
+
+       {% endif %}
+    </ul>
+</nav><!-- #primary-menu end -->

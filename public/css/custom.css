@@ -1,0 +1,445 @@
+/* ----------------------------------------------------------------
+	Custom CSS
+
+	Add all your Custom Styled CSS here for New Styles or
+	Overwriting Default Theme Styles for Better Hanlding Updates
+-----------------------------------------------------------------*/
+
+/*Changement de la police du site*/
+
+body{
+
+	font-family: 'Cabin Sketch', sans-serif;
+	font-family: 'Roboto', sans-serif;
+}
+
+/*Modification de la position du logo*/
+#logo img{
+	position:relative;
+	top:5px;
+	left:-120px;
+	height: 100px; 
+	width: 170px;
+}
+
+/*Suppression de la bordure droite dans le menu*/
+.sf-js-enabled{
+	border: none!important;
+}
+
+
+/*Modification des items et du hover du menu*/
+
+#primary-menu ul li > a, #primary-menu ul ul li > a {
+   
+   	color: #fa6e59!important;
+    font-weight: bold;
+    font-size: 17px;
+    text-transform: none;
+    font-family: 'Cabin Sketch', cursive;
+}
+
+.bgcolor{
+    background-color: #fa6e59!important;
+}
+
+.bgcolor a div{
+	color:white!important;
+}
+
+#primary-menu ul li:hover > a, #primary-menu ul li.current > a {
+    color: #6ea8a7;
+}
+
+.dark #primary-menu:not(.not-dark) ul ul li > a
+{
+    color: #fff!important;
+    text-align:justify;
+}
+
+/*Customisation des textes du slider*/
+
+h3{
+    color: #ffffff!important;
+    font-family:'Roboto', sans-serif;
+    text-transform: none;
+    margin-bottom: 10px!important;
+    font-size: 20px!important;
+    font-weight: bold;
+}
+
+.heading-block h1{
+	margin-top:30px;
+}
+
+.melon{
+	color:#ffffff; 
+	border:2px solid #ffdb5c;
+	border-radius: 5px; 
+	font-size:20px; 
+	background-color:#fa6e59; 
+	font-weight:bold;
+    padding:5px;
+    font-family: 'Cabin Sketch',cursive;
+}
+
+/*Customisation du CTA*/
+
+.button{
+    text-transform: none;
+    font-size: 18px;
+}
+
+.button.button-border.button-light {
+    border-color:#4897d8!important;
+    border-width: 4px;
+    color: #EEE;
+    background-color: #fa6e59;
+    font-family: 'Cabin Sketch', cursive;
+}
+
+.button.button-reveal.button-light:hover{
+    text-shadow: none;
+    color: #fa6e59;
+    border-color:#4897d8!important;
+}
+
+.button.button-border.button-light:hover  {
+    background-color: #EEE;
+    border-color:#4897d8!important;
+}
+
+.button-shadow{
+    background-color: #4897d8!important;
+}
+
+.landing-wide-form {
+    background-color: rgba(0,0,0,0);
+}
+/*Customisation de l'icone du  CTA*/
+
+.button.button-reveal.button-large.tright i {
+    
+    color: #5d3e51;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+/*Customisation des images "Qui sommes-nous ?"*/
+.feature-box.media-box.fbox-bg .fbox-media img{
+    border-radius: 5px;
+    border-bottom: 3px solid #f8a055;
+    border-left:   3px solid #f8a055;
+}
+
+/*Changement de la police, de la taille et de la couleur des h2*/
+
+.heading-block h2 {
+    font-size: 25px;
+    font-family: 'Cabin Sketch', cursive;
+    color:#fa6e59;
+    font-weight: bold;
+    margin-top: -10px;
+    text-transform: none;
+}
+
+/*Changement de la police, de la taille et de la couleur des  et p de feature-box*/
+
+.feature-box h3 {
+    font-size: 16px;
+    font-family: 'Cabin Sketch', cursive;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 0;
+    color:#5d3e51;
+}
+
+h3.nott {
+    color: #4897d8!important;
+}
+
+.feature-box p, .testi-content p {
+    margin: 8px 0 0 0;
+    color:#5d3e51;
+    font-family: 'Cabin Sketch', cursive;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: justify;
+}
+
+.testi-image {
+    height: 58px;
+    width:  58px;
+}
+
+.img-thumbnail {
+  
+    border-color: #5d3e51;
+}
+.h{
+	color:#5d3e51!important;
+	font-size: 25px;
+	font-weight: bold;
+    font-family: 'Cabin Sketch', cursive;
+}
+
+.a{
+	color:#6ea8a7!important;
+	font-weight: bold;
+  	font-size:20px;
+}
+
+.c{
+	color:#5d3e51!important;
+	font-weight: bold;
+    font-size: 16px;
+    font-family: 'Cabin Sketch', cursive;
+}
+.cbis{
+    color:#5d3e51!important;
+    font-weight: bold;
+    font-family: 'Cabin Sketch', cursive;
+}
+
+.b{
+  color:#eeeeee!important;
+  font-family: 'Cabin Sketch', cursive;
+  font-weight: bold;
+}
+
+.bb , .more-link{
+
+  color:#5d3e51!important;
+  font-family: 'Cabin Sketch',cursive!important;
+  font-size: 16px!important;
+  font-weight: bold;
+    text-decoration: none;
+}
+
+#service{
+  margin-top: 200px!important;
+}
+
+/* Customisation section prochains vols */
+#vols:after {
+    content: '';
+    display: block;
+    margin-top: 30px;
+    width: 40px;
+    border-top: 2px solid #ffffff;
+}
+
+blockquote{
+  color:#5d3e51;
+  font-size: 15px;
+  text-align: justify;
+}
+
+.stretched #wrapper{
+	background-color: #f8a055;
+
+}
+
+/* Customisation icones section prochains vols */
+.icon-svg{
+    max-width: 50%;
+}
+
+.optionsTrip{
+    font-size: 30px;
+}
+
+/* Icone  du slider */
+
+.owl-carousel .owl-nav .owl-next {
+  
+    color: #5d3e51;
+}
+.owl-carousel .owl-nav [class*=owl-]:hover {
+    background-color: #6ea8a7 !important;
+}
+
+.heading-block:after {
+    border-top: 4px solid #ffdb5c!important;
+}
+
+/* formulaire de recherche */
+.form-control{
+    border: 2px solid #ffdb5c;
+}
+
+/* Personnalisation de l'onglet "Enregistre un nouveau voyage" */
+
+.advanced-real-estate-tabs ul.tab-nav li.ui-tabs-active a{
+    background-color: #5d3e51;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+.advanced-real-estate-tabs .tab-container {
+    padding: 30px;
+    background-color: rgba(238,238,238,0.95);
+    border-top: 5px solid #5d3e51;
+}
+.tabs{
+    background-color: rgba(238,238,238,0.95);
+}
+
+ul.tab-nav:not(.tab-nav-lg) {
+    margin: -42px;
+}
+
+/* Personnalisation du formulaire d'ajout d'un nouveau voyage*/
+#appbundle_trip_date{
+    margin-top: 20px;
+}
+
+label , option , .sm-form-control{
+    color:  #5d3e51;
+    font-weight: bold;
+    font-family: 'Cabin Sketch',cursive!important;
+}
+.description{
+    margin-top: -70px;
+}
+.description_input{
+    margin-top: -120px;
+}
+.isPurchase{
+    margin-top: -50px;
+}
+.isReceipt{
+    margin-top: -100px;
+}
+input[type="checkbox"] {
+    margin: -30px 35px 0;
+}
+#appbundle_trip_GO{
+    border-color: #6ea8a7;
+    border-width: 2px;
+    color: #ffffff;
+    background-color: #5d3e51;
+    font-family: 'Cabin Sketch', cursive;
+    text-transform: uppercase;
+}
+
+.success-text{
+    color: #ffffff;
+    background-color: #6ea8a7;
+    font-family: 'Cabin Sketch', cursive;
+    text-align: center;
+    font-size: 20px;
+}
+
+.info-text{
+    color: #ffffff;
+    background-color:#5d3e51;
+    font-family: 'Cabin Sketch', cursive;
+    font-size: 20px;
+    text-align:center;
+
+}
+.btn-success, .btn-info {
+    background-color: #6ea8a7;
+    border-color: #6ea8a7;
+}
+.btn-success:hover {
+    background-color: #5d3e51;
+    border-color: #5d3e51;
+}
+
+.btn-danger {
+    color: #fff;
+    background-color: #fa6e59;
+}
+
+/* Personnalisation affichage de la date dans la vue liste de tous les voyages*/
+.events .entry-image .entry-date{
+    background-color: rgba(93,62,81,0.8);
+}
+
+/* Personnalisation affichage des catÃ©gories dans la vue liste de tous les voyages*/
+.badge {
+    font-size: 15px;
+    background-color: #5d3e51;
+    font-family: 'Cabin Sketch', cursive;
+}
+/* Personnalisation du formulaire d'inscription d'un utilisateur*/
+#fos_user_registration_form_email, #fos_user_registration_form_username, #fos_user_registration_form_name, #fos_user_registration_form_plainPassword_first,#fos_user_registration_form_plainPassword_second,#fos_user_registration_form_phoneNumber{
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+     color: #555555;
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+.tripinfos{
+    padding: 20px;
+    font-size: 14px;
+    text-align: left;
+    right: 38px;
+    bottom: 130px;
+    width: 320px;
+    height: auto;
+    line-height: inherit;
+    background-color: rgba(93,62,81,0.7);
+    border-radius: 5px;
+}
+
+/* Customisation page profil public d'un utilisateur */
+
+#last{
+    position:relative;
+    left: 120px;
+}
+
+/* Customisation du datepicker */
+.ui-widget-header{
+    color: #6ea8a7!important;
+    font-family: 'Cabin Sketch', cursive;
+    font-size: 20px;
+    background-color: #fff!important;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-datepicker th{
+    background: none!important;
+    font-weight: bold!important;
+    font-size: 13px;
+    border: 1px solid #fff!important;
+    color: #5d3e51!important;
+    font-weight: bold;
+    font-family: 'Cabin Sketch', cursive;
+} 
+
+/* Customisation de l'image téléchargée via l'upload */
+.vich-image a img{
+    max-width: 15%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
