@@ -1,0 +1,238 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Détail de la location {{ad.slug}}| {{parent()}}{% endblock %}
+
+{% block body %}
+
+<!-- Content
+============================================= -->
+<div id="slider" class="slider-element full-screen clearfix" style="background: url('/images/banners/banner6.jpg') center right no-repeat; background-size: cover; height:200px;"></div>
+<section id="content">
+	<div class="content-wrap">
+		<div class="single-event">
+			<div class="entry-image parallax header-stick" style=" height:500px" data-bottom-top="background-position:0px 300px;" data-top-bottom="background-position:0px -300px;">
+				<div class="heading-block divcenter nobottomborder nobottommargin">
+									<!-- Page Title
+						============================================= -->
+
+						<div class="container clearfix">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="{{path('homepage')}}"><i class="icon-line2-home"> Accueil</i></a></li>
+								<li class="breadcrumb-item"><a href="{{path('ad_index')}}"><i class="icon-list"></i> Liste des annonces</a></li>
+								<li class="breadcrumb-item active" aria-current="page"><i class="icon-image"></i> Détail de l'annonce {{ad.title}}</li>
+							</ol>
+						</div>
+			
+    <i class="icon-list1 d-block h1 mb-4" style="color:#f8a055; margin-top:20px; margin-left:100px;"></i> 
+                </div>       
+                <div id="single" class="heading-block">
+                    <h2 style="margin-left:100px;">{{ad.title}}</h2>
+                    <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; margin-left:100px;">Girl Tripeuse, voici toutes les informations relatives à cet hébergement.</p>
+                </div>
+                <div class="entry-overlay-meta" style="margin-bottom:-50px;">
+					<h2 style="text-transform:none; font-family:'Cabin Sketch', cursive; font-size:20px;" class="center"><a href="#">{{ad.title}}</a></h2>
+					<ul class="iconlist" style="margin-left:40px; font-family:'Cabin Sketch', cursive;">
+                        <li style="font-size:15px;"><i class="icon-user2"></i> <strong>Propriétaire:  </li></strong>
+						<li style="font-size:15px;"><i class="icon-money"></i> <strong>Prix: {{ad.price}} FCFA par nuit</strong></li>
+						<li style="font-size:15px;"><i class="icon-bed"></i> <strong> {{ad.rooms}} chambres disponibles</strong> </li>
+						
+					</ul>
+						<div class="center">
+                            <a href="#" class="button button-border button-light button-rounded button-reveal button-large topmargin">Réserve ce logement</a>
+                        </div>
+				</div>
+			</div>
+			<div class="container clearfix">
+				<div class="postcontent nobottommargin clearfix"> 
+					<div class="col_three_fourth">
+						<h3 style="margin-top:-350px;"></h3>
+                        <div class="entry-title">
+						    <p style="margin-top:50px!important; text-align:justify;">{{ad.introduction}}</p>
+						</div>
+
+                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                                {% for image in ad.images %}
+                                <li data-target="#carouselExampleIndicators" data-slide-to="{{loop.index0}}" class="{% if loop.first %}active{% endif %}"></li>
+                                {% endfor %}
+                            </ol>
+                             <div class="carousel-inner">
+                             {% for image in ad.images %}
+                                <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                    <img class="d-block w-100" src="{{image.url}}" alt="First slide" style="width:600px; height:400px;">
+                                     <div class="carousel-caption d-none d-md-block" style="text-shadow: 3px 3px 3px rgba(0,0,0,0.5)!important;
+                                         color:#ffffff!important;" >
+                                        <h5 style="text-shadow: 3px 3px 3px rgba(0,0,0,0.5)!important;
+                                         color:#ffffff!important;font-family:'Cabin Sketch', cursive; font-size:30px!important;">{{ad.title}}</h5>
+                                        <p style="font-family:'Cabin Sketch', cursive; font-size:20px!important;">{{image.legend}}</p>
+                                    </div>
+                                </div>
+                              {% endfor %}
+                            </div>
+                                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                        </div>
+		                <h3 style="margin-top:20px; font-family:'Cabin Sketch', cursive;font-size:17px;color:#4897d8!important;">Description du bien</h3>
+                             {{ad.content|raw}}                      
+			<div class="col_half nobottommargin">
+			    <ul class="iconlist nobottommargin">
+					<li><i class="icon-ok"></i> Return Flight Tickets</li>
+					<li><i class="icon-ok"></i> All Local/Airport Transfers</li>
+					<li><i class="icon-ok"></i> Resort Accomodation</li>
+					<li><i class="icon-ok"></i> All Meals Included</li>
+					<li><i class="icon-ok"></i> Adventure Activities</li>
+				</ul>
+
+						</div>
+						<div class="col_half nobottommargin col_last">
+							<ul class="iconlist nobottommargin">
+								<li><i class="icon-ok"></i> Logical Games</li>
+								<li><i class="icon-ok"></i> Local Guides</li>
+								<li><i class="icon-ok"></i> Support Staff</li>
+								<li><i class="icon-ok"></i> Personal Security</li>
+								<li><i class="icon-ok"></i> VISA Fees &amp; Medical Insurance</li>
+							</ul>
+						</div>
+
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="sidebar nobottommargin col_last clearfix">
+					<div class="sidebar-widgets-wrap">
+						<div class="widget clearfix">
+							<h4 style="margin-top:-80px; font-family:'Cabin Sketch', cursive;font-size:17px;"><a href="#" style="color:#4897d8!important; text-transform:none;" ><i class="icon-line2-home h1"></i> Nos dernières locations</a></h4>
+							<div id="post-list-footer">
+								<div class="spost clearfix">
+									<div class="entry-image">
+										<a href="#" class="nobg"><img src="images/events/thumbs/1.jpg" alt=""></a>
+									</div>
+									<div class="entry-c">
+										<div class="entry-title">
+											<h4><a href="#">Lorem ipsum dolor sit amet, consectetur</a></h4>
+										</div>
+										<ul class="entry-meta">
+											<li>10th July 2014</li>
+										</ul>
+									</div>
+								</div>
+
+								<div class="spost clearfix">
+									<div class="entry-image">
+										<a href="#" class="nobg"><img src="images/events/thumbs/2.jpg" alt=""></a>
+									</div>
+									<div class="entry-c">
+										<div class="entry-title">
+											<h4><a href="#">Elit Assumenda vel amet dolorum quasi</a></h4>
+										</div>
+										<ul class="entry-meta">
+											<li>10th July 2014</li>
+										</ul>
+									</div>
+								</div>
+
+								<div class="spost clearfix">
+									<div class="entry-image">
+										<a href="#" class="nobg"><img src="images/events/thumbs/3.jpg" alt=""></a>
+									</div>
+									<div class="entry-c">
+										<div class="entry-title">
+											<h4><a href="#">Debitis nihil placeat, illum est nisi</a></h4>
+										</div>
+										<ul class="entry-meta">
+											<li>10th July 2014</li>
+										</ul>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+
+						<div class="widget clearfix">
+
+							<h4  style="font-family:'Cabin Sketch', cursive; font-size:17px;"><a href="#" style="color:#4897d8!important; text-transform:none;"><i class="icon-line-star h1"></i> Nos locations STARS </a></h4>
+								<div id="oc-portfolio-sidebar" class="owl-carousel carousel-widget" data-items="1" data-margin="10" data-loop="true" data-nav="false" data-autoplay="5000">
+
+									<div class="oc-item">
+										<div class="iportfolio">
+											<div class="portfolio-image">
+												<a href="#">
+													<img src="images/events/thumbs/3.jpg" alt="Mac Sunglasses">
+												</a>
+												<div class="portfolio-overlay">
+													<a href="http://vimeo.com/89396394" class="center-icon" data-lightbox="iframe"><i class="icon-line-play"></i></a>
+												</div>
+											</div>
+											<div class="portfolio-desc center nobottompadding">
+												<h3><a href="portfolio-single-video.html">Inventore voluptates velit totam ipsa tenetur</a></h3>
+												<span><a href="#">Melbourne, Australia</a></span>
+											</div>
+										</div>
+									</div>
+
+									<div class="oc-item">
+										<div class="iportfolio">
+											<div class="portfolio-image">
+												<a href="portfolio-single.html">
+													<img src="images/events/thumbs/1.jpg" alt="Open Imagination">
+												</a>
+												<div class="portfolio-overlay">
+													<a href="images/portfolio/full/1.jpg" class="center-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
+												</div>
+											</div>
+											<div class="portfolio-desc center nobottompadding">
+												<h3><a href="portfolio-single.html">Nisi officia adipisci molestiae aliquam</a></h3>
+												<span><a href="#">Perth, Australia</a></span>
+											</div>
+										</div>
+									</div>
+
+								</div>
+
+						</div>
+
+						<div class="widget clearfix">
+
+							<h4>Recent Event in Video</h4>
+							<iframe src="//player.vimeo.com/video/103927232" width="500" height="250" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+						</div>
+
+						<div class="widget quick-contact-widget clearfix">
+
+							<h4>Quick Contact</h4>
+							<div class="quick-contact-form-result"></div>
+							<form id="quick-contact-form" name="quick-contact-form" action="include/quickcontact.php" method="post" class="quick-contact-form nobottommargin">
+								<div class="form-process"></div>
+
+								<input type="text" class="required sm-form-control input-block-level" id="quick-contact-form-name" name="quick-contact-form-name" value="" placeholder="Full Name" />
+								<input type="text" class="required sm-form-control email input-block-level" id="quick-contact-form-email" name="quick-contact-form-email" value="" placeholder="Email Address" />
+								<textarea class="required sm-form-control input-block-level short-textarea" id="quick-contact-form-message" name="quick-contact-form-message" rows="4" cols="30" placeholder="Message"></textarea>
+								<input type="text" class="hidden" id="quick-contact-form-botcheck" name="quick-contact-form-botcheck" value="" />
+								<button type="submit" id="quick-contact-form-submit" name="quick-contact-form-submit" class="button button-small button-3d nomargin" value="submit">Send Email</button>
+							</form>
+
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</section><!-- #content end -->
+
+{% endblock %}
+
+
+ 
+

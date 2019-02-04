@@ -263,6 +263,10 @@ blockquote{
     border-top: 4px solid #ffdb5c!important;
 }
 
+#single:after{
+    margin-left:100px;
+}
+
 /* formulaire de recherche */
 .form-control{
     border: 2px solid #ffdb5c;
@@ -354,16 +358,25 @@ input[type="checkbox"] {
 }
 
 /* Personnalisation affichage de la date dans la vue liste de tous les voyages*/
-.events .entry-image .entry-date{
-    background-color: rgba(93,62,81,0.8);
+.events .entry-image .entry-date {
+    background-color: rgba(72,151,216,0.8);
+    width:80px;
+}
+
+.entry-title h2 a {
+    font-family: 'Cabin Sketch', cursive;
+    text-transform: none;
 }
 
 /* Personnalisation affichage des catÃ©gories dans la vue liste de tous les voyages*/
 .badge {
     font-size: 15px;
-    background-color: #5d3e51;
+    background-color: #fa6e59;
+    border: 3px solid #ffdb5c;
     font-family: 'Cabin Sketch', cursive;
+    color: #ffffff;
 }
+
 /* Personnalisation du formulaire d'inscription d'un utilisateur*/
 #fos_user_registration_form_email, #fos_user_registration_form_username, #fos_user_registration_form_name, #fos_user_registration_form_plainPassword_first,#fos_user_registration_form_plainPassword_second,#fos_user_registration_form_phoneNumber{
     display: block;
@@ -426,6 +439,31 @@ input[type="checkbox"] {
 .vich-image a img{
     max-width: 15%;
 }
+
+div#slider{
+    height:400px!important;
+}
+
+/* Customisation du fil d'Ariane */
+.breadcrumb a {
+    margin-top:10px;
+    color:#4897d8!important;
+    font-family: 'Cabin Sketch', cursive;
+    font-size: 14px;
+}
+
+.breadcrumb .active {
+    margin-top:10px;
+    color:#4897d8!important;
+    font-family: 'Cabin Sketch', cursive;
+    font-size: 17px;
+    font-weight: bold;
+    text-decoration: #ffdb5c;
+
+}
+
+
+
 
 
 
