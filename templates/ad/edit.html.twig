@@ -1,67 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Liste de toutes les annonces de locations | {{parent()}}{% endblock %}
+{% block title %} Modification de l'annonce {{ad.title}} | {{parent()}}{% endblock %}
 
 {% block body %}
 
-<div id="slider" class="slider-element full-screen clearfix" style="background: url('images/banners/banner6.jpg') center right no-repeat; background-size: cover; height:200px;"></div>
+{% form_theme adForm 'ad/_collection.html.twig' %}
+
+<div id="slider" class="slider-element full-screen clearfix" style="background: url('/images/banners/banner6.jpg') center right no-repeat; background-size: cover; height:200px;"></div>
 <section id="content">
     <div class="content-wrap">
 		<div class="container clearfix">
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item"><a href="{{path('homepage')}}"><i class="icon-line2-home"></i> Accueil</a></li>
-				<li class="breadcrumb-item active" aria-current="page"><a href="{{path('ad_index')}}"><i class="icon-list"></i> Liste des annonces</a></li>
+                <li class="breadcrumb-item"><a href="{{path('ad_view', {'slug': ad.slug })}}"><i class="icon-image"></i> Détail de l'annonce</a></li>
+				<li class="breadcrumb-item active" aria-current="page"><a href="{{path('ad_edit', {'slug': ad.slug})}}"><i class="icon-edit"></i> Modifier une annonce</a></li>
 			</ol>
 		</div>			
         <section id="section-about" class="page-section">
             <div class="container clearfix">
-                <div class="heading-block divcenter nobottomborder nobottommargin center">
-                    <i class="icon-list1 d-block h1 mb-4" style="color:#f8a055;"></i> 
+                <div class="heading-block divcenter nobottomborder nobottommargin">
+                    <i class="icon-edit d-block h1 mb-4" style="color:#f8a055;"></i> 
                 </div>        
-                <div class="heading-block center">
-                    <h2>Toutes nos annonces de location disponibles</h2>
-                    <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Girl Tripeuse, tu trouveras, sans aucun doute, le logement de tes rêves dans cette liste lors de ton voyage.</p>
+                <div class="heading-block">
+                    <h2>Modifie ton annonce {{ad.title}}</h2>
+                    <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Tu souhaites modifier ton annonce de location ? Tu es au bon endroit.</p>
                 </div>
                 <div class="postcontent nobottommargin">
-
-						<div id="posts" class="events small-thumbs">
-                            {% for ad in ads %}
-							{% set url = path('ad_view', {'slug': ad.slug}) %}
-							<div class="entry clearfix">
-								<div class="entry-image">
-									<a href="{{url}}">
-										<img src="{{ad.coverImage}}" alt="Photo du voyage {{ad.title}}">
-										{#<div class="entry-date"><span style="font-weight:bold; font-size:15px;"> {{format_date_created_at(trip)}}</span></div>#}								
-									</a>
-								</div>
-								<div class="entry-c">
-									<div class="entry-title">
-										<h2><a href="{{url}}"><i class="icon-realestate-advert"></i> {{ad.title}}</a></h2>
-										<p style:"text-align:justify;">{{ad.introduction}}</p>
-									</div>
-									<ul class="entry-meta clearfix">
-										<li><span class="badge badge-warning">{{ad.price}} FCFA par nuit</span></li>
-										<li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-bed"></i> {{ad.rooms}} pièces </span></li>
-									</ul>
-									<div class="entry-content">
-										<p style:"text-align:justify;">{{ad.content|truncate(150, true)| raw}}</p>
-										<a href="{{url}}" class="btn btn-secondary" disabled="disabled">Plus d'infos sur cette annonce</a> <a href="#" class="btn btn-danger">Réserve ce logement</a>
-									</div>
-								</div>
-							</div>
-                            {% endfor %}
-						</div>
-
-						<!-- Pagination
-						============================================= -->
-						<div class="row mb-3">
-							<div class="col-12">
-								<a href="#" class="btn btn-outline-secondary float-left">&larr; Précédent</a>
-								<a href="#" class="btn btn-outline-dark float-right">Suivant &rarr;</a>
-							</div>
-						</div>
-						<!-- .pager end -->
-
+                {{form_start(adForm)}}
+                   
+                    <div class="form-group">
+                        {{form_widget(adForm)}}
+                        <div class="center">                                                    
+                            <button type='submit' class="button button-border button-light button-rounded button-reveal button-large topmargin">
+                                Modifie ton annonce
+                            </button>
+                        </div>
+                    </div>                      
+                 {{form_end(adForm)}}              
 				</div>
                 	<div class="sidebar nobottommargin col_last clearfix">
 						<div class="sidebar-widgets-wrap">
@@ -200,5 +175,8 @@
         <div class="container clearfix"></div>       
 </section>
 
-
+{% endblock %}
+{% block javascripts %}
+	<script src="/js/ad.js">
+	</script>
 {% endblock %}

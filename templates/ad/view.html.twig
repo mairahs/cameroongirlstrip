@@ -19,7 +19,7 @@
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="{{path('homepage')}}"><i class="icon-line2-home"> Accueil</i></a></li>
 								<li class="breadcrumb-item"><a href="{{path('ad_index')}}"><i class="icon-list"></i> Liste des annonces</a></li>
-								<li class="breadcrumb-item active" aria-current="page"><i class="icon-image"></i> Détail de l'annonce {{ad.title}}</li>
+								<li class="breadcrumb-item active" aria-current="page"><i class="icon-image"></i> Détail de l'annonce </li>
 							</ol>
 						</div>
 			
@@ -29,11 +29,12 @@
                     <h2 style="margin-left:100px;">{{ad.title}}</h2>
                     <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; margin-left:100px;">Girl Tripeuse, voici toutes les informations relatives à cet hébergement.</p>
                 </div>
-                <div class="entry-overlay-meta" style="margin-bottom:-50px;">
+                <div class="entry-overlay-meta" style="margin-bottom:-80px;">
 					<h2 style="text-transform:none; font-family:'Cabin Sketch', cursive; font-size:20px;" class="center"><a href="#">{{ad.title}}</a></h2>
 					<ul class="iconlist" style="margin-left:40px; font-family:'Cabin Sketch', cursive;">
                         <li style="font-size:15px;"><i class="icon-user2"></i> <strong>Propriétaire:  </li></strong>
-						<li style="font-size:15px;"><i class="icon-money"></i> <strong>Prix: {{ad.price}} FCFA par nuit</strong></li>
+						<li style="font-size:15px;"><i class="icon-map-marker1"></i> <strong>Localisation du bien: {{ad.location}} </li></strong>
+						<li style="font-size:15px;"><i class="icon-money"></i> <strong>Prix: {{ad.price|number_format(0,'.',' ')}} FCFA par nuit</strong></li>
 						<li style="font-size:15px;"><i class="icon-bed"></i> <strong> {{ad.rooms}} chambres disponibles</strong> </li>
 						
 					</ul>
@@ -79,7 +80,9 @@
                                 </a>
                         </div>
 		                <h3 style="margin-top:20px; font-family:'Cabin Sketch', cursive;font-size:17px;color:#4897d8!important;">Description du bien</h3>
-                             {{ad.content|raw}}                      
+                            <div style="text-align:justify;margin-bottom:30px;">
+								 {{ad.content|raw}} 
+							</div>                     
 			<div class="col_half nobottommargin">
 			    <ul class="iconlist nobottommargin">
 					<li><i class="icon-ok"></i> Return Flight Tickets</li>

@@ -29,7 +29,8 @@ class AppFixtures extends Fixture
            $trip = new Trip;
            $trip->setDeparture($faker->city)
                 ->setArrival($faker->city)
-                ->setTripDate($faker->dateTimeBetween('now', '+2 years', 'Africa/Lagos'))
+                ->setDepartureDate($faker->dateTimeBetween('now', '+1 years', 'Africa/Lagos'))
+                ->setReturnDate($faker->dateTimeBetween('now', '+2 years', 'Africa/Lagos'))
                 ->setDescription($faker->paragraph(10, true))
                 ->setNumberPersons(mt_rand(2,5))
                 ->setCoverImage($faker->imageUrl(500, 400))
@@ -45,7 +46,8 @@ class AppFixtures extends Fixture
             $ad = new Ad;
             $ad->setTitle($faker->sentence(3))
         	   ->setPrice(mt_rand(40,200))
-        	   ->setIntroduction($faker->paragraph(2))
+               ->setIntroduction($faker->paragraph(2))
+               ->setLocation($faker->city)
         	   ->setContent("<p>".join('</p><p>', $faker->paragraphs(5))."</p>")
         	   ->setCoverImage($faker->imageUrl(1000,350))
                ->setRooms(mt_rand(2,5));

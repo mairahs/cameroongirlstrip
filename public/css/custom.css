@@ -298,10 +298,12 @@ ul.tab-nav:not(.tab-nav-lg) {
     margin-top: 20px;
 }
 
-label , option , .sm-form-control{
-    color:  #5d3e51;
+label , option , .sm-form-control, legend{
+    color:  #4897d8;
     font-weight: bold;
     font-family: 'Cabin Sketch',cursive!important;
+    text-transform: none;
+    font-size:15px;
 }
 .description{
     margin-top: -70px;
@@ -325,31 +327,6 @@ input[type="checkbox"] {
     background-color: #5d3e51;
     font-family: 'Cabin Sketch', cursive;
     text-transform: uppercase;
-}
-
-.success-text{
-    color: #ffffff;
-    background-color: #6ea8a7;
-    font-family: 'Cabin Sketch', cursive;
-    text-align: center;
-    font-size: 20px;
-}
-
-.info-text{
-    color: #ffffff;
-    background-color:#5d3e51;
-    font-family: 'Cabin Sketch', cursive;
-    font-size: 20px;
-    text-align:center;
-
-}
-.btn-success, .btn-info {
-    background-color: #6ea8a7;
-    border-color: #6ea8a7;
-}
-.btn-success:hover {
-    background-color: #5d3e51;
-    border-color: #5d3e51;
 }
 
 .btn-danger {
@@ -461,6 +438,31 @@ div#slider{
     text-decoration: #ffdb5c;
 
 }
+
+.form-control {
+    border-radius: 5px; 
+    text-align: justify; 
+}
+
+.input-group-text {
+    background-color: #4897d8;
+    color:#ffffff;
+    font-family: 'Cabin Sketch', cursive;
+    font-weight: bold;
+}
+
+/* Customisation des messages flash */
+.btn-success, .btn-info, .btn-danger, .btn-warning{
+    font-weight: bold;
+    font-family: 'Cabin Sketch',cursive;
+    font-size: 16px;
+}
+
+/* Customisation des messages d'erreurs */
+.invalid-feedback {
+    font-size: 100%;
+}
+
 
 
 

@@ -32,3 +32,11 @@
        {% endif %}
     </ul>
 </nav><!-- #primary-menu end -->
+{% for label, messages in app.flashes %}
+
+    {% for message in messages %}
+        <a href="#" class="btn btn-{{label}}" data-notify-type="{{label}}" data-notify-position="top-full-width " data-notify-close=true data-notify-msg="<i class=icon-info-sign></i> {{message}}" onclick="SEMICOLON.widget.notifications(this); return false;">{{message}}</a>
+    {% endfor %}
+
+{% endfor %}
+

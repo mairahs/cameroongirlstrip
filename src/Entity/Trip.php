@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TripRepository")
@@ -30,16 +31,33 @@ class Trip
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\DateTime
      */
-    private $tripDate;
+    private $departureDate;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @Assert\DateTime
+     */
+    private $returnDate;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Length(
+     *      min = 100,
+     *      minMessage = "La description détaillée de ton voyage ne peut pas faire moins de 100 caractères."
+     * )
      */
     private $description;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(
+     *      min = 2,
+     *      max = 5,
+     *      minMessage = "Le nombre de personnes ne peut être inférieur à 2",
+     *      maxMessage = "Le nombre de personnes ne peut excéder 5"
+     * )
      */
     private $numberPersons;
 
@@ -50,6 +68,7 @@ class Trip
 
     /**
      * @ORM\Column(type="string", length=255)
+     *  @Assert\Url()
      */
     private $coverImage;
 
@@ -93,17 +112,30 @@ class Trip
         return $this;
     }
 
-    public function getTripDate(): ?\DateTimeInterface
+    public function getDepartureDate(): ?\DateTimeInterface
     {
-        return $this->tripDate;
+        return $this->departureDate;
     }
 
-    public function setTripDate(\DateTimeInterface $tripDate): self
+    public function setDepartureDate(\DateTimeInterface $departureDate): self
     {
-        $this->tripDate = $tripDate;
+        $this->departureDate = $departureDate;
 
         return $this;
     }
+
+    public function getReturnDate(): ?\DateTimeInterface
+    {
+        return $this->returnDate;
+    }
+
+    public function setReturnDate(\DateTimeInterface $returnDate): self
+    {
+        $this->returnDate = $returnDate;
+
+        return $this;
+    }
+
 
     public function getDescription(): ?string
     {
@@ -165,6 +197,23 @@ class Trip
         return $this;
     }
 
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
     /**
      * Allows to initialize automatically the slug
      * @ORM\PrePersist
@@ -181,17 +230,6 @@ class Trip
             }
         }
 
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category): self
-    {
-        $this->category = $category;
-
-        return $this;
-    }
     
 
 }
