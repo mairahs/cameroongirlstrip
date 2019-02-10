@@ -25,19 +25,49 @@
                     <h2>Modifie ton annonce {{ad.title}}</h2>
                     <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Tu souhaites modifier ton annonce de location ? Tu es au bon endroit.</p>
                 </div>
-                <div class="postcontent nobottommargin">
+				<div class="postcontent nobottommargin">
                 {{form_start(adForm)}}
-                   
-                    <div class="form-group">
-                        {{form_widget(adForm)}}
-                        <div class="center">                                                    
-                            <button type='submit' class="button button-border button-light button-rounded button-reveal button-large topmargin">
-                                Modifie ton annonce
-                            </button>
-                        </div>
-                    </div>                      
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							{{form_row(adForm.title)}}
+						</div>
+						<div class="form-group col-md-6">
+							{{form_row(adForm.location)}}
+						</div>					
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							{{form_row(adForm.rooms)}}
+						</div>
+						<div class="form-group col-md-6">
+							{{form_row(adForm.price)}}
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							{{form_row(adForm.coverImage)}}
+						</div>
+						<div class="form-group col-md-6">
+							{{form_row(adForm.images)}}
+						</div>
+					
+					</div> 
+					<div class="form-group">
+						{{form_row(adForm.introduction)}}
+					</div> 
+					<div class="form-group">
+						{{form_row(adForm.content)}}
+					</div>               
+					<div class="form-group">
+						<div class="center">                                                    
+							<button type='submit' class="button button-border button-light button-rounded button-reveal button-large topmargin">
+									Modifie ton annonce
+							</button>
+						</div>
+					</div>                      
                  {{form_end(adForm)}}              
 				</div>
+          
                 	<div class="sidebar nobottommargin col_last clearfix">
 						<div class="sidebar-widgets-wrap">
 

@@ -83,6 +83,12 @@ class Trip
      */
     private $category;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="trips")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $traveller;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -229,6 +235,18 @@ class Trip
                 $this->slug = $slugify->slugify($this->departure.'-'.$this->arrival);
             }
         }
+
+    public function getTraveller(): ?User
+    {
+        return $this->traveller;
+    }
+
+    public function setTraveller(?User $traveller): self
+    {
+        $this->traveller = $traveller;
+
+        return $this;
+    }
 
     
 

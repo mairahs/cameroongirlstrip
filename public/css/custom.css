@@ -454,13 +454,23 @@ div#slider{
 /* Customisation des messages flash */
 .btn-success, .btn-info, .btn-danger, .btn-warning{
     font-weight: bold;
-    font-family: 'Cabin Sketch',cursive;
+    font-family: 'Roboto', sans-serif;
     font-size: 16px;
 }
 
 /* Customisation des messages d'erreurs */
 .invalid-feedback {
     font-size: 100%;
+}
+
+/* Customisation formulaire de login mot de passe oublié */
+.fright {
+    color: #4897d8;
+    font-weight: bold;
+    font-family: 'Cabin Sketch',cursive!important;
+    text-transform: none;
+    font-size: 15px;
+    margin-top:20px;
 }
 
 

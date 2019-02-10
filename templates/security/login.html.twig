@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Connecte toi à la communauté GirlsTripeuses | {{parent()}}{% endblock %}
+
+{% block body %}
+
+<div id="slider" class="slider-element full-screen clearfix" style="background: url('/images/banners/banner8.jpg') center right no-repeat; background-size: cover; height:200px;"></div>
+<section id="content">
+    <div class="content-wrap">
+		<div class="container clearfix">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="{{path('homepage')}}"><i class="icon-line2-home"></i> Accueil</a></li>
+				<li class="breadcrumb-item active" aria-current="page"><a href="{{path('security_login')}}"><i class="icon-line2-login"></i> Connnecte toi</a></li>
+			</ol>
+		</div>			
+        <section id="section-about" class="page-section">
+            <div class="container clearfix center">
+                <div class="heading-block divcenter nobottomborder nobottommargin">
+                    <i class="icon-line2-login d-block h1 mb-4" style="color:#f8a055;"></i> 
+                </div>        
+                <div class="heading-block">
+                    <h2>Connnecte toi à la communauté GirlsTripeuse </h2>
+                    <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Accède à ton compte, modifie tes infos, propose un nouveau trajet ou un hébergement...<br> Bref, fais comme à la maison...</p>
+                </div>
+
+                <div class="card divcenter noradius noborder" style="max-width: 400px; background-color: rgba(255,255,255,0.93); margin-top:-50px;">
+					<div class="card-body" style="padding: 40px;">
+                        {% if hasError %}
+                            <div class="badge">
+                                Une erreur est survenue. Ton email et/ou ton mot de passe sont incorrects.
+                            </div>
+					    {% endif %}
+						<form id="login-form" name="login-form" class="nobottommargin" action="{{path('security_login')}}" method="post">
+							<div class="col_full">
+								<label for="login-form-email">Ton email:</label>
+								<input type="email" id="email" name="_username" value="{{username}}" class="form-control not-dark" placeholder="Renseigne ton adresse email" required />
+							</div>
+
+							<div class="col_full">
+								<label for="login-form-password">Ton mot de passe:</label>
+								<input type="password" id="password" name="_password" value="" class="form-control not-dark" placeholder="Renseigne ton mot de passe" required/>
+							</div>
+					</div>
+
+					<div class="col_full nobottommargin">
+                        <div class="center">
+                            <button type="submit" class="button button-border button-light button-rounded button-reveal button-large " id="login-form-submit" name="login-form-submit">Connexion</button>
+                                  
+                        </div> <a href="#" class="fright">Mot de passe oublié ?</a>
+						<a href="{{path('security_register')}}" class="fright">Pas encore GirlTripeuse ? alors inscris toi.</a>
+					</div>
+            
+						</form>
+
+						<div class="line line-sm"></div>
+
+						<div class="center">
+							<h4 style="margin-bottom: 15px; font-family:'Cabin Sketch', cursive;">ou sinon, connecte toi avec :</h4>
+							<a href="#" class="button button-rounded si-facebook si-colored">Facebook</a>
+							<span class="d-none d-md-block">or</span>
+							<a href="#" class="button button-rounded si-twitter si-colored">Twitter</a>
+						</div>
+					</div>
+				</div>
+        </div>
+            
+    </section>                         
+</section>
+
+{% endblock %}
