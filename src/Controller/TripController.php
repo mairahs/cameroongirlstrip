@@ -37,6 +37,7 @@ class TripController extends AbstractController
         $tripForm->handleRequest($request);
         if($tripForm->isSubmitted() && $tripForm->isValid())
         {
+            $trip->setTraveller($this->getUser());
             $manager->persist($trip);
             $manager->flush();
 

@@ -124,5 +124,18 @@ class SecurityController extends AbstractController
         ]);
     }
 
+    /**
+     * Avoid to display loggued user's profile
+     * @Route("/security/my-account", name="security_account")
+     * @return Response
+     */
+    public function myAccount()
+    {
+        $user = $this->getUser();
+        return $this->render('user/view.html.twig', [
+            'user' => $user
+        ]);
+    }
+
     
 }

@@ -174,7 +174,7 @@ h3.nott {
 
 .img-thumbnail {
   
-    border-color: #5d3e51;
+    border-color: #f8a055;
 }
 .h{
 	color:#5d3e51!important;
@@ -265,6 +265,10 @@ blockquote{
 
 #single:after{
     margin-left:100px;
+}
+
+#singled:after{
+    margin-left:120px;
 }
 
 /* formulaire de recherche */
@@ -456,6 +460,14 @@ div#slider{
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
+   
+}
+
+.btn-warning p {
+    text-align: center;
+    font-family: 'Cabin Sketch', cursive;
+    color: #333;
+
 }
 
 /* Customisation des messages d'erreurs */
@@ -471,6 +483,12 @@ div#slider{
     text-transform: none;
     font-size: 15px;
     margin-top:20px;
+}
+
+/* Customisation partie user dans l'affichage d'une seule annonce */
+.spost .entry-title h4 a {
+    font-size: 18px;
+    
 }
 
 

@@ -26,28 +26,7 @@
 
 						<div id="posts" class="events small-thumbs">
                             {% for trip in trips %}
-							{% set url = path('trip_view', {'slug': trip.slug})%}
-							<div class="entry clearfix">
-								<div class="entry-image">
-									<a href="{{url}}">
-										<img src="{{trip.coverImage}}" alt="Photo du voyage {{trip.departure}} - {{trip.arrival}}">
-										<div class="entry-date"><span style="font-weight:bold; font-size:15px;"> {{format_date_departure(trip)}}</span></div>
-								</div>
-								<div class="entry-c">
-									<div class="entry-title">
-										<h2><a href="{{url}}"><i class="icon-map-marker2"></i> {{trip.departure}} - {{trip.arrival}}</a></h2>
-									</div>
-									<ul class="entry-meta clearfix">
-										<li><span class="badge badge-warning">{% if trip.category.name == 'bus' %}<i class="icon-bus-alt"></i> {% else %} <i class="icon-car-alt"></i>{% endif %}</span></li>
-										<li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-users"></i> Groupe de {{trip.numberPersons}} personnes</span></li>
-									</ul>
-									<div class="entry-content">
-										<p style:"text-align:justify;">{{trip.description|truncate(150, true)}}</p>
-										<a href="{{url}}" class="btn btn-secondary" disabled="disabled">Plus d'infos sur ce voyage</a> 
-										<a href="#" class="btn btn-danger">Réserve ce voyage</a>
-									</div>
-								</div>
-							</div>
+							{% include 'trip/_trip.html.twig' %}
                             {% endfor %}
 						</div>
 

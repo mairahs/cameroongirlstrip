@@ -8,6 +8,7 @@
 ============================================= -->
 <div id="slider" class="slider-element full-screen clearfix" style="background: url('/images/banners/banner5.jpg') center right no-repeat; background-size: cover; height:200px;"></div>
 <section id="content">
+{% set t = trip.traveller %}
 	<div class="content-wrap">
 		<div class="single-event">
 			<div class="entry-image parallax header-stick" style=" height:500px" data-bottom-top="background-position:0px 300px;" data-top-bottom="background-position:0px -300px;">
@@ -22,7 +23,7 @@
 								<li class="breadcrumb-item active" aria-current="page"><i class="icon-image"></i> Détail du trajet</li>
 							</ol>
 						</div>
-                    <i class="icon-list1 d-block h1 mb-4" style="color:#f8a055; margin-top:20px; margin-left:100px;"></i> 
+                    <i class="icon-sitemap d-block h1 mb-4" style="color:#f8a055; margin-top:20px; margin-left:100px;"></i> 
                 </div>        
                 <div id="single" class="heading-block">
                     <h2 style="margin-left:100px;">Trajet {{trip.departure}} - {{trip.arrival}}</h2>
@@ -30,10 +31,10 @@
                 </div>
                 <div class="entry-overlay-meta" style="margin-bottom:-80px;">
 					<h2 style="text-transform:none; font-family:'Cabin Sketch', cursive; font-size:20px;" class="center"><a href="#">{{trip.departure}} - {{trip.arrival}}</a></h2>
-					<ul class="iconlist" style="margin-left:40px; font-family:'Cabin Sketch', cursive;">
+					<ul class="iconlist" style="margin-left:40px; font-family:'Roboto', sans-serif;">
 						<li style="font-size:15px;"><i class="icon-calendar3"></i> <strong>Date de départ: le {{format_date_departure(trip)}}</strong> </li>
 						<li style="font-size:15px;"><i class="icon-calendar3"></i> <strong>Date de retour: le {{format_date_return(trip)}}</strong> </li>
-						<li style="font-size:15px;"><i class="icon-user2"></i> <strong>Proposé par </li></strong>
+						<li style="font-size:15px;"><i class="icon-user2"></i> <strong>Voyage proposé par {{t.fullName}} </li></strong>
 						<li style="font-size:15px;"><i class="icon-users1"></i> <strong>Groupe de {{trip.numberPersons}} personnes  </strong> </li>
 						<li style="font-size:15px;"><i class="icon-move"></i> <strong>Mode de transport: {{ trip.category.name}}</strong></li>
 					</ul>
@@ -75,55 +76,39 @@
 				<div class="sidebar nobottommargin col_last clearfix">
 					<div class="sidebar-widgets-wrap">
 						<div class="widget clearfix">
-							<h4 style="margin-top:-80px; font-family:'Cabin Sketch', cursive;font-size:17px;"><a href="#" style="color:#4897d8!important; text-transform:none;" ><i class="icon-line2-home h1"></i> Nos dernières locations</a></h4>
+							<h4 style="margin-top:-50px; font-family:'Cabin Sketch', cursive;font-size:17px;"><a href="#" style="color:#4897d8!important; text-transform:none;" ><i class="icon-user-alt h1"></i> Créatrice du voyage</a></h4>
 							<div id="post-list-footer">
 								<div class="spost clearfix">
 									<div class="entry-image">
-										<a href="#" class="nobg"><img src="images/events/thumbs/1.jpg" alt=""></a>
+										<a href="{{path('user_view', {'slug': t.slug})}}" class="nobg"><img style="width:200px!important;" src="{{t.picture}}" alt="Avatar de {{t.fullName}}" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image"></a>
 									</div>
 									<div class="entry-c">
-										<div class="entry-title">
-											<h4><a href="#">Lorem ipsum dolor sit amet, consectetur</a></h4>
-										</div>
-										<ul class="entry-meta">
-											<li>10th July 2014</li>
-										</ul>
+										<div class="entry-title mb-3">
+											<h4><a href="{{path('user_view', {'slug': t.slug})}}">{{t.fullName}}</a></h4>
+										</div> 
+										<span class="badge">
+										 {{t.trips|length}} voyages {#voyages pluriel et singulier à gérer#}
+										</span>
 									</div>
 								</div>
 
 								<div class="spost clearfix">
-									<div class="entry-image">
-										<a href="#" class="nobg"><img src="images/events/thumbs/2.jpg" alt=""></a>
-									</div>
+							
 									<div class="entry-c">
+					
 										<div class="entry-title">
-											<h4><a href="#">Elit Assumenda vel amet dolorum quasi</a></h4>
+											<h4><a style="text-align:justify; font-family:'Roboto', sans-serif;" href="#">{{t.description | raw}}</a></h4>
 										</div>
-										<ul class="entry-meta">
-											<li>10th July 2014</li>
-										</ul>
+										<div class="center">
+											<a href="{{path('user_view', {'slug': t.slug})}}" class="badge">
+												En savoir plus sur {{t.firstName}} 	
+											</a>
+										</div>
 									</div>
 								</div>
-
-								<div class="spost clearfix">
-									<div class="entry-image">
-										<a href="#" class="nobg"><img src="images/events/thumbs/3.jpg" alt=""></a>
-									</div>
-									<div class="entry-c">
-										<div class="entry-title">
-											<h4><a href="#">Debitis nihil placeat, illum est nisi</a></h4>
-										</div>
-										<ul class="entry-meta">
-											<li>10th July 2014</li>
-										</ul>
-									</div>
-								</div>
-
 							</div>
-
 						</div>
-
-						<div class="widget clearfix">
+					<div class="widget clearfix">
 
 							<h4  style="font-family:'Cabin Sketch', cursive; font-size:17px;"><a href="#" style="color:#4897d8!important; text-transform:none;"><i class="icon-line-star h1"></i> Nos locations STARS </a></h4>
 								<div id="oc-portfolio-sidebar" class="owl-carousel carousel-widget" data-items="1" data-margin="10" data-loop="true" data-nav="false" data-autoplay="5000">

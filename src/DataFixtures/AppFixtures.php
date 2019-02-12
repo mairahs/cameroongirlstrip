@@ -36,14 +36,14 @@ class AppFixtures extends Fixture
 
         $users = [];
         $genres = ["male", "female"];
-        $genre = $faker->randomElement($genres);
-        $picture = 'https://randomuser.me/api/portraits/';
-        $pictureId = $faker->numberBetween(1,99).'.jpg';
-        $picture .= ($genre == 'male' ? '/men' : '/women').$pictureId;
 
         for($u=1; $u <= 10; $u++)
         {
             $user = new User;
+            $genre = $faker->randomElement($genres);
+            $picture = 'https://randomuser.me/api/portraits/';
+            $pictureId = $faker->numberBetween(1,99).'.jpg';
+            $picture .= ($genre == 'male' ? 'men/' : 'women/').$pictureId;
             $user->setFirstname($faker->firstname($genre))
                  ->setLastName($faker->lastname)
                  ->setEmail($faker->email)

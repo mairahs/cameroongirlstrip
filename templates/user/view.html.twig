@@ -1,0 +1,152 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Page de profil de  {{user.fullName}}| {{parent()}}{% endblock %}
+
+{% block body %}
+
+    <!-- Content
+============================================= -->
+<div id="slider" class="slider-element full-screen clearfix" style="background: url('/images/banners/banner9.jpg') center right no-repeat; background-size: cover; height:200px;"></div>
+<section id="content">
+
+	<div class="content-wrap">
+		<div class="single-event">
+			<div class="entry-image parallax header-stick" style=" height:500px" data-bottom-top="background-position:0px 300px;" data-top-bottom="background-position:0px -300px;">
+				<div class="heading-block divcenter nobottomborder nobottommargin">
+													<!-- Page Title
+						============================================= -->
+
+					<div class="container clearfix">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{path('homepage')}}"><i class="icon-line2-home"></i> Accueil</a></li>
+                            <li class="breadcrumb-item active" aria-current="page"><i class="icon-image"></i> Profil </li>
+                         </ol>
+					</div>
+                    <div class="container clearfix">
+                         <div class="heading-block nobottomborder nobottommargin">
+                            <i class="icon-sitemap d-block h1 mb-4" style="color:#f8a055; margin-top:20px; margin-left:120px;"></i> 
+                        </div> 
+                         <img src="{{user.picture}}" class="alignleft img-circle img-thumbnail notopmargin nobottommargin" alt="Avatar" style="max-width: 100px;">  
+                        <div id="singled" class="heading-block">
+                            <h2 style="margin-left:100px;">{{user.fullName}}</h2>
+                            <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; margin-left:100px;">Girl Tripeuse, voici toutes les informations relatives à {{user.firstName}}.</p>
+                        {% if user is same as (app.user) %}
+                        <div class="entry-content">
+                            <a href="{{path('security_profile')}}" class="btn btn-secondary">Modifie tes informations</a> 
+                            <a href="{{path('security_password')}}" class="btn btn-danger">Modifie ton mot de passe</a>
+                        </div>
+                    {% endif %}
+                        </div>     
+                    </div>                
+                </div> 
+               
+                <div class="entry-overlay-meta" style="margin-bottom:-50px;">
+					<h2 style="text-transform:none; font-family:'Cabin Sketch', cursive; font-size:20px;" class="center"><a href="#">{{user.fullName}}</a></h2>
+					<ul class="iconlist" style="margin-left:40px; font-family:'Roboto', sans-serif;">
+						<li style="font-size:15px;"><i class="icon-line-move"></i> <strong>{{user.trips |length}} voyages créés</strong> </li> {#gérer le pluriel/singulier #}
+						<li style="font-size:15px;"><i class="icon-line2-home"></i> <strong>{{user.ads |length}} logements loués</strong> </li> {#gérer le pluriel/singulier #}
+						{# <li style="font-size:15px;"><i class="icon-user2"></i> <strong>Voyage proposé par {{t.fullName}} </li></strong>
+						<li style="font-size:15px;"><i class="icon-users1"></i> <strong>Groupe de {{trip.numberPersons}} personnes  </strong> </li>
+						<li style="font-size:15px;"><i class="icon-move"></i> <strong>Mode de transport: {{ trip.category.name}}</strong></li> #}
+					</ul>
+						{# <div class="center">
+                            <a href="#" class="button button-border button-light button-rounded button-reveal button-large topmargin">Réserve ce voyage</a>
+                        </div> #}
+				</div>
+			</div>
+			<div class="container clearfix">
+				<div class="postcontent nobottommargin clearfix"> 
+					<div class="col_three_fourth">
+						<h3 style="margin-top:-300px;"></h3>
+						<p style="margin-top:50px!important; text-align:justify;">{{user.description| raw}}</p>
+						
+						<h4>Ses hobbies</h4>
+						<div class="col_half nobottommargin">
+							<ul class="iconlist nobottommargin">
+								<li><i class="icon-ok"></i> Return Flight Tickets</li>
+								<li><i class="icon-ok"></i> All Local/Airport Transfers</li>
+								<li><i class="icon-ok"></i> Resort Accomodation</li>
+								<li><i class="icon-ok"></i> All Meals Included</li>
+								<li><i class="icon-ok"></i> Adventure Activities</li>
+							</ul>
+
+						</div>
+						<div class="col_half nobottommargin col_last">
+							<ul class="iconlist nobottommargin">
+								<li><i class="icon-ok"></i> Logical Games</li>
+								<li><i class="icon-ok"></i> Local Guides</li>
+								<li><i class="icon-ok"></i> Support Staff</li>
+								<li><i class="icon-ok"></i> Personal Security</li>
+								<li><i class="icon-ok"></i> VISA Fees &amp; Medical Insurance</li>
+							</ul>
+						</div>
+
+					</div>
+					<div class="clear"></div>
+                    <h4>Ses voyages</h4>
+
+                    {% if user.trips| length > 0 %}
+                    {% for trip in user.trips %}
+                         {% include 'trip/_trip.html.twig' %} 
+                    {% endfor %}                 
+                    {% else %}
+                        <div class="btn-warning">
+                            <p>
+                                {{user.firstName}} n'a pas encore créé de voyage.
+                            </p>
+                        </div>
+                    {% endif %}
+				</div>
+				<div class="sidebar nobottommargin col_last clearfix">
+					<div class="sidebar-widgets-wrap">
+                        <div class="widget clearfix">
+                                <h4  style="font-family:'Cabin Sketch', cursive; font-size:17px;"><a href="#" style="color:#4897d8!important; text-transform:none;"><i class="icon-hotel h1"></i> Les locations de {{user.firstName}} </a></h4>
+                                    <div id="oc-portfolio-sidebar" class="owl-carousel carousel-widget" data-items="1" data-margin="10" data-loop="true" data-nav="false" data-autoplay="5000">
+
+                                        {% if user.ads| length > 0 %}
+                                            {% for ad in user.ads %}
+                                                <div class="oc-item">
+                                                    <div class="iportofolio">
+                                                        <div class="portofolio-image">
+                                                            <a href="">
+                                                                <img src="{{ad.coverImage}}" alt="Photo de couverture du logement {{ad.title}}">
+                                                            </a>
+                                                        </div>
+                                                        <div class="portofolio-desc center nobottompadding">
+                                                            <h3>
+                                                                <a href=""> {{ad.title}}</a>
+                                                            </h3>
+                                                            <div class="nobottommargin">
+							                                    <ul class="iconlist nobottommargin">
+								                                    <li><i class="icon-money-bill-alt1"></i> Prix à la nuit: <strong>{{ad.price}}</strong> FCFA</li>
+								                                    <li><i class="icon-location-arrow"></i> Localisation: <strong>{{ad.location}}</strong></li>
+                                                                    <li><i class="icon-bed"></i> Nombre de chambre: <strong>{{ad.rooms}}</strong></li>
+							                                    </ul>
+						                                    </div>
+                                                        </div>
+                                                    </div>
+                                                
+                                                </div>
+                                            {% endfor %}
+                                        {% else %}
+                                        <div class="btn-warning">
+                                            <p>
+                                                {{user.firstName}} n'a pas encore créé de biens à louer.
+                                            </p>
+                                        </div>
+                                        {% endif %}
+
+                                    </div>
+                            </div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</section><!-- #content end -->
+	    
+{% endblock %}
