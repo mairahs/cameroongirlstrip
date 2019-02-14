@@ -26,29 +26,7 @@
 
 						<div id="posts" class="events small-thumbs">
                             {% for ad in ads %}
-							{% set url = path('ad_view', {'slug': ad.slug}) %}
-							<div class="entry clearfix">
-								<div class="entry-image">
-									<a href="{{url}}">
-										<img src="{{ad.coverImage}}" alt="Photo du voyage {{ad.title}}">
-										{#<div class="entry-date"><span style="font-weight:bold; font-size:15px;"> {{format_date_created_at(trip)}}</span></div>#}								
-									</a>
-								</div>
-								<div class="entry-c">
-									<div class="entry-title">
-										<h2><a href="{{url}}"><i class="icon-realestate-advert"></i> {{ad.title}}</a></h2>
-										<p style:"text-align:justify;">{{ad.introduction}}</p>
-									</div>
-									<ul class="entry-meta clearfix">
-										<li><span class="badge badge-warning">{{ad.price}} FCFA par nuit</span></li>
-										<li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-bed"></i> {{ad.rooms}} pièces </span></li>
-									</ul>
-									<div class="entry-content">
-										<p style:"text-align:justify;">{{ad.content|truncate(150, true)| raw}}</p>
-										<a href="{{url}}" class="btn btn-secondary" disabled="disabled">Plus d'infos sur cette annonce</a> <a href="#" class="btn btn-danger">Réserve ce logement</a>
-									</div>
-								</div>
-							</div>
+							{% include 'ad/_ad.html.twig' %}
                             {% endfor %}
 						</div>
 

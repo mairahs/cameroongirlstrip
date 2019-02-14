@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class AdController extends AbstractController
 {
@@ -28,6 +30,8 @@ class AdController extends AbstractController
     /**
      * Create a new Ad
      * @Route("/ad/new", name="ad_new")
+     * @isGranted("ROLE_TRAVELLER", message="Hélas, tu n'as pas accès à cette ressource.")
+     * @isGranted("ROLE_RENTER",  message="Hélas, tu n'as pas accès à cette ressource.")
      * @return Response
      */
     public function new(Request $request, ObjectManager $manager)
@@ -61,6 +65,8 @@ class AdController extends AbstractController
     /**
      * Edit a ad
      * @Route("/ad/{slug}/edit", name="ad_edit")
+     * @Security("is_granted('ROLE_RENTER') and user === ad.getAuthor()", message="Cette annonce n'est pas la tienne. Tu ne peux donc pas la modifier.")
+     * @Security("is_granted('ROLE_TRAVELLER') and user === ad.getAuthor()", message="Cette annonce n'est pas la tienne. Tu ne peux donc pas la modifier.")
      * @return Response
      */
     public function edit(Ad $ad, Request $request, ObjectManager $manager)
@@ -99,5 +105,23 @@ class AdController extends AbstractController
         return $this->render('ad/view.html.twig', [
             'ad' => $ad
         ]);
+    }
+
+     /**
+     * Delete one ad
+     * @Route("/ad/{slug}/delete", name="ad_delete")
+     * @Security("is_granted('ROLE_RENTER') and user === ad.getAuthor()", message="Cette annonce n'est pas la tienne. Tu ne peux donc pas la supprimer.")
+     * @Security("is_granted('ROLE_TRAVELLER') and user === ad.getAuthor()", message="Cette annonce n'est pas la tienne. Tu ne peux donc pas la supprimer.")
+     * @param Ad $ad
+     * @param ObjectManager $manager
+     * @return Response
+     */
+    public function delete(Ad $ad, ObjectManager $manager)
+    {
+        $manager->remove($ad);
+        $manager->flush();
+
+        $this->addFlash("success", "Félicitations, la suppression  de ton annonce {$ad->getTitle()} a bien été enregistrée.");
+        return $this->redirectToRoute('ad_index');
     }
 }

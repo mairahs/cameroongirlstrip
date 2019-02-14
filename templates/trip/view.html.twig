@@ -69,8 +69,14 @@
 								<li><i class="icon-ok"></i> VISA Fees &amp; Medical Insurance</li>
 							</ul>
 						</div>
-
 					</div>
+					{% if app.user == trip.traveller %}
+						<div class="left">
+                            <a href="{{path('trip_edit', {'slug':trip.slug})}}" class="button button-border button-light button-rounded button-reveal button-large topmargin">Modifie ton voyage</a>
+							<a href="{{path('trip_delete', {'slug':trip.slug})}}" class="button button-border button-light button-rounded button-reveal button-large topmargin" onclick="return confirm(`Es tu sûre de vouloir supprimer le voyage {{trip.departure}} {{trip.arrival}} ?`)">Supprime ton voyage</a>
+                        </div>
+					{% endif %}
+
 					<div class="clear"></div>
 				</div>
 				<div class="sidebar nobottommargin col_last clearfix">

@@ -1,0 +1,45 @@
+{% set url = path('ad_view', {'slug': ad.slug}) %}
+	<div class="entry clearfix">
+		<div class="entry-image">
+			<a href="{{url}}">
+				<img src="{{ad.coverImage}}" alt="Photo du voyage {{ad.title}}">
+				{#<div class="entry-date"><span style="font-weight:bold; font-size:15px;"> {{format_date_created_at(trip)}}</span></div>#}								
+			</a>
+		</div>
+		<div class="entry-c">
+			<div class="entry-title">
+				<h2><a href="{{url}}"><i class="icon-realestate-advert"></i> {{ad.title}}</a></h2>
+			    <p style:"text-align:justify;">{{ad.introduction}}</p>
+			</div>
+			<ul class="entry-meta clearfix">
+				<li><span class="badge badge-warning">{{ad.price}} FCFA par nuit</span></li>
+				<li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-bed"></i> {{ad.rooms}} pièces </span></li>
+			</ul>
+			<div class="entry-content">
+				<p style:"text-align:justify;">{{ad.content|truncate(150, true)| raw}}</p>
+                {% if app.user == ad.author %}
+					<div class="row">
+						<div class="col-md-6"><a href="{{url}}" class="btn btn-secondary">Plus d'informations </a> </div>
+						<div class="col-md-6"><a href="#" class="btn btn-danger">Réserve cette annonce</a></div>
+					</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="center mt-3">	
+						   	 		<a href="{{path('ad_edit', {'slug':ad.slug})}}" class="btn btn-warning">Modifie ton annonce</a>
+						   		</div>
+						   </div>
+						</div>	
+						{% else %}
+						<div class="row">
+							<div class="col-md-6">
+								<a href="{{url}}" class="btn btn-secondary">Plus d'infos sur cette annonce</a>
+							</div>
+							<div class="col-md-6">
+								<a href="#" class="btn btn-danger">Réserve cette annonce</a>
+							</div>
+							
+						</div>
+						{% endif %}					
+			</div>
+		</div>
+	</div>

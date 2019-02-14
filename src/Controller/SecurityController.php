@@ -15,6 +15,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class SecurityController extends AbstractController
 {
@@ -70,6 +72,8 @@ class SecurityController extends AbstractController
     /**
      * Avoid to edit and manage the profile of an user
      * @Route("/security/profile", name="security_profile")
+     * @isGranted("ROLE_TRAVELLER", message="Hélas, tu n'as pas accès à cette ressource.")
+     * @isGranted("ROLE_RENTER",  message="Hélas, tu n'as pas accès à cette ressource.")
      * @return Response
      */
     public function profile(Request $request, ObjectManager $manager)
@@ -82,7 +86,7 @@ class SecurityController extends AbstractController
             $manager->flush();
 
             $this->addFlash('success', 'Félicitations !!! Ton compte a bien été modifié '. $user->getFirstName().'.');
-            //return $this->redirectToRoute('security_login');
+            return $this->redirectToRoute('user_view');
         }
         return $this->render('security/profile.html.twig', [
             'user'          => $user,
@@ -93,6 +97,8 @@ class SecurityController extends AbstractController
     /**
      * Avoid to update user's password
      * @Route("/security/password-update", name="security_password")
+     * @isGranted("ROLE_TRAVELLER", message="Hélas, tu n'as pas accès à cette ressource.")
+     * @isGranted("ROLE_RENTER",  message="Hélas, tu n'as pas accès à cette ressource.")
      * @return Response
      */
     public function updatePassword(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
@@ -113,7 +119,7 @@ class SecurityController extends AbstractController
                 $manager->flush();
 
                 $this->addFlash('success', 'Félicitations !!! Ton mot de passe a bien été modifié '. $user->getFirstName().'.');
-            //return $this->redirectToRoute('security_login');
+            return $this->redirectToRoute('user_view');
             }        
         }
         
@@ -127,6 +133,8 @@ class SecurityController extends AbstractController
     /**
      * Avoid to display loggued user's profile
      * @Route("/security/my-account", name="security_account")
+     * @isGranted("ROLE_TRAVELLER", message="Hélas, tu n'as pas accès à cette ressource.")
+     * @isGranted("ROLE_RENTER",  message="Hélas, tu n'as pas accès à cette ressource.")
      * @return Response
      */
     public function myAccount()

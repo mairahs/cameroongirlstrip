@@ -10,6 +10,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class TripController extends AbstractController
 {
@@ -28,6 +30,8 @@ class TripController extends AbstractController
     /**
      * Create a new Trip
      * @Route("/trip/new", name="trip_new")
+     * @isGranted("ROLE_TRAVELLER", message="Hélas, tu n'as pas accès à cette ressource.")
+     * @isGranted("ROLE_RENTER",  message="Hélas, tu n'as pas accès à cette ressource.")
      * @return Response
      */
     public function new(Request $request, ObjectManager $manager)
@@ -56,6 +60,8 @@ class TripController extends AbstractController
     /**
      * Edit a trip
      * @Route("/trip/{slug}/edit", name="trip_edit")
+     * @Security("is_granted('ROLE_RENTER') and user === trip.getTraveller()", message="Ce voyage n'est pas le tien. Tu ne peux donc pas le modifier.")
+     * @Security("is_granted('ROLE_TRAVELLER') and user === trip.getTraveller()", message="Ce voyage n'est pas le tien. Tu ne peux donc pas le modifier.")
      * @return Response
      */
     public function edit(Trip $trip, Request $request, ObjectManager $manager)
@@ -90,5 +96,23 @@ class TripController extends AbstractController
         return $this->render('trip/view.html.twig', [
             'trip' => $trip
         ]);
+    }
+
+    /**
+     * Delete one trip
+     * @Route("/trip/{slug}/delete", name="trip_delete")
+     *  @Security("is_granted('ROLE_RENTER') and user === trip.getTraveller()", message="Ce voyage n'est pas le tien. Tu ne peux donc pas le supprimer.")
+     * @Security("is_granted('ROLE_TRAVELLER') and user === trip.getTraveller()", message="Ce voyage n'est pas le tien. Tu ne peux donc pas le supprimer.")
+     * @param Trip $trip
+     * @param ObjectManager $manager
+     * @return Response
+     */
+    public function delete(Trip $trip, ObjectManager $manager)
+    {
+        $manager->remove($trip);
+        $manager->flush();
+
+        $this->addFlash("success", "Félicitations, la suppression  du trajet {$trip->getDeparture()} {$trip->getArrival()} a bien été enregistrée.");
+        return $this->redirectToRoute('trip_index');
     }
 }

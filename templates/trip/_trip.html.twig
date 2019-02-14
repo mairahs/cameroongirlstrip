@@ -19,8 +19,29 @@
 					</ul>
 					<div class="entry-content">
 						<p style:"text-align:justify;">{{trip.description|truncate(150, true)}}</p>
-						<a href="{{url}}" class="btn btn-secondary" disabled="disabled">Plus d'infos sur ce voyage</a> 
-						<a href="#" class="btn btn-danger">Réserve ce voyage</a>
+						{% if app.user == trip.traveller %}
+						<div class="row">
+							<div class="col-md-6"><a href="{{url}}" class="btn btn-secondary">Plus d'infos sur ce voyage</a> </div>
+							<div class="col-md-6"><a href="#" class="btn btn-danger">Réserve ce voyage</a></div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="center mt-3">	
+						   	 		<a href="{{path('trip_edit', {'slug':trip.slug})}}" class="btn btn-warning">Modifie ton voyage</a>
+						   		</div>
+						   </div>
+						</div>	
+						{% else %}
+						<div class="row">
+							<div class="col-md-6">
+								<a href="{{url}}" class="btn btn-secondary">Plus d'infos sur ce voyage</a>
+							</div>
+							<div class="col-md-6">
+								<a href="#" class="btn btn-danger">Réserve ce voyage</a>
+							</div>
+							
+						</div>
+						{% endif %}		
 					</div>
 				</div>
 			</div>

@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Ad;
 use Faker\Factory;
+use App\Entity\Role;
 use App\Entity\Trip;
 use App\Entity\User;
 use App\Entity\Image;
@@ -25,6 +26,21 @@ class AppFixtures extends Fixture
     {
         $faker = Factory::create('fr-FR');
 
+        $adminRole = new Role;
+        $adminRole->setTitle('ROLE_ADMIN');
+        $manager->persist($adminRole);
+
+        $adminUser  = new User;
+        $adminUser->setFirstName('Maïrah')
+                  ->setLastName('Moukoury')
+                  ->setEmail('mairahs16@gmail.com')
+                  ->setHash($this->encoder->encodePassword($adminUser, 'passwordpassword'))
+                  ->setPicture('https://randomuser.me/api/portraits/women/62.jpg')
+                  ->setIntroduction($faker->sentence())
+                  ->setDescription("<p>".join('</p><p>', $faker->paragraphs(1))."</p>")
+                  ->addUserRole($adminRole);
+        $manager->persist($adminUser);
+        
         $categories = [];
         for($k=1; $k<=3; $k++)
         {

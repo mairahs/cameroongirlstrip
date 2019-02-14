@@ -84,14 +84,14 @@
                             <div style="text-align:justify;margin-bottom:30px;">
 								 {{ad.content|raw}} 
 							</div>                     
-			<div class="col_half nobottommargin">
-			    <ul class="iconlist nobottommargin">
-					<li><i class="icon-ok"></i> Return Flight Tickets</li>
-					<li><i class="icon-ok"></i> All Local/Airport Transfers</li>
-					<li><i class="icon-ok"></i> Resort Accomodation</li>
-					<li><i class="icon-ok"></i> All Meals Included</li>
-					<li><i class="icon-ok"></i> Adventure Activities</li>
-				</ul>
+						<div class="col_half nobottommargin">
+							<ul class="iconlist nobottommargin">
+								<li><i class="icon-ok"></i> Return Flight Tickets</li>
+								<li><i class="icon-ok"></i> All Local/Airport Transfers</li>
+								<li><i class="icon-ok"></i> Resort Accomodation</li>
+								<li><i class="icon-ok"></i> All Meals Included</li>
+								<li><i class="icon-ok"></i> Adventure Activities</li>
+							</ul>
 
 						</div>
 						<div class="col_half nobottommargin col_last">
@@ -103,6 +103,13 @@
 								<li><i class="icon-ok"></i> VISA Fees &amp; Medical Insurance</li>
 							</ul>
 						</div>
+
+						{% if app.user == ad.author %}
+						 <div class="center">
+                            <a href="{{path('ad_edit', {'slug':ad.slug})}}" class="button button-border button-light button-rounded button-reveal button-large topmargin">Modifie ton annonce</a>
+							<a href="{{path('ad_delete', {'slug':ad.slug})}}" class="button button-border button-light button-rounded button-reveal button-large topmargin" onclick="return confirm(`Es tu sûre de vouloir supprimer ton annonce {{ad.title}} ?`)">Supprime ton annonce</a>
+                        </div>
+						{% endif %}
 
 					</div>
 					<div class="clear"></div>
