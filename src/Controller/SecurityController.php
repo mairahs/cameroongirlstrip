@@ -145,5 +145,18 @@ class SecurityController extends AbstractController
         ]);
     }
 
+    /**
+     * Avoid to display all loggued user's adbookings
+     * @Route("/security/my-adbookings", name="security_adbookings")
+     * @isGranted("ROLE_TRAVELLER", message="Hélas, tu n'as pas accès à cette ressource.")
+     * @isGranted("ROLE_RENTER",  message="Hélas, tu n'as pas accès à cette ressource.")
+     * @return AdBooking []
+     */
+    public function myAdBookings()
+    {
+        return $this->render('security/index_adBookings.html.twig');
+    }
+    
+
     
 }

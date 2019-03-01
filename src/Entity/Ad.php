@@ -91,9 +91,15 @@ class Ad
      */
     private $author;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\AdBooking", mappedBy="ad", orphanRemoval=true)
+     */
+    private $adBookings;
+    
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->adBookings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -255,4 +261,60 @@ class Ad
 
         return $this;
     }
+
+    /**
+     * @return Collection|AdBooking[]
+     */
+    public function getAdBookings(): Collection
+    {
+        return $this->adBookings;
+    }
+
+    public function addAdBooking(AdBooking $adBooking): self
+    {
+        if (!$this->adBookings->contains($adBooking)) {
+            $this->adBookings[] = $adBooking;
+            $adBooking->setAd($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdBooking(AdBooking $adBooking): self
+    {
+        if ($this->adBookings->contains($adBooking)) {
+            $this->adBookings->removeElement($adBooking);
+            // set the owning side to null (unless already changed)
+            if ($adBooking->getAd() === $this) {
+                $adBooking->setAd(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * avoid to obtain an array which contains not avalaible day for this ad
+     *
+     * @return \DateTime []
+     */
+    public function getNotAvailableDays()
+    {
+        $notAvailableDays = [];
+
+        foreach($this->adBookings as $booking)
+        {
+            $result = range($booking->getStartDate()->getTimestamp(), $booking->getEndDate()->getTimestamp(), 24*60*60);
+            $days = array_map(function($dayTimestamp){
+                return new \DateTime(date('Y-m-d', $dayTimestamp));
+            }, $result);
+
+            $notAvailableDays = array_merge($notAvailableDays, $days);
+        }
+
+        return $notAvailableDays;
+
+       
+    }
+   
 }

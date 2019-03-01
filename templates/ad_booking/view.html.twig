@@ -1,0 +1,215 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Détail de la réservation {{adBooking.id}}| {{parent()}}{% endblock %}
+
+{% block body %}
+{% set ad = adBooking.ad %}
+{% set author = ad.author %}
+
+<!-- Content
+============================================= -->
+<div id="slider" class="slider-element full-screen clearfix" style="background: url('/images/banners/banner6.jpg') center right no-repeat; background-size: cover; height:200px;"></div>
+<section id="content">
+{% if app.request.query.get('success') %}
+    <div class="btn-success">
+        <h4 style="tet-align:center; margin-left:20px;margin-top:20px; font-family:'Cabin Sketch', cursive;font-size:15px; color:#ffffff;">
+            Bravo !!! Ta réservation auprès de <strong><a href="{{path('user_view', {'slug': author.slug})}}"></a>{{author.fullName}}</strong> pour le logement <strong>{{ad.title}}</strong> a bien été enregistrée.
+        </h4>   
+    </div>
+                    {% endif %}
+{% set a = ad.author %}
+	<div class="content-wrap">
+		<div class="single-event">
+			<div class="entry-image parallax header-stick" style=" height:500px" data-bottom-top="background-position:0px 300px;" data-top-bottom="background-position:0px -300px;">
+				<div class="heading-block divcenter nobottomborder nobottommargin">
+									<!-- Page Title
+						============================================= -->
+
+						<div class="container clearfix">
+							<ol class="breadcrumb" style="margin-top:20px!important;">
+								<li class="breadcrumb-item"><a href="{{path('homepage')}}"><i class="icon-line2-home"> Accueil</i></a></li>
+								<li class="breadcrumb-item"><a href="{{path('ad_index')}}"><i class="icon-list"></i> Liste des annonces</a></li>
+                                <li class="breadcrumb-item"><a href="{{path('ad_view', {'slug': ad.slug})}}"><i class="icon-image"></i> Détail de l'annonce</a></li>
+								<li class="breadcrumb-item active" aria-current="page"><i class="icon-image"></i> Réserver l'annonce </li>
+							</ol>
+						</div>
+			
+    				<i class="icon-sitemap h1 mb-4" style="color:#f8a055; margin-top:20px; margin-left:100px;"></i> 
+                </div>       
+                <div id="single" class="heading-block">
+                    <h2 style="margin-left:100px;">Détail de la réservation numéro {{adBooking.id}}</h2>
+                    <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; margin-left:100px;">Girl Tripeuse, voici toutes les informations relatives à ta réservation pour le logement de <strong>{{author.fullName}}</strong>.</p>
+                </div>
+                <div class="entry-overlay-meta" style="margin-bottom:-80px;">
+					<h2 style="text-transform:none; font-family:'Cabin Sketch', cursive; font-size:20px;" class="center"><a href="#">Réservation numéro {{adBooking.id}}</a></h2>
+					<ul class="iconlist" style="margin-left:40px; font-family:'Roboto', sans-serif;">
+                        <li style="font-size:15px;"><i class="icon-calendar3"></i> <strong>Arrivée prévue le {{format_date_start(adBooking)}} </li></strong>
+						<li style="font-size:15px;"><i class="icon-calendar3"></i> <strong>Départ prévu le {{format_date_end(adBooking)}} </li></strong>
+                        <li style="font-size:15px;"><i class="icon-bed"></i> <strong>Pour {{adBooking.duration}} nuits</li></strong>
+						<li style="font-size:15px;"><i class="icon-money"></i> <strong>Montant total de la réservation: {{adBooking.amount|number_format(0,'.',' ')}} FCFA </strong></li>	              	
+					</ul>
+						<div class="center">
+                            <a href="#" class="button button-border button-light button-rounded button-reveal button-large topmargin">Payer</a>
+                        </div>
+				</div>
+			</div>
+			<div class="container clearfix">
+				<div class="postcontent nobottommargin clearfix"> 
+					<div class="col_three_fourth">
+						<h3 style="margin-top:-300px; color:#555!important;"><i class="icon-comment2"></i> Ton commentaire pour cette réservation:</h3>
+                        <div class="entry-title">
+							{% if adBooking.comment %}
+                            	<blockquote><p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">"{{adBooking.comment}}"</p></blockquote>
+							{% else %}
+								<p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Aucun commentaire pour l'instant.</p>
+							{% endif %}
+						</div>
+                        <div id="post-list-footer">
+								<div class="spost clearfix">
+                                <h4 style="margin-top:20px; font-family:'Cabin Sketch', cursive;font-size:17px;"><a href="{{path('ad_view', {'slug': ad.slug})}}" style="color:#4897d8!important; text-transform:none;" ><i class="icon-user-shield h1"></i> Ton hôte / Ton hôtesse</a></h4>
+									<div class="entry-image">
+										<a href="{{path('user_view', {'slug': a.slug})}}" class="nobg"><img class="alignleft img-circle img-thumbnail nomargin image_fade testi-image" alt="Avatar de {{author.fullName}}" src="{{author.picture}}"></a>
+									</div>
+									<div class="entry-c">
+										<div class="entry-title mb-3">
+											<h4><a href="{{path('user_view', {'slug': a.slug})}}">{{author.fullName}}</a></h4>
+										</div> 
+										<span class="badge">
+											{{author.ads|length}} locations {#annonces pluriel et singulier à gérer#}	
+										</span>
+                                        <span class="badge">
+											{{author.trips|length}} voyages {#annonces pluriel et singulier à gérer#}	
+										</span>
+									</div>
+								</div>
+
+								<div class="spost clearfix">
+							
+									<div class="entry-c">
+					
+										<div class="entry-title">
+											<h4><a style="text-align:justify; font-family:'Roboto', sans-serif;" href="#">{{author.description | raw}}</a></h4>
+                                            <div class="center">
+                                                <a href="{{path('user_view', {'slug':author.slug})}}" class="button button-border button-light button-rounded button-reveal button-large topmargin">Plus d'infos sur {{author.firstName}}</a>
+                                            </div>
+										</div>
+									</div>
+								</div>
+
+                                <div class="spost clearfix">
+                                <div class="entry-title">
+                                     <h4 style="margin-top:20px; font-family:'Cabin Sketch', cursive;font-size:17px;"><a href="{{path('ad_view', {'slug': ad.slug})}}" style="color:#4897d8!important; text-transform:none;" ><i class="icon-line2-home h1 h1"></i> Description du logement de {{author.firstName}}</a></h4>
+                                </div>								
+                                <div class="entry-c">
+
+										<div class="entry-title">
+											<p><a style="text-align:justify; font-family:'Roboto', sans-serif;" href="#">{{ad.introduction | raw}}</a><p>
+										</div>
+                                        <div>
+											<img src="{{ad.coverImage}}" alt="Photo de couverture de l'annonce {{ad.title}}" class
+                                            ="img-fluid">
+                                            <h4 class="mt-5"><a style="text-align:justify; font-family:'Roboto', sans-serif;">{{ad.content|raw}}</h4>
+                                            <div class="center">
+                                                <a href="{{path('ad_view', {'slug':ad.slug})}}" class="button button-border button-light button-rounded button-reveal button-large topmargin">Plus d'infos sur cette annonce</a>
+                                            </div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+			
+						{# {% if app.user == ad.author %}
+						 <div class="center">
+                            <a href="{{path('ad_edit', {'slug':ad.slug})}}" class="button button-border button-light button-rounded button-reveal button-large topmargin">Modifie ton annonce</a>
+							<a href="{{path('ad_delete', {'slug':ad.slug})}}" class="button button-border button-light button-rounded button-reveal button-large topmargin" onclick="return confirm(`Es tu sûre de vouloir supprimer ton annonce {{ad.title}} ?`)">Supprime ton annonce</a>
+                        </div>
+						{% endif %} #}
+
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="sidebar nobottommargin col_last clearfix">
+					<div class="sidebar-widgets-wrap">
+
+						<div class="widget clearfix">
+
+							<h4  style="font-family:'Cabin Sketch', cursive; font-size:17px;"><a href="#" style="color:#4897d8!important; text-transform:none;"><i class="icon-line-star h1"></i> Nos locations STARS </a></h4>
+								<div id="oc-portfolio-sidebar" class="owl-carousel carousel-widget" data-items="1" data-margin="10" data-loop="true" data-nav="false" data-autoplay="5000">
+
+									<div class="oc-item">
+										<div class="iportfolio">
+											<div class="portfolio-image">
+												<a href="#">
+													<img src="images/events/thumbs/3.jpg" alt="Mac Sunglasses">
+												</a>
+												<div class="portfolio-overlay">
+													<a href="http://vimeo.com/89396394" class="center-icon" data-lightbox="iframe"><i class="icon-line-play"></i></a>
+												</div>
+											</div>
+											<div class="portfolio-desc center nobottompadding">
+												<h3><a href="portfolio-single-video.html">Inventore voluptates velit totam ipsa tenetur</a></h3>
+												<span><a href="#">Melbourne, Australia</a></span>
+											</div>
+										</div>
+									</div>
+
+									<div class="oc-item">
+										<div class="iportfolio">
+											<div class="portfolio-image">
+												<a href="portfolio-single.html">
+													<img src="images/events/thumbs/1.jpg" alt="Open Imagination">
+												</a>
+												<div class="portfolio-overlay">
+													<a href="images/portfolio/full/1.jpg" class="center-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
+												</div>
+											</div>
+											<div class="portfolio-desc center nobottompadding">
+												<h3><a href="portfolio-single.html">Nisi officia adipisci molestiae aliquam</a></h3>
+												<span><a href="#">Perth, Australia</a></span>
+											</div>
+										</div>
+									</div>
+
+								</div>
+
+						</div>
+
+						<div class="widget clearfix">
+
+							<h4>Recent Event in Video</h4>
+							<iframe src="//player.vimeo.com/video/103927232" width="500" height="250" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+						</div>
+
+						<div class="widget quick-contact-widget clearfix">
+
+							<h4>Quick Contact</h4>
+							<div class="quick-contact-form-result"></div>
+							<form id="quick-contact-form" name="quick-contact-form" action="include/quickcontact.php" method="post" class="quick-contact-form nobottommargin">
+								<div class="form-process"></div>
+
+								<input type="text" class="required sm-form-control input-block-level" id="quick-contact-form-name" name="quick-contact-form-name" value="" placeholder="Full Name" />
+								<input type="text" class="required sm-form-control email input-block-level" id="quick-contact-form-email" name="quick-contact-form-email" value="" placeholder="Email Address" />
+								<textarea class="required sm-form-control input-block-level short-textarea" id="quick-contact-form-message" name="quick-contact-form-message" rows="4" cols="30" placeholder="Message"></textarea>
+								<input type="text" class="hidden" id="quick-contact-form-botcheck" name="quick-contact-form-botcheck" value="" />
+								<button type="submit" id="quick-contact-form-submit" name="quick-contact-form-submit" class="button button-small button-3d nomargin" value="submit">Send Email</button>
+							</form>
+
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</section><!-- #content end -->
+
+{% endblock %}
+
+
+ 
+

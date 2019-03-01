@@ -31,13 +31,13 @@ class Trip
 
     /**
      * @ORM\Column(type="datetime")
-     * @Assert\DateTime
+     * @Assert\Date()
      */
     private $departureDate;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Assert\DateTime
+     * @Assert\Date()
      */
     private $returnDate;
 

@@ -9,6 +9,7 @@ use App\Entity\Trip;
 use App\Entity\User;
 use App\Entity\Image;
 use App\Entity\Category;
+use App\Entity\AdBooking;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -115,7 +116,29 @@ class AppFixtures extends Fixture
                       ->setAd($ad);
 
                 $manager->persist($image);         
-            }        
+            } 
+            
+            for($x=1; $x <= mt_rand(1,5); $x++)
+            {
+                $adBooking = new AdBooking();
+
+                $createdAt = $faker->dateTimeBetween('-6months');
+                $startDate = $faker->dateTimeBetween('-3months');
+                $duration = mt_rand(3,10);
+                $endDate = (clone $startDate)->modify('+'.$duration.'days');
+                $amount = $ad->getPrice() * $duration;
+                $adBooker = $users[mt_rand(0, count($users) - 1)];
+                $comment= $faker->paragraph();
+
+                $adBooking->setAdBooker($adBooker)
+                          ->setAd($ad)
+                          ->setCreatedAt($createdAt)
+                          ->setStartDate($startDate)
+                          ->setEndDate($endDate)
+                          ->setAmount($amount)
+                          ->setComment($comment);
+                $manager->persist($adBooking);       
+            }
             $manager->persist($ad);          
        }
         $manager->flush();

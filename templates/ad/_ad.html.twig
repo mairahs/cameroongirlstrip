@@ -12,7 +12,7 @@
 			    <p style:"text-align:justify;">{{ad.introduction}}</p>
 			</div>
 			<ul class="entry-meta clearfix">
-				<li><span class="badge badge-warning">{{ad.price}} FCFA par nuit</span></li>
+				<li><span class="badge badge-warning">{{ad.price| number_format(0,'.',' ')}} FCFA par nuit</span></li>
 				<li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-bed"></i> {{ad.rooms}} pièces </span></li>
 			</ul>
 			<div class="entry-content">
@@ -32,7 +32,7 @@
 						{% else %}
 						<div class="row">
 							<div class="col-md-6">
-								<a href="{{url}}" class="btn btn-secondary">Plus d'infos sur cette annonce</a>
+								<a href="{{url}}" class="btn btn-secondary">Plus d'informations</a>
 							</div>
 							<div class="col-md-6">
 								<a href="#" class="btn btn-danger">Réserve cette annonce</a>

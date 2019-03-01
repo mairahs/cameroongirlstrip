@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Page introuvable | {{parent()}} {% endblock %}
+
+ {% block body %}
+
+<section id="slider" class="slider-element slider-parallax full-screen dark error404-wrap" style="background: url('/images/img/sorry.jpg') center right no-repeat; background-size: cover;">
+	<div class="slider-parallax-inner">
+
+		<div class="container-fluid vertical-middle center clearfix">
+
+			<div class="heading-block divcenter nobottomborder nobottommargin center">
+				<h4 style ="font-family:'Cabin Sketch', cursive; color:#fffff!important; font-size:50px; font-weight:bold;">Ooopps !!!</h4>	
+				<span style ="font-family:'Cabin Sketch', cursive; color:#ffffff!important; font-size: 40px; font-weight:bold;"> La page que tu recherches n'existe pas.</span>					
+			</div>					
+			<div class="center">
+                <a href="{{path('homepage')}}" data-animate="tada" class="button button-border button-light button-rounded button-reveal button-large topmargin" ><i class="icon-long-arrow-left"></i> Retour à l'Accueil</a>
+            </div>
+
+		</div>
+	</div>
+</section>
+{% endblock %}
