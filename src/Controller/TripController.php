@@ -41,11 +41,14 @@ class TripController extends AbstractController
         $tripForm->handleRequest($request);
         if($tripForm->isSubmitted() && $tripForm->isValid())
         {
-            $trip->setTraveller($this->getUser());
+           
+            $trip->setTraveller($this->getUser())
+                 ->setBookingNumber($trip->getBookingNumber());
+                 
             $manager->persist($trip);
             $manager->flush();
 
-            $this->addFlash("success", "Félicitations, le trajet {$trip->getDeparture()} {$trip->getArrival()} a bien été enregistré.");
+            $this->addFlash("success", "Félicitations, le trajet {$trip->getDeparture()} - {$trip->getArrival()} a bien été enregistré.");
 
             return $this->redirectToRoute('trip_view', [
                 'slug' => $trip->getSlug()
@@ -89,10 +92,13 @@ class TripController extends AbstractController
     /**
      * View one trip
      * @Route("/trip/{slug}", name="trip_view")
+     * @isGranted("ROLE_TRAVELLER", message="Hélas, tu n'as pas accès à cette ressource.")
+     * @isGranted("ROLE_RENTER",  message="Hélas, tu n'as pas accès à cette ressource.")
      * @return Response
      */
     public function view(Trip $trip)
     {
+
         return $this->render('trip/view.html.twig', [
             'trip' => $trip
         ]);

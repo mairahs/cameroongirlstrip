@@ -23,4 +23,24 @@ class ApplicationType extends AbstractType
              ]
         ];
     }
+
+    /**
+     * Avoid to get the basic configuration of a field with currency
+     *
+     * @param string $label
+     * @param string $placeholder
+     * @param string $currency
+     * @return array
+     */
+
+    protected function getConfigurationBis($label, $placeholder, $currency)
+    {
+        return [ 
+            'label' => $label,
+             'attr' => [
+                 'placeholder' => $placeholder           
+             ],
+            'currency' => $currency           
+        ];
+    }
 }

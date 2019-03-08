@@ -102,6 +102,11 @@ class User implements UserInterface
      */
     private $adBookings;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\TripBooking", mappedBy="tripBooker", orphanRemoval=true)
+     */
+    private $tripBookings;
+
     public function getRoles()
     {
     $roles = $this->userRoles->map(function($role){
@@ -141,6 +146,7 @@ class User implements UserInterface
         $this->trips = new ArrayCollection();
         $this->userRoles = new ArrayCollection();
         $this->adBookings = new ArrayCollection();
+        $this->tripBookings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -380,6 +386,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($adBooking->getAdBooker() === $this) {
                 $adBooking->setAdBooker(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TripBooking[]
+     */
+    public function getTripBookings(): Collection
+    {
+        return $this->tripBookings;
+    }
+
+    public function addTripBooking(TripBooking $tripBooking): self
+    {
+        if (!$this->tripBookings->contains($tripBooking)) {
+            $this->tripBookings[] = $tripBooking;
+            $tripBooking->setTripBooker($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTripBooking(TripBooking $tripBooking): self
+    {
+        if ($this->tripBookings->contains($tripBooking)) {
+            $this->tripBookings->removeElement($tripBooking);
+            // set the owning side to null (unless already changed)
+            if ($tripBooking->getTripBooker() === $this) {
+                $tripBooking->setTripBooker(null);
             }
         }
 

@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Liste de toutes les réservations de logement de {{app.user.getFullName}}  | {{parent()}}{% endblock %}
+{% block title %} Liste de toutes les réservations de voyage de {{app.user.getFullName}}  | {{parent()}}{% endblock %}
 
 {% block body %}
 
-<div id="slider" class="slider-element full-screen clearfix" style="background: url('/images/banners/banner6.jpg') center right no-repeat; background-size: cover; height:200px;"></div>
+<div id="slider" class="slider-element full-screen clearfix" style="background: url('/images/banners/banner5.jpg') center right no-repeat; background-size: cover; height:200px;"></div>
 <section id="content">
     <div class="content-wrap">
 		<div class="container clearfix">
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item"><a href="{{path('homepage')}}"><i class="icon-line2-home"></i> Accueil</a></li>
-				<li class="breadcrumb-item active" aria-current="page"><a href="{{path('security_adbookings')}}"><i class="icon-list"></i> Liste des réservations</a></li>
+				<li class="breadcrumb-item active" aria-current="page"><a href="{{path('security_tripbookings')}}"><i class="icon-list"></i> Liste des réservations</a></li>
 			</ol>
 		</div>
         <section id="section-about" class="page-section">
@@ -19,31 +19,31 @@
                     <i class="icon-list1 d-block h1 mb-4" style="color:#f8a055;"></i> 
                 </div>        
                 <div class="heading-block center">
-                    <h2>Tes réservations de logement</h2>
-                    <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">{{app.user.fullName}}, voici la liste de tes réservations de logement actuelles et à venir.</p>
+                    <h2>Tes réservations de voyage</h2>
+                    <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">{{app.user.fullName}}, voici la liste de tes réservations de voyage actuelles et à venir.</p>
                 </div>
                 <div class="postcontent nobottommargin">
 
 					<div id="posts" class="events small-thumbs">
-                        {% for adBooking in app.user.adBookings %}
-                        {% set ad = adBooking.ad %}
+                        {% for tripBooking in app.user.tripBookings %}
+                        {% set trip = tripBooking.trip %}
 							
                             <div class="entry clearfix">
                                 <div class="entry-image">
                                     <a href="">
-                                        <img style="height: 200px!important;" src="{{ad.coverImage}}" alt="Photo de l'image de la location {{ad.title}}">
+                                        <img style="height: 200px!important;" src="{{trip.coverImage}}" alt="Photo de l'image du voyage {{trip.departure}} - {{trip.arrival}}">
                                     </a>
                                 </div>    
                                 <div class="entry-c">
                                     <div class="entry-title">
-                                        <h2><a href=""><i class="icon-realestate-advert"></i> {{ad.title}}</a></h2>
+                                        <h2><a href=""><i class="icon-realestate-advert"></i> {{trip.departure}} - {{trip.arrival}}</a></h2>
                                     </div>
                                     <ul class="entry-meta clearfix">
-                                        <li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;">Réservation numéro {{adBooking.id}}</span></li>
-                                        <li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-calendar21"></i>Du <strong>{{format_start_date(adBooking)}}</strong> au <strong>{{format_end_date(adBooking)}}</strong></span></li>
-                                        <li><span class="badge badge-warning">{{adBooking.amount | number_format(0,'.',' ')}} FCFA </span></li>
-										 {% if adBooking.comment %}
-                                        <li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-comment2"></i><strong>{{adBooking.comment|nl2br}}</strong></span></li>
+                                        <li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;">Réservation numéro {{tripBooking.id}}</span></li>
+                                        <li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-calendar21"></i>Du <strong>{{format_created_at(tripBooking)}}</strong></span></li>
+                                        <li><span class="badge badge-warning">{{tripBooking.amount | number_format(0,'.',' ')}} FCFA </span></li>
+                                        {% if tripBooking.comment %}
+                                        <li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-comment2"></i><strong>{{tripBooking.comment|nl2br}}</strong></span></li>
                                         {% else %}
                                           <li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-comment2"></i><strong>Tu n'a fait aucun commentaire pour cette réservation.</strong></span></li>
                                         {% endif %}
@@ -51,14 +51,14 @@
                                     <div class="entry-content">
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <a href="{{path('adbooking_view', {'id':adBooking.id})}}" class="btn btn-secondary">Plus d'informations</a>
+                                                <a href="{{path('tripbooking_view', {'id':tripBooking.id})}}" class="btn btn-secondary">Plus d'informations</a>
                                             </div>
                                             <div class="col-md-4">
                                                 <a href="#" class="btn btn-danger">Modifie ta réservation</a>
-                                            </div>
-											<div class="col-md-4">
+                                            </div> 
+                                            <div class="col-md-4">
                                                 <a href="#" class="btn btn-danger">Supprime ta réservation</a>
-                                            </div>                 
+                                            </div>                
                                         </div>
 	
 					                </div>

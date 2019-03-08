@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Cocur\Slugify\Slugify;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -54,9 +56,9 @@ class Trip
      * @ORM\Column(type="integer")
      * @Assert\Range(
      *      min = 2,
-     *      max = 5,
+     *      max = 6,
      *      minMessage = "Le nombre de personnes ne peut être inférieur à 2",
-     *      maxMessage = "Le nombre de personnes ne peut excéder 5"
+     *      maxMessage = "Le nombre de personnes ne peut excéder 6"
      * )
      */
     private $numberPersons;
@@ -65,6 +67,11 @@ class Trip
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $price;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -88,6 +95,23 @@ class Trip
      * @ORM\JoinColumn(nullable=false)
      */
     private $traveller;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\TripBooking", mappedBy="trip", orphanRemoval=true)
+     */
+    private $tripBookings;
+
+    /**
+     * @ORM\Column(type="time")
+     * @Assert\Time
+     * @var string A "H:i" formatted value
+     */
+    private $tripHour;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $BookingNumber = 0;
 
     public function getId(): ?int
     {
@@ -179,6 +203,18 @@ class Trip
         return $this;
     }
 
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(float $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
     public function getCoverImage(): ?string
     {
         return $this->coverImage;
@@ -206,6 +242,7 @@ class Trip
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->tripBookings = new ArrayCollection();
     }
 
     public function getCategory(): ?Category
@@ -248,6 +285,77 @@ class Trip
         return $this;
     }
 
+    /**
+     * @return Collection|TripBooking[]
+     */
+    public function getTripBookings(): Collection
+    {
+        return $this->tripBookings;
+    }
+
+    public function addTripBooking(TripBooking $tripBooking): self
+    {
+        if (!$this->tripBookings->contains($tripBooking)) {
+            $this->tripBookings[] = $tripBooking;
+            $tripBooking->setTrip($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTripBooking(TripBooking $tripBooking): self
+    {
+        if ($this->tripBookings->contains($tripBooking)) {
+            $this->tripBookings->removeElement($tripBooking);
+            // set the owning side to null (unless already changed)
+            if ($tripBooking->getTrip() === $this) {
+                $tripBooking->setTrip(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getTripHour(): ?\DateTimeInterface
+    {
+        return $this->tripHour;
+    }
+
+    public function setTripHour(\DateTimeInterface $tripHour): self
+    {
+        $this->tripHour = $tripHour;
+
+        return $this;
+    }
+
+    public function getBookingNumber(): ?int
+    {
+        return $this->BookingNumber;
+    }
+
+    public function setBookingNumber(?int $BookingNumber): self
+    {
+        $this->BookingNumber = $BookingNumber;
+
+        return $this;
+    }
+
+    public function increaseBookingsNumber()
+    {
+      foreach($this->tripBookings as $tripBooking)
+       { 
+    
+            return $this->BookingNumber += $tripBooking->getNumberPlaces();
+       }           
+    }
+
+     public function decreaseBookingsNumber()
+     {
+        foreach($this->tripBookings as $tripBooking)
+        {
+            
+        }
+     }
     
 
 }

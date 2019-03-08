@@ -4,7 +4,7 @@
         <li><a href="{{path('ad_new')}}"><div><i class="icon-line2-home"></i></i>Accueillir des voyageuses</div></a></li>
         <li><a href="#"><div><i class="icon-pencil2"></i>Blog</div></a></li>
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            <i class="icon-caret-down" style="font-size: 15px; color:#4897d8!important;"></i>
+            <i class="icon-caret-down" style="font-size: 15px; color:#fa6e59!important;"></i>
             <li>
                 <a href="#">
                     <div ><i class="icon-user2"></i>Hello {{app.user.firstName}} </div>
@@ -13,6 +13,7 @@
                     <li><a href="{{path('security_account')}}"><div><i class="icon-dashboard"></i>Mon profil</div></a></li>
                     <li><a href="{{path('security_profile')}}"><div><i class="icon-user-edit"></i>Modifier mon profil</div></a></li>
                     <li><a href="{{path('security_adbookings')}}"><div><i class="icon-archive1"></i>Mes biens réservés</div></a></li>
+                    <li><a href="{{path('security_tripbookings')}}"><div><i class="icon-archive1"></i>Mes voyages réservés</div></a></li>
                     <li><a href="#"><div><i class="icon-line2-plane"></i>Mes voyages</div></a></li>
                     <li><a href="#"><div><i class="icon-line2-home"></i>Mes locations</div></a></li>
                     <div class="dropdown-divider"></div>

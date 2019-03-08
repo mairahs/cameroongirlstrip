@@ -157,6 +157,18 @@ class SecurityController extends AbstractController
         return $this->render('security/index_adBookings.html.twig');
     }
     
+     /**
+     * Avoid to display all loggued user's tripbookings
+     * @Route("/security/my-tripbookings", name="security_tripbookings")
+     * @isGranted("ROLE_TRAVELLER", message="Hélas, tu n'as pas accès à cette ressource.")
+     * @isGranted("ROLE_RENTER",  message="Hélas, tu n'as pas accès à cette ressource.")
+     * @return TripBooking []
+     */
+    public function myTripBookings()
+    {
+        return $this->render('security/index_tripBookings.html.twig');
+    }
+    
 
     
 }

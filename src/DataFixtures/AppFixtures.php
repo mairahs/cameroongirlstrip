@@ -10,6 +10,7 @@ use App\Entity\User;
 use App\Entity\Image;
 use App\Entity\Category;
 use App\Entity\AdBooking;
+use App\Entity\TripBooking;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -86,10 +87,25 @@ class AppFixtures extends Fixture
                 ->setReturnDate($faker->dateTimeBetween('now', '+2 years', 'Africa/Lagos'))
                 ->setDescription($faker->paragraph(10, true))
                 ->setNumberPersons(mt_rand(2,5))
+                ->setPrice(mt_rand(40,200))
+                ->setTripHour($faker->dateTimeThisYear('now'))
                 ->setCoverImage($faker->imageUrl(500, 400))
                 ->setCreatedAt($faker->datetime('now'))
                 ->setCategory($category)
-                ->setTraveller($user);
+                ->setTraveller($user)
+                ->setBookingNumber(mt_rand(0,5));
+
+                for($e=1; $e <= mt_rand(1,5); $e++)
+                {
+                    $tripBooking = new TripBooking;
+
+                    $tripBooking->setNumberPlaces(mt_rand(2,5))
+                                ->setTripBooker( $users[mt_rand(0, count($users) - 1)])
+                                ->setTrip($trip)
+                                ->setAmount($trip->getPrice())
+                                ->setComment($faker->paragraph());
+                    $manager->persist($tripBooking);
+                }
             
             $manager->persist($trip);
 
