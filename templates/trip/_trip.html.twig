@@ -12,6 +12,11 @@
 				<div class="entry-c">
 					<div class="entry-title">
 						<h2><a href="{{url}}"><i class="icon-map-marker2"></i> {{trip.departure}} - {{trip.arrival}}</a></h2>
+						{% if trip.tripComments |length > 0 %}
+						<p style:"text-align:center; font-weight:bold;">{% include 'inc/rating.html.twig' with {'rating':trip.avgRatings}  %}</p>
+						{% else %}
+						<p style:"text-align:center; font-weight:bold!important;">Ce voyage n'a pas encore été noté.</p>
+						{% endif %}
 					</div>
 					<ul class="entry-meta clearfix">
 						<li><span class="badge badge-warning">{% if trip.category.name == 'bus' %}<i class="icon-bus-alt"></i> {% else %} <i class="icon-car-alt"></i>{% endif %}</span></li>

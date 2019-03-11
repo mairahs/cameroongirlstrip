@@ -37,6 +37,16 @@
                                 <div class="entry-c">
                                     <div class="entry-title">
                                         <h2><a href=""><i class="icon-realestate-advert"></i> {{trip.departure}} - {{trip.arrival}}</a></h2>
+										{% set tripComment = trip.getCommentFromAuthor(app.user) %}
+												{% if tripComment is not null %}
+												<strong>
+														Note: {% include 'inc/rating.html.twig' with {'rating': tripComment.rating } %}
+												</strong>
+												{% else %}
+												<p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Tu n'as pas encore noté ce voyage.<br>
+													<a href="{{path('tripbooking_view', {'id': tripBooking.id})}}#tripComment">Donne ta note</a>
+												</p>
+												{% endif %}
                                     </div>
                                     <ul class="entry-meta clearfix">
                                         <li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;">Réservation numéro {{tripBooking.id}}</span></li>

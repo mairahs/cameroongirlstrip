@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Trip;
 use App\Entity\TripBooking;
+use App\Entity\TripComment;
 use App\Form\TripBookingType;
+use App\Form\TripCommentType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
@@ -67,10 +69,27 @@ class TripBookingController extends AbstractController
      * @param TripBooking $tripBooking
      * @return Response
      */
-    public function view(TripBooking $tripBooking)
+
+    public function view(TripBooking $tripBooking,Request $request, ObjectManager $manager)
     {
+        $tripComment = new TripComment;
+
+        $tripCommentForm = $this->createForm(TripCommentType::class, $tripComment);
+
+        $tripCommentForm->handleRequest($request);
+         if($tripCommentForm->isSubmitted() && $tripCommentForm->isValid())
+         {
+            $tripComment->setTrip($tripBooking->getTrip())
+                        ->setAuthor($this->getUser());
+            $manager->persist($tripComment);
+            $manager->flush();
+
+            $this->addFlash('success', "{$this->getUser()->getFirstName()}, ton commentaire a bien été pris en compte");
+         }
+
         return $this->render('trip_booking/view.html.twig', [
-            'tripBooking' => $tripBooking
+            'tripBooking'     => $tripBooking,
+            'tripCommentForm' => $tripCommentForm->createView()
         ]);
     }
 }

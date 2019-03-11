@@ -95,10 +95,10 @@
 								</div>
 
                                 <div class="spost clearfix">
-                                <div class="entry-title">
-                                     <h4 style="margin-top:20px; font-family:'Cabin Sketch', cursive;font-size:17px;"><a href="{{path('trip_view', {'slug': trip.slug})}}" style="color:#4897d8!important; text-transform:none;" ><i class="icon-move h1 h1"></i> Description du voyage de {{traveller.firstName}}</a></h4>
-                                </div>								
-                                <div class="entry-c">
+									<div class="entry-title">
+										<h4 style="margin-top:20px; font-family:'Cabin Sketch', cursive;font-size:17px;"><a href="{{path('trip_view', {'slug': trip.slug})}}" style="color:#4897d8!important; text-transform:none;" ><i class="icon-move h1 h1"></i> Description du voyage {{trip.departure}} - {{trip.arrival}} proposé par {{traveller.firstName}}</a></h4>
+									</div>								
+                                	<div class="entry-c">
 
 										<div class="entry-title">
 											<h4 style="text-align:justify;"><a style="font-family:'Roboto', sans-serif;" href="#">{{trip.description | raw}}</h4><p>
@@ -113,6 +113,41 @@
 									</div>
 								</div>
 
+								<div class="spost clearfix">
+									<h4 id="tripComment" style="margin-top:20px; font-family:'Cabin Sketch', cursive;font-size:17px;"><a href="#" style="color:#4897d8!important; text-transform:none;" ><i class="icon-comment2 h1"></i> {{app.user.firstName}}, ton avis compte pour nous</a></h4>
+									
+										<div class="entry-c">
+											{% if date() > date(tripBooking.trip.returnDate) %}
+												{% set tripComment = tripBooking.trip.getCommentFromAuthor(app.user) %}
+											
+												{% if tripComment is not null %}
+													<blockquote>
+														{{tripComment.content}}
+													</blockquote>
+													<strong>
+														Note: {% include 'inc/rating.html.twig' with {'rating': tripComment.rating } %}
+													</strong>
+												{% else %}
+												<div class="entry-title mb-3">
+													{{form_start(tripCommentForm)}}
+													{{form_row(tripCommentForm.rating, {'label': 'Note sur 5', 'attr': {'placeholder': 'GirlTripeuse, note le voyage auquel tu as participé entre 0 et 5'}})}}
+													{{form_row(tripCommentForm.content)}}
+													<div class="form-group">
+														<div class="center">                                                    
+															<button type='submit' class="button button-border button-light button-rounded button-reveal button-large topmargin">
+																	Enregistre ton commentaire
+															</button>
+														</div>
+													</div>
+													{{form_end(tripCommentForm)}}
+												</div>
+												{% endif %}
+
+											{% else %}
+											<p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">{{app.user.firstName}}, tu pourras noter ce voyage une fois celui-ci effectué. </p> 
+											{% endif %}	
+										</div>
+								</div>
 							</div>
 			
 						{# {% if app.user == trip.traveller %}

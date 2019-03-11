@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
+use App\Entity\User;
 use Cocur\Slugify\Slugify;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -393,6 +394,44 @@ class Trip
 
          return $this;
      }
+
+    /**
+     * Provide an author's comment for an trip
+     *
+     * @param  User $author
+     *
+     * @return Comment|null
+     */
+    public function getCommentFromAuthor(User $author)
+    {
+        foreach($this->tripComments as $tripComment )
+        {
+            if($tripComment->getAuthor() == $author)
+            {
+                return $tripComment;
+            }    
+        }
+        return null;
+    }
+
+    /**
+     * provide average rating for an ad
+     *
+     * @return float
+     */
+    public function getAvgRatings()
+    {
+        $sum = array_reduce($this->tripComments->toArray(), function($total, $tripComment){
+            return $total + $tripComment->getRating();
+        }, 0);
+
+        if(count($this->tripComments) > 0)
+        {
+            return $sum / count($this->tripComments);
+        }else{
+            return 0;
+        }
+    }
     
 
 }
