@@ -37,6 +37,16 @@
                                 <div class="entry-c">
                                     <div class="entry-title">
                                         <h2><a href=""><i class="icon-realestate-advert"></i> {{ad.title}}</a></h2>
+											{% set adComment = ad.getCommentFromAuthor(app.user) %}
+												{% if adComment is not null %}
+												<strong>
+														Note: {% include 'inc/rating.html.twig' with {'rating': adComment.rating } %}
+												</strong>
+												{% else %}
+												<p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Tu n'as pas encore noté cette annonce.<br>
+													<a href="{{path('adbooking_view', {'id': adBooking.id})}}#adComment">Donne ta note</a>
+												</p>
+												{% endif %}
                                     </div>
                                     <ul class="entry-meta clearfix">
                                         <li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;">Réservation numéro {{adBooking.id}}</span></li>

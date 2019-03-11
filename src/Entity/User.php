@@ -107,6 +107,16 @@ class User implements UserInterface
      */
     private $tripBookings;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\AdComment", mappedBy="author", orphanRemoval=true)
+     */
+    private $adComments;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\TripComment", mappedBy="author", orphanRemoval=true)
+     */
+    private $tripComments;
+
     public function getRoles()
     {
     $roles = $this->userRoles->map(function($role){
@@ -147,6 +157,8 @@ class User implements UserInterface
         $this->userRoles = new ArrayCollection();
         $this->adBookings = new ArrayCollection();
         $this->tripBookings = new ArrayCollection();
+        $this->adComments = new ArrayCollection();
+        $this->tripComments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -417,6 +429,68 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($tripBooking->getTripBooker() === $this) {
                 $tripBooking->setTripBooker(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AdComment[]
+     */
+    public function getAdComments(): Collection
+    {
+        return $this->adComments;
+    }
+
+    public function addAdComment(AdComment $adComment): self
+    {
+        if (!$this->adComments->contains($adComment)) {
+            $this->adComments[] = $adComment;
+            $adComment->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdComment(AdComment $adComment): self
+    {
+        if ($this->adComments->contains($adComment)) {
+            $this->adComments->removeElement($adComment);
+            // set the owning side to null (unless already changed)
+            if ($adComment->getAuthor() === $this) {
+                $adComment->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TripComment[]
+     */
+    public function getTripComments(): Collection
+    {
+        return $this->tripComments;
+    }
+
+    public function addTripComment(TripComment $tripComment): self
+    {
+        if (!$this->tripComments->contains($tripComment)) {
+            $this->tripComments[] = $tripComment;
+            $tripComment->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTripComment(TripComment $tripComment): self
+    {
+        if ($this->tripComments->contains($tripComment)) {
+            $this->tripComments->removeElement($tripComment);
+            // set the owning side to null (unless already changed)
+            if ($tripComment->getAuthor() === $this) {
+                $tripComment->setAuthor(null);
             }
         }
 

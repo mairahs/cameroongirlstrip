@@ -9,6 +9,11 @@
 		<div class="entry-c">
 			<div class="entry-title">
 				<h2><a href="{{url}}"><i class="icon-realestate-advert"></i> {{ad.title}}</a></h2>
+				{% if ad.adComments |length > 0 %}
+				<p style:"text-align:center; font-weight:bold;">{% include 'inc/rating.html.twig' with {'rating':ad.avgRatings}  %}</p>
+				{% else %}
+				<p style:"text-align:center; font-weight:bold!important;">Cette annonce n'a pas encore été notée.</p>
+				{% endif %}
 			    <p style:"text-align:justify;">{{ad.introduction}}</p>
 			</div>
 			<ul class="entry-meta clearfix">
@@ -20,7 +25,7 @@
                 {% if app.user == ad.author %}
 					<div class="row">
 						<div class="col-md-6"><a href="{{url}}" class="btn btn-secondary">Plus d'informations </a> </div>
-						<div class="col-md-6"><a href="#" class="btn btn-danger">Réserve cette annonce</a></div>
+						<div class="col-md-6"><a href="{{path('adBooking_new', {'slug':ad.slug})}}" class="btn btn-danger">Réserve cette annonce</a></div>
 					</div>
 						<div class="row">
 							<div class="col-md-12">
@@ -35,7 +40,7 @@
 								<a href="{{url}}" class="btn btn-secondary">Plus d'informations</a>
 							</div>
 							<div class="col-md-6">
-								<a href="#" class="btn btn-danger">Réserve cette annonce</a>
+								<a href="{{path('adBooking_new', {'slug':ad.slug})}}" class="btn btn-danger">Réserve cette annonce</a>
 							</div>
 							
 						</div>

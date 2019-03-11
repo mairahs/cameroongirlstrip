@@ -10,13 +10,7 @@
 ============================================= -->
 <div id="slider" class="slider-element full-screen clearfix" style="background: url('/images/banners/banner6.jpg') center right no-repeat; background-size: cover; height:200px;"></div>
 <section id="content">
-{% if app.request.query.get('success') %}
-    <div class="btn-success">
-        <h4 style="tet-align:center; margin-left:20px;margin-top:20px; font-family:'Cabin Sketch', cursive;font-size:15px; color:#ffffff;">
-            Bravo !!! Ta réservation auprès de <strong><a href="{{path('user_view', {'slug': author.slug})}}"></a>{{author.fullName}}</strong> pour le logement <strong>{{ad.title}}</strong> a bien été enregistrée.
-        </h4>   
-    </div>
-                    {% endif %}
+
 {% set a = ad.author %}
 	<div class="content-wrap">
 		<div class="single-event">
@@ -82,7 +76,6 @@
 										</span>
 									</div>
 								</div>
-
 								<div class="spost clearfix">
 							
 									<div class="entry-c">
@@ -110,21 +103,49 @@
                                             ="img-fluid">
                                             <h4 class="mt-5"><a style="text-align:justify; font-family:'Roboto', sans-serif;">{{ad.content|raw}}</h4>
                                             <div class="center">
-                                                <a href="{{path('ad_view', {'slug':ad.slug})}}" class="button button-border button-light button-rounded button-reveal button-large topmargin">Plus d'infos sur cette annonce</a>
+                                                <a href="{{path('ad_view', {'slug':ad.slug})}}" class="button button-border button-light button-rounded button-reveal button-large topmargin">Plus d'infos sur ce logement</a>
                                             </div>
 										</div>
 									</div>
 								</div>
 
-							</div>
-			
-						{# {% if app.user == ad.author %}
-						 <div class="center">
-                            <a href="{{path('ad_edit', {'slug':ad.slug})}}" class="button button-border button-light button-rounded button-reveal button-large topmargin">Modifie ton annonce</a>
-							<a href="{{path('ad_delete', {'slug':ad.slug})}}" class="button button-border button-light button-rounded button-reveal button-large topmargin" onclick="return confirm(`Es tu sûre de vouloir supprimer ton annonce {{ad.title}} ?`)">Supprime ton annonce</a>
-                        </div>
-						{% endif %} #}
+								<div class="spost clearfix">
+									<h4 id="adComment" style="margin-top:20px; font-family:'Cabin Sketch', cursive;font-size:17px;"><a href="#" style="color:#4897d8!important; text-transform:none;" ><i class="icon-comment2 h1"></i> {{app.user.firstName}}, ton avis compte pour nous</a></h4>
+									
+										<div class="entry-c">
+											{% if date() > date(adBooking.endDate) %}
+												{% set adComment = adBooking.ad.getCommentFromAuthor(app.user) %}
+											
+												{% if adComment is not null %}
+													<blockquote>
+														{{adComment.content}}
+													</blockquote>
+													<strong>
+														Note: {% include 'inc/rating.html.twig' with {'rating': adComment.rating } %}
+													</strong>
+												{% else %}
+												<div class="entry-title mb-3">
+													{{form_start(adCommentForm)}}
+													{{form_row(adCommentForm.rating, {'label': 'Note sur 5', 'attr': {'placeholder': 'GirlTripeuse, note le logement que tu as occupé de 0 à 5'}})}}
+													{{form_row(adCommentForm.content)}}
+													<div class="form-group">
+														<div class="center">                                                    
+															<button type='submit' class="button button-border button-light button-rounded button-reveal button-large topmargin">
+																	Enregistre ton commentaire
+															</button>
+														</div>
+													</div>
+													{{form_end(adCommentForm)}}
+												</div>
+												{% endif %}
 
+											{% else %}
+											<p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">{{app.user.firstName}}, tu pourras noter ce logement une fois ton séjour effectué. </p> 
+											{% endif %}	
+										</div>
+								</div>
+
+							</div>
 					</div>
 					<div class="clear"></div>
 				</div>

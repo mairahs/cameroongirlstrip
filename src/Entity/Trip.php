@@ -113,6 +113,11 @@ class Trip
      */
     private $BookingNumber = 0;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\TripComment", mappedBy="trip", orphanRemoval=true)
+     */
+    private $tripComments;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -243,6 +248,7 @@ class Trip
     {
         $this->createdAt = new \DateTime();
         $this->tripBookings = new ArrayCollection();
+        $this->tripComments = new ArrayCollection();
     }
 
     public function getCategory(): ?Category
@@ -355,6 +361,37 @@ class Trip
         {
             
         }
+     }
+
+     /**
+      * @return Collection|TripComment[]
+      */
+     public function getTripComments(): Collection
+     {
+         return $this->tripComments;
+     }
+
+     public function addTripComment(TripComment $tripComment): self
+     {
+         if (!$this->tripComments->contains($tripComment)) {
+             $this->tripComments[] = $tripComment;
+             $tripComment->setTrip($this);
+         }
+
+         return $this;
+     }
+
+     public function removeTripComment(TripComment $tripComment): self
+     {
+         if ($this->tripComments->contains($tripComment)) {
+             $this->tripComments->removeElement($tripComment);
+             // set the owning side to null (unless already changed)
+             if ($tripComment->getTrip() === $this) {
+                 $tripComment->setTrip(null);
+             }
+         }
+
+         return $this;
      }
     
 

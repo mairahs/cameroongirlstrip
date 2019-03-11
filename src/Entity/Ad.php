@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\User;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
@@ -95,11 +96,17 @@ class Ad
      * @ORM\OneToMany(targetEntity="App\Entity\AdBooking", mappedBy="ad", orphanRemoval=true)
      */
     private $adBookings;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\AdComment", mappedBy="ad", orphanRemoval=true)
+     */
+    private $adComments;
     
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->adBookings = new ArrayCollection();
+        $this->adComments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -316,5 +323,75 @@ class Ad
 
        
     }
+
+    /**
+     * @return Collection|AdComment[]
+     */
+    public function getAdComments(): Collection
+    {
+        return $this->adComments;
+    }
+
+    public function addAdComment(AdComment $adComment): self
+    {
+        if (!$this->adComments->contains($adComment)) {
+            $this->adComments[] = $adComment;
+            $adComment->setAd($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdComment(AdComment $adComment): self
+    {
+        if ($this->adComments->contains($adComment)) {
+            $this->adComments->removeElement($adComment);
+            // set the owning side to null (unless already changed)
+            if ($adComment->getAd() === $this) {
+                $adComment->setAd(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Provide an author's comment for an ad
+     *
+     * @param  User $author
+     *
+     * @return Comment|null
+     */
+    public function getCommentFromAuthor(User $author)
+    {
+        foreach($this->adComments as $adComment )
+        {
+            if($adComment->getAuthor() == $author)
+            {
+                return $adComment;
+            }    
+        }
+        return null;
+    }
+
+    /**
+     * provide average rating for an ad
+     *
+     * @return float
+     */
+    public function getAvgRatings()
+    {
+        $sum = array_reduce($this->adComments->toArray(), function($total, $adComment){
+            return $total + $adComment->getRating();
+        }, 0);
+
+        if(count($this->adComments) > 0)
+        {
+            return $sum / count($this->adComments);
+        }else{
+            return 0;
+        }
+    }
+
    
 }

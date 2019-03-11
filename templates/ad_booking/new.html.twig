@@ -24,7 +24,7 @@
                 </div>        
                 <div class="heading-block">
                     <h2>Effectue une réservation pour le logement de <a href="{{path('user_view', {slug:ad.author.slug})}}"><strong>{{ad.author.fullName}}</strong></a>.</h2>
-                    <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Ce logement t'intéresse ? <br>Alors réserve le sans hésiter en renseignant tes dates.<br> Tu pourras contacter le propriétaire pour plus de renseignements. </p>
+                    <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">{{app.user.firstName}}, ce logement t'intéresse ? <br>Alors réserve le sans hésiter en renseignant tes dates.<br> Tu pourras contacter le propriétaire pour plus de renseignements. </p>
                 </div>
                 <div class="postcontent nobottommargin">
                 {{form_start(adBookingForm)}}

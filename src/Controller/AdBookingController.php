@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Ad;
 use App\Entity\AdBooking;
+use App\Entity\AdComment;
 use App\Form\AdBookingType;
+use App\Form\AdCommentType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,7 +38,7 @@ class AdBookingController extends AbstractController
                 $manager->persist($adBooking);
                 $manager->flush();
 
-                $this->addFlash("success", "Félicitations, tu as bien réservé l'annonce {$ad->getTitle()}.");
+                $this->addFlash("success", "Félicitations, tu as bien réservé le logement {$ad->getTitle()} de {$ad->getAuthor()->getFirstName()}");
 
                 return $this->redirectToRoute('adbooking_view', [
                  'id'      => $adBooking->getId(),
@@ -57,10 +59,26 @@ class AdBookingController extends AbstractController
      * @param AdBooking $adBooking
      * @return Response
      */
-    public function view(AdBooking $adBooking)
+    public function view(AdBooking $adBooking,Request $request, ObjectManager $manager)
     {
+        $adComment = new AdComment;
+
+        $adCommentForm = $this->createForm(AdCommentType::class, $adComment);
+
+        $adCommentForm->handleRequest($request);
+         if($adCommentForm->isSubmitted() && $adCommentForm->isValid())
+         {
+            $adComment->setAd($adBooking->getAd())
+                      ->setAuthor($this->getUser());
+            $manager->persist($adComment);
+            $manager->flush();
+
+            $this->addFlash('success', "{$this->getUser()->getFirstName()}, ton commentaire a bien été pris en compte");
+         }
+
         return $this->render('ad_booking/view.html.twig', [
-            'adBooking' => $adBooking
+            'adBooking'     => $adBooking,
+            'adCommentForm' => $adCommentForm->createView()
         ]);
     }
 

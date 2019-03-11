@@ -62,6 +62,8 @@ class TripBookingController extends AbstractController
     /**
      * View one booking
      * @Route("/tripbooking/{id}", name="tripbooking_view")
+     * @isGranted("ROLE_TRAVELLER", message="Hélas, tu n'as pas accès à cette ressource.")
+     * @isGranted("ROLE_RENTER",  message="Hélas, tu n'as pas accès à cette ressource.")
      * @param TripBooking $tripBooking
      * @return Response
      */

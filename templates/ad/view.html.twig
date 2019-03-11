@@ -113,6 +113,52 @@
 
 					</div>
 					<div class="clear"></div>
+				
+					<div id="posts" class="events small-thumbs">
+						{% if ad.adComments | length > 0 %}
+							<h3 style="margin-top:20px; font-family:'Cabin Sketch', cursive;font-size:17px;color:#4897d8!important;">Commentaires des GirlsTripeuses sur le logement de {{ad.author.fullName}} </h3>
+							<div class="alert alert-warning">
+								<h4 class="alert-heading text-center">
+									<div class="row align-items-center">
+										<div class="col">
+											Note globale donnée par nos GirlsTripeuses
+										</div>
+										<div class="col ">
+											{% include 'inc/rating.html.twig'  with {'rating': ad.getAvgRatings()} %}
+											<br>
+											<small>(Calculée sur {{ad.adComments|length}} avis)</small>
+										</div>
+									</div>
+								</h4>
+							</div>
+							{% for adComment in ad.adComments %}
+								<div class="entry clearfix">
+									
+									<div class="entry-image">
+										<a href="{{path('user_view', {'slug': adComment.author.slug})}}">
+											<img style="width:130px!important;" src="{{adComment.author.picture}}" alt="Avatar de {{adComment.author.fullName}}"  class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
+										</a>
+									</div>
+									<div class="entry-c">
+
+										<div class="entry-title">
+											<h2><a href="#"><i class="icon-comment2"></i> <strong>{{adComment.author.fullName}}</strong> a dit:</a></h2>
+										</div>
+										<div class="entry-content">
+											<blockquote style:"text-align:justify;"><strong>{{adComment.content|nl2br}}</strong></blockquote>
+											<p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Note donnée par {{adComment.author.firstName}}: 	
+												{% include 'inc/rating.html.twig' with {'rating': adComment.rating} %}
+											</p>
+											
+										</div>				
+									</div>
+								</div>						
+							{% endfor %}
+						{% else %}
+							<p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Cette annonce n'a pas encore reçu de commentaires pour le moment.</p>
+						{% endif %}
+
+					</div>
 				</div>
 				<div class="sidebar nobottommargin col_last clearfix">
 					<div class="sidebar-widgets-wrap">

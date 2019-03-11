@@ -10,7 +10,9 @@ use App\Entity\User;
 use App\Entity\Image;
 use App\Entity\Category;
 use App\Entity\AdBooking;
+use App\Entity\AdComment;
 use App\Entity\TripBooking;
+use App\Entity\TripComment;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -97,7 +99,7 @@ class AppFixtures extends Fixture
 
                 for($e=1; $e <= mt_rand(1,5); $e++)
                 {
-                    $tripBooking = new TripBooking;
+                    $tripBooking = new TripBooking($manager);
 
                     $tripBooking->setNumberPlaces(mt_rand(2,5))
                                 ->setTripBooker( $users[mt_rand(0, count($users) - 1)])
@@ -105,6 +107,16 @@ class AppFixtures extends Fixture
                                 ->setAmount($trip->getPrice())
                                 ->setComment($faker->paragraph());
                     $manager->persist($tripBooking);
+                    if(mt_rand(0,1))
+                    {
+                      $comment = new TripComment;
+                      $comment->setContent($faker->paragraph())
+                              ->setRating(mt_rand(1,5))
+                              ->setAuthor($users[mt_rand(0, count($users) - 1)])
+                              ->setTrip($trip);
+    
+                      $manager->persist($comment);
+                    }       
                 }
             
             $manager->persist($trip);
@@ -120,7 +132,7 @@ class AppFixtures extends Fixture
                ->setIntroduction($faker->paragraph(2))
                ->setLocation($faker->city)
         	   ->setContent("<p>".join('</p><p>', $faker->paragraphs(5))."</p>")
-        	   ->setCoverImage($faker->imageUrl(1000,350))
+        	   ->setCoverImage($faker->imageUrl(500,400))
                ->setRooms(mt_rand(2,5))
                ->setAuthor($user);
             
@@ -153,7 +165,17 @@ class AppFixtures extends Fixture
                           ->setEndDate($endDate)
                           ->setAmount($amount)
                           ->setComment($comment);
-                $manager->persist($adBooking);       
+                $manager->persist($adBooking);
+                if(mt_rand(0,1))
+                {
+                  $comment = new AdComment;
+                  $comment->setContent($faker->paragraph())
+                          ->setRating(mt_rand(1,5))
+                          ->setAuthor($adBooker)
+                          ->setAd($ad);
+
+                  $manager->persist($comment);
+                }       
             }
             $manager->persist($ad);          
        }
