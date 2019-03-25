@@ -25,7 +25,7 @@
                     <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Tu possèdes un bien que nos voyageuses peuvent louer pendant la durée de leur séjour ? Ceci est ton espace..</p>
                 </div>
                 <div class="postcontent nobottommargin">
-                {{form_start(adForm)}}
+				{{form_start(adForm,{'attr': {'novalidate': 'novalidate'}})}} 
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							{{form_row(adForm.title)}}
@@ -36,7 +36,8 @@
 					</div>
 					<div class="form-row">
 						<div class="form-group col-md-6">
-							{{form_row(adForm.rooms)}}
+						
+							{{form_row(adForm.rooms, {'label': 'Nombre de chambres', 'attr': {'placeholder': 'Renseigne le nombre de chambres disponibles'}})}}
 						</div>
 						<div class="form-group col-md-6">
 							{{form_row(adForm.price)}}

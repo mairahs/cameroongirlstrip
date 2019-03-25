@@ -55,14 +55,8 @@ class Trip
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\Range(
-     *      min = 2,
-     *      max = 6,
-     *      minMessage = "Le nombre de personnes ne peut être inférieur à 2",
-     *      maxMessage = "Le nombre de personnes ne peut excéder 6"
-     * )
      */
-    private $numberPersons;
+    private $numberPersons; 
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -118,6 +112,17 @@ class Trip
      * @ORM\OneToMany(targetEntity="App\Entity\TripComment", mappedBy="trip", orphanRemoval=true)
      */
     private $tripComments;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Range(
+     *      min = 2,
+     *      max = 5,
+     *      minMessage = "Le nombre de personne ne peut être inférieur à 2",
+     *      maxMessage = "Le nombre de personne ne peut excéder 5"
+     * )
+     */
+    private $fixedNumberPersons;
 
     public function getId(): ?int
     {
@@ -272,13 +277,27 @@ class Trip
      * @return void
      */
     public function initializeSlug()
+    {
+        if(empty($this->slug))
         {
-            if(empty($this->slug))
-            {
-                $slugify = new Slugify;
-                $this->slug = $slugify->slugify($this->departure.'-'.$this->arrival);
-            }
+            $slugify = new Slugify;
+            $this->slug = $slugify->slugify($this->departure.'-'.$this->arrival);
         }
+    }
+
+    /**
+     * Allows to initialize automatically the numberPersons
+     * @ORM\PrePersist
+     * 
+     * @return void
+     */
+    public function initializeNumberPersons()
+    {
+        if(empty($this->numberPersons))
+        {
+            $this->numberPersons = $this->fixedNumberPersons;
+        }
+    }
 
     public function getTraveller(): ?User
     {
@@ -346,23 +365,6 @@ class Trip
 
         return $this;
     }
-
-    public function increaseBookingsNumber()
-    {
-      foreach($this->tripBookings as $tripBooking)
-       { 
-    
-            return $this->BookingNumber += $tripBooking->getNumberPlaces();
-       }           
-    }
-
-     public function decreaseBookingsNumber()
-     {
-        foreach($this->tripBookings as $tripBooking)
-        {
-            
-        }
-     }
 
      /**
       * @return Collection|TripComment[]
@@ -432,6 +434,53 @@ class Trip
             return 0;
         }
     }
-    
+
+    public function increaseBookingNumber()
+    {
+         $this->BookingNumber = array_reduce($this->tripBookings->toArray(), function($total, $tripBooking){
+            return $total + $tripBooking->getNumberPlaces();
+        }, 0);
+
+        return $this->BookingNumber;
+    }
+
+    public function decreaseBookingNumber()
+    {
+         $this->BookingNumber = array_reduce($this->tripBookings->toArray(), function($minus, $tripBooking){
+            return $this->BookingNumber - $tripBooking->getNumberPlaces();
+        });
+
+        return $this->BookingNumber;
+    }
+
+    public function decreaseNumberPersons()
+    {
+         $this->numberPersons = array_reduce($this->tripBookings->toArray(), function($minus, $tripBooking){
+            return $minus - $tripBooking->getNumberPlaces();
+        }, $this->fixedNumberPersons);
+
+        return $this->numberPersons;
+    }
+
+    public function increaseNumberPersons()
+    {  
+        $this->numberPersons = array_reduce($this->tripBookings->toArray(), function($total, $tripBooking){
+            return $this->numberPersons + $tripBooking->getNumberPlaces();
+        });
+
+        return $this->numberPersons;
+    }
+
+    public function getFixedNumberPersons(): ?int
+    {
+        return $this->fixedNumberPersons;
+    }
+
+    public function setFixedNumberPersons(int $fixedNumberPersons): self
+    {
+        $this->fixedNumberPersons = $fixedNumberPersons;
+
+        return $this;
+    }    
 
 }

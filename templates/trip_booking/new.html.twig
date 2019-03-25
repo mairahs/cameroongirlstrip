@@ -28,12 +28,12 @@
 					
 					<div class="form-row">
 						<div class="form-group col-md-12">
-							{{form_row(tripBookingForm.numberPlaces)}}
+							{{form_row(tripBookingForm.numberPlaces, {'label': 'Nombre de places', 'attr': {'placeholder': 'Pour combien de personnes effectues-tu la réservation ?'}})}}
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-md-12">
-							<label for=""> Un commentaire, une question à poser à {{trip.traveller.firstname}} ?</label>
+							<label for=""> Une question à poser à {{trip.traveller.firstname}} sur ce voyage ?</label>
 							{{form_row(tripBookingForm.comment)}}	
 						</div>
 					</div>

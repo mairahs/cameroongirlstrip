@@ -25,7 +25,13 @@ class AnnonceType extends ApplicationType
             ->add('introduction', TextType::class, $this->getConfiguration('Introduction', 'Renseigne une description sommaire de ton bien (type, localisation..)'))
             ->add('content', TextareaType::class, $this->getConfiguration('Description détaillée', 'Donne une description complète et attractive de ton bien'))
             ->add('coverImage', TextType::class, $this->getConfiguration('Image de couverture', 'Télécharge une illustration attractive pour ton bien.'))
-            ->add('rooms', IntegerType::class, $this->getConfiguration('Nombre de chambre', 'Renseigne le nombre de chambre disponible'))
+            ->add('rooms', IntegerType::class, ['attr' => 
+                [
+                    'min' => 1,
+                    'max' => 5,
+                    'step' => 1
+                 ]
+            ], $this->getConfiguration('Nombre de chambres', 'Renseigne le nombre de chambres disponibles'))
             ->add('price', MoneyType::class, $this->getConfigurationBis('Prix par nuit', 'Renseigne un tarif pour la nuit','XAF'))
             ->add('images', CollectionType::class, [
                 'entry_type' => ImageType::class,

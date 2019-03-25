@@ -1,0 +1,68 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %} Modification du commentaire numéro  {{adComment.id}} pour le logement {{adComment.ad.title}}| {{parent()}}{% endblock %}
+
+{% block body %}
+    
+	<div class="container">	
+        <div>
+			<ol class="breadcrumb" style="margin-top:20px!important;">
+                <li class="breadcrumb-item"><a href="{{path('adminadcomment_index')}}"><i class="icon-image"></i> Gestion des commentaires sur les logements</a></li>
+				<li class="breadcrumb-item active" aria-current="page"><a href="{{path('adminadcomment_edit', {'id': adComment.id})}}"><i class="icon-edit"></i> Modifier un commentaire</a></li>
+			</ol>
+        </div>
+		<h1 class="my-5 text-center">Modification du commentaire numéro {{adComment.id}} sur l'annonce {{adComment.ad.title}}</h1>
+		
+		{{form_start(adminAdCommentForm)}}
+		<div class="row">
+			<div class="col">
+				<div class="card bg-light">
+					<div class="card-header">
+						<h4 class="card-title">Corriger le commentaire ?</h4>
+					</div>
+					<div class="card-body">
+						{{form_widget(adminAdCommentForm)}}
+                        {{form_row(adminAdCommentForm.rating, {'label': 'Note sur 5', 'attr': {'placeholder': 'GirlTripeuse, note le logement que tu as occupé de 0 à 5'}})}}
+                        {{form_row(adminAdCommentForm.content)}}
+						<button type="submit" class="btn btn-danger btn-lg center">
+							<i class="icon-check"></i>
+							Enregistrer les modifications
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card bg-light">
+					<div class="card-header">
+						<h4 class="card-title">Annonce liée à ce commentaire</h4>
+					</div>
+					<div class="card-body">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Id</th>
+									<th>Titre</th>
+									<th>Auteur</th>
+                                    <th>Prix (FCFA)</th>
+								</tr>
+							</thead>
+							<tbody>
+								
+								<tr>
+									<td>{{adComment.ad.id}}</td>
+									<td>{{adComment.ad.title}}</td>
+									<td><img style="width:50%;" src="{{adComment.ad.author.picture}}" alt="Avatar de {{adComment.ad.author.fullName}}" class="rounded-circle avatar img-thumbnail mr-2">{{adComment.ad.author.fullName}}</td>
+                                    <td>{{adComment.ad.price}}</td>
+									<td>
+										<a href="{{path('ad_view', {'slug':adComment.ad.slug})}}" class="btn btn-warning"><i class="icon-eye-open"></i></a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{{form_end(adminAdCommentForm)}}
+	</div>
+{% endblock %}

@@ -32,9 +32,10 @@
 						{{app.user.firstName}}, voici toutes les informations relatives à ton voyage.</p>
 					{% else %}
 					 <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; margin-left:100px;">
-						GirlTripeuse, voici toutes les informations relatives au voyage de {{trip.traveller.firstName}}.</p>
+						{{app.user.firstName}}, voici toutes les informations relatives au voyage de {{trip.traveller.firstName}}.</p>
 					{% endif %}
                 </div>
+				{% set unitPrice = trip.price/trip.fixedNumberPersons %}
                 <div class="entry-overlay-meta" style="margin-bottom:-140px;">
 					<h2 style="text-transform:none; font-family:'Cabin Sketch', cursive; font-size:20px;" class="center"><a href="#">{{trip.departure}} - {{trip.arrival}}</a></h2>
 					<ul class="iconlist" style="margin-left:40px; font-family:'Roboto', sans-serif;">
@@ -42,11 +43,11 @@
 						<li style="font-size:15px;"><i class="icon-time"></i> <strong>Heure de départ: {{trip.tripHour| date('H:i')}}</strong> </li>
 						<li style="font-size:15px;"><i class="icon-calendar3"></i> <strong>Date de retour: le {{format_date_return(trip)}}</strong> </li>
 						<li style="font-size:15px;"><i class="icon-user2"></i> <strong>Voyage proposé par {{t.fullName}} </li></strong>
-						<li style="font-size:15px;"><i class="icon-users1"></i> <strong>Groupe de {{trip.numberPersons}} personnes  </strong> </li>
+						<li style="font-size:15px;"><i class="icon-users1"></i> <strong>Groupe de {{trip.fixedNumberPersons}} personnes  </strong> </li>
 						<li style="font-size:15px;"><i class="icon-move"></i> <strong>Mode de transport: {{ trip.category.name}}</strong></li>
-						<li style="font-size:15px;"><i class="icon-money"></i> <strong>Prix: {{trip.price|number_format(0,'.',' ')}} FCFA la place de voyage</strong></li>
+						<li style="font-size:15px;"><i class="icon-money"></i> <strong>Prix total: {{trip.price|number_format(0,'.',' ')}} FCFA soit<br> la place de voyage à {{unitPrice|number_format(0,'.',' ')}} FCFA</strong></li>
 					</ul>
-					{% if  trip.bookingNumber <= trip.numberPersons %}
+					{% if trip.numberPersons != 0 %}
 						<div class="center">
                             <a href="{{path('tripBooking_new', {'slug': trip.slug})}}" class="button button-border button-light button-rounded button-reveal button-large topmargin">Réserve ce voyage</a>
                         </div>
@@ -63,8 +64,24 @@
                             	<img src="{{trip.coverImage}}" alt="Photo de l'image du voyage {{trip.departure}} - {{trip.arrival}} ">
                             </a>
                         </div>
+						{% if app.user == trip.traveller %}
+						 <div class="center" style="margin-bottom:50px;">
+                            <a href="{{path('trip_edit', {'slug':trip.slug})}}" class="button button-border button-light button-rounded button-reveal button-large topmargin">Modifie ton voyage</a>
+							<a href="{{path('trip_delete', {'slug':trip.slug})}}" class="button button-border button-light button-rounded button-reveal button-large topmargin" onclick="return confirm(`Es tu sûre de vouloir supprimer ton voyage {{trip.departure}} - {{trip.arrival}} ?`)">Supprime ton voyage</a>
+                        </div>
+						{% endif %}
+						
+						{% if trip.numberPersons == 0 %}
+							<h4 style="font-family:'Cabin Sketch', cursive;font-size:17px; color:#4897d8;">{{app.user.firstName}}, il n'y a plus de place disponible pour ce voyage. <br> Tu peux créer un nouveau voyage <a href="{{path('trip_new')}}">ici</a>.</h4>{#Gérer le pluriel#}
+						{% else %}
+							<p style ="margin-top:15px; font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">{{app.user.firstName}}, encore {{trip.numberPersons}} places disponibles pour ce voyage.</p> {# Gérer le pluriel#}
+						{% endif %}
 
-						<h4 style="font-family:'Cabin Sketch', cursive;font-size:17px; color:#4897d8;">Elles participent également à ce voyage:</h4>
+						{% if trip.tripBookings is empty %}
+						<p style ="margin-top:15px; font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Ce voyage ne possède pas encore de réservations pour le moment. <br> Sois la première à le réserver.</p>
+						{% else %}
+						<h4 style="margin-top:15px; font-family:'Cabin Sketch', cursive;font-size:17px; color:#4897d8;">Ces GirlsTripeuses participent également à ce voyage:</h4>
+						{% endif %}
 				
 						<div id="posts" class="events small-thumbs">
 							{% for booking in trip.tripBookings %}
@@ -91,12 +108,12 @@
 										</div>
 									{% else %}
 										<div class="entry-title">
-											<h2><a href="#"><i class="icon-female1"></i> {{booking.tripBooker.fullName}}</a></h2>
+											<h2><a href="#"><i class="icon-female1"></i> {{booking.tripBooker.fullName}}</a><p class="badge badge-warning" style="float:right; text-transform:none;">{{booking.numberPlaces}} places{#Gérer le pluriel#}</p></h2>
 										</div>
 									{% endif %}
 									{% if app.user == booking.tripBooker %}
 										<div class="entry-content">
-											<p style:"text-align:justify;">Tu as également réservé ce voyage.</p>		
+											<p style:"text-align:justify;">Tu as également réservé {{booking.numberPlaces}} places {# gérer le pluriel#} pour ce voyage.</p>		
 										</div>
 									{% else %}
 										<div class="entry-content">
@@ -116,12 +133,9 @@
 								</div>
 								{% endfor %}
 							</div>
-											<div class="clear"></div>
-					{% if trip.bookingNumber > trip.numberPersons %}
-						<h4 style="font-family:'Cabin Sketch', cursive;font-size:17px; color:#4897d8;">{{app.user.firstName}}, il n'y a plus de place disponible pour ce voyage. <br> Tu peux créer un nouveau voyage <a href="{{path('trip_new')}}">ici</a>.</h4>{#Gérer le pluriel#}
-						{% else %}
-						<h4 style="font-family:'Cabin Sketch', cursive;font-size:17px; color:#4897d8;">{{app.user.firstName}}, encore {{trip.numberPersons - trip.bookingNumber}} places disponibles pour ce voyage.</h4>
-						{% endif %}
+					<div class="clear"></div>
+			
+				
 					<div class="clear"></div>
 					<div id="posts" class="events small-thumbs">
 						{% if trip.tripComments | length > 0 %}
@@ -164,7 +178,7 @@
 								</div>						
 							{% endfor %}
 						{% else %}
-							<p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Ce voyage n'a pas encore reçu de commentaires pour le moment.</p>
+							<p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Ce voyage n'a pas encore reçu de commentaires pour le moment.<br> Sois la première à le commenter.</p>
 						{% endif %}
 
 					</div>					

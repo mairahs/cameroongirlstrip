@@ -138,6 +138,7 @@ class TripBooking
      * 
      * Used to automatically generate some info before the insertion of booking in database
      * @ORM\PrePersist
+     * @ORM\PreUpdate
      */
     public function prePersist()
     {
@@ -154,13 +155,36 @@ class TripBooking
 
     /**
      * 
-     * Used to automatically generate some info before the insertion of booking in database
+     * Used to automatically generate some info after the insertion of booking in database
      * @ORM\PostPersist
      */
-    public function increase()
+    public function increaseTripBooking()
     {
-        $this->manager->find($this->manager->getMetadataFactory()->getMetadataFor(get_class($this->trip))->getName(),$this->trip->getId());
-        $this->trip->setBookingNumber($this->trip->increaseBookingsNumber());
-        $this->manager->flush();
+        foreach($this->trip->getTripBookings() as $tripBooking)
+        {
+            $tripBooking->setNumberPlaces($tripBooking->numberPlaces++);
+        }
+
+        $this->trip->setBookingNumber($this->trip->increaseBookingNumber());
+        $this->trip->setNumberPersons($this->trip->decreaseNumberPersons());
+
+        $this->manager->persist($this->trip);
+        $this->manager->flush(); 
     }
+    
+     /**
+     * 
+     * Used to automatically generate some info after the suppression of booking in database
+     * @ORM\PreRemove
+     */
+    public function decreaseTripBooking()
+    {
+        foreach($this->trip->getTripBookings() as $tripBooking)
+        {
+            $tripBooking->setNumberPlaces($tripBooking->numberPlaces--);
+        }
+
+        $this->trip->setBookingNumber($this->trip->decreaseBookingNumber());
+        $this->trip->setNumberPersons($this->trip->increaseNumberPersons());
+    }   
 }

@@ -1,0 +1,58 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %} Administration des voyages| {{parent()}}{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1 class="my-5 text-center">Gestion des {{trips|length}} voyages</h1>
+		<table class="table table-hover" >
+			<thead>
+				<tr>
+					<th class="text-center">Id</th>
+					<th class="text-center">Ville de départ</th>
+					<th class="text-center">Ville d'arrivée</th>
+                    <th class="text-center">Nombre de personnes</th>
+                    <th class="text-center">Prix</th>
+                    <th class="text-center">Créé par</th>
+					<th class="text-center">Réservations</th>
+					<th class="text-center">Note</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for trip in trips %}
+				<tr>
+					<td>{{trip.id}}</td>
+                    <td>{{trip.departure}}</td>
+					<td>{{trip.arrival}}</td>
+                    <td>{{trip.numberPersons}}</td>
+                    <td>{{trip.price}}</td>
+					<td><img src="{{trip.traveller.picture}}" alt="Avatar de {{trip.traveller.fullName}}" class="rounded-circle avatar img-thumbnail mr-2">{{trip.traveller.fullName}}</td>
+					<td class="text-center"><span class="badge badge-pill badge-info">{{trip.tripbookings | length }}</span></td>
+					<td class="text-center"><span class="badge badge-pill badge-info">{{trip.avgRatings| number_format(1,',','')}}<span class="badge badge-pill badge-info"></td>
+					<td>
+						<a href="{{path('admintrip_edit', {'id':trip.id})}}" class="btn btn-warning"><i class="icon-edit2"></i></a>
+						<a href="{{path('admintrip_delete', {'id':trip.id})}}" class="btn btn-danger"><i class="icon-trash-alt1"></i></a>
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+
+		{# <div class="d-flex justify-content-center">
+		  <ul class="pagination">
+		    <li class="page-item {% if page == 1 %}disabled{% endif %}">
+		      <a class="page-link" href="{{path('admin_ads_index', {'page':page - 1 })}}">&laquo;</a>
+		    </li>
+		    {% for i in 1..pagesNumber %}
+		    <li class="page-item {% if page == i %}active{% endif %}">
+		      <a class="page-link" href="{{path('admin_ads_index', {'page':i})}}">{{i}}</a>
+		    </li>
+			{% endfor %}
+		    <li class="page-item {% if page == pagesNumber %}disabled{% endif %}">
+		      <a class="page-link" href="{{path('admin_ads_index', {'page':page + 1 })}}">&raquo;</a>
+		    </li>
+		  </ul>
+		</div> #}
+
+	</div>
+{% endblock %}

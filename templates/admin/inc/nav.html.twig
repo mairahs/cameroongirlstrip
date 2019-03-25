@@ -1,0 +1,33 @@
+<nav id="primary-menu" class="style-5 style-6">
+    <ul>
+        <li><a target="_blank" href="{{path('homepage')}}"><div><i class="icon-eye-open"></i>Voir le site</div></a>
+        <li><a href="#"><div><i class="icon-dashboard"></i>Admin Dashboard</div></a>
+        <li><a href="{{path('adminad_index')}}"><div><i class="icon-line2-home"></i></i>Logements</div></a></li>
+        <li><a href="#"><div><i class="icon-paper-plane1"></i>Voyages</div></a></li>
+        <li><a href="#"><div><i class="icon-bookmark2"></i>Réservations</div></a></li>
+        <li><a href="#"><div><i class="icon-comment2"></i>Commentaires</div></a></li>
+        <li><a href="#"><div><i class="icon-users"></i>Utilisateurs</div></a></li>
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <i class="icon-caret-down" style="font-size: 15px; color:#fa6e59!important;"></i>
+            <li>
+                <a href="#">
+                    <div ><i class="icon-user2"></i>Hello {{app.user.firstName}} </div>
+                </a>
+                <ul>
+                    {# <div class="dropdown-divider"></div> #}
+                    <li><a href="{{path('adminsecurity_logout')}}"><div><i class="icon-line2-logout"></i>Déconnexion</div></a></li>
+                </ul>
+            </li>
+                <img src="{{app.user.picture}}" alt="Avatar de {{app.user.fullName}}" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
+
+       {% endif %}
+    </ul>
+</nav><!-- #primary-menu end -->
+{% for label, messages in app.flashes %}
+
+    {% for message in messages %}
+        <a href="#" class="btn btn-{{label}}" data-notify-type="{{label}}" data-notify-position="top-full-width " data-notify-close=true data-notify-msg="<i class=icon-info-sign></i> {{message}}" onclick="SEMICOLON.widget.notifications(this); return false;">{{message}}</a>
+    {% endfor %}
+
+{% endfor %}
+

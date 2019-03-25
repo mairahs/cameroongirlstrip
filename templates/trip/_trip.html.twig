@@ -11,7 +11,11 @@
                 </div>    
 				<div class="entry-c">
 					<div class="entry-title">
-						<h2><a href="{{url}}"><i class="icon-map-marker2"></i> {{trip.departure}} - {{trip.arrival}}</a></h2>
+						<h2><a href="{{url}}"><i class="icon-map-marker2"></i> {{trip.departure}} - {{trip.arrival}}</a>
+							{% if trip.numberPersons == 0 %}
+								<p class="badge badge-warning" style="float:right; text-transform:none;">Voyage complet</p>
+							{% endif %}
+						</h2>
 						{% if trip.tripComments |length > 0 %}
 						<p style:"text-align:center; font-weight:bold;">{% include 'inc/rating.html.twig' with {'rating':trip.avgRatings}  %}</p>
 						{% else %}
@@ -20,7 +24,12 @@
 					</div>
 					<ul class="entry-meta clearfix">
 						<li><span class="badge badge-warning">{% if trip.category.name == 'bus' %}<i class="icon-bus-alt"></i> {% else %} <i class="icon-car-alt"></i>{% endif %}</span></li>
-						<li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-users"></i> Groupe de {{trip.numberPersons}} personnes</span></li>
+						<li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-users"></i> Groupe de {{trip.fixedNumberPersons}} personnes</span></li>
+						{% if trip.numberPersons == 0 %}
+						<li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-bookmark2"></i> Plus de place disponible pour ce voyage</span></li>
+						{% else %}
+						<li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-bookmark2"></i> Encore {{trip.numberPersons}} places disponibles pour ce voyage</span></li>{#Gérer le pluriel#}
+						{% endif %}
 					</ul>
 					<div class="entry-content">
 						<p style:"text-align:justify;">{{trip.description|truncate(150, true)}}</p>
@@ -35,10 +44,12 @@
 							<div class="col-md-6">
 								<a href="{{url}}" class="btn btn-secondary">Plus d'infos sur ce voyage</a>
 							</div>
-							
-							<div class="col-md-6">
-								<a href="{{path('tripBooking_new', {'slug':trip.slug})}}" class="btn btn-danger">Réserve ce voyage</a>
-							</div>
+
+							{% if trip.numberPersons != 0 %}
+								<div class="col-md-6">
+									<a href="{{path('tripBooking_new', {'slug':trip.slug})}}" class="btn btn-danger">Réserve ce voyage</a>
+								</div>
+							{% endif %}
 							
 						</div>
 						{% endif %}		

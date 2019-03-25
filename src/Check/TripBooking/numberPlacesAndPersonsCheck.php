@@ -14,6 +14,6 @@ class numberPlacesAndPersonsCheck
      */
     public function check(TripBooking $tripBooking): bool
     {
-        return $tripBooking->getTrip()->getBookingNumber() < $tripBooking->getTrip()->getNumberPersons();
+        return $tripBooking->getNumberPlaces() <= $tripBooking->getTrip()->getNumberPersons();
      }
 }

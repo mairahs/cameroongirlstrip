@@ -1,0 +1,33 @@
+.stretched #wrapper {
+    background-color: #ffffff;
+}
+
+.badge {
+    font-size: 15px;
+    background-color: #fa6e59;
+    border: 3px solid #ffdb5c;
+    font-family: 'Cabin Sketch', cursive;
+    color: #ffffff;
+}
+
+#primary-menu ul li > a, #primary-menu ul ul li > a {
+   
+ color: #fa6e59!important;
+ font-weight: bold;
+ font-size: 12px;
+ text-transform: none;
+ font-family: 'Cabin Sketch', cursive;
+}
+
+h1 {
+    font-size: 30px;
+    font-family: 'Cabin Sketch', cursive;
+    color:#4897d8;
+    font-weight: bold;
+    text-transform: none;
+}
+
+.breadcrumb {
+    top:5%!important;
+    font-size:15px;
+}

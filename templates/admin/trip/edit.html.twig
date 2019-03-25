@@ -1,0 +1,98 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %} Modification du voyage {{trip.departure}} - {{trip.arrival}}| {{parent()}}{% endblock %}
+
+{% block body %}
+    
+	<div class="container">	
+        <div>
+			<ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{path('admintrip_index')}}"><i class="icon-image"></i> Gestion des voyages</a></li>
+				<li class="breadcrumb-item active" aria-current="page"><a href="{{path('admintrip_edit', {'id': trip.id})}}"><i class="icon-edit"></i> Modifier un voyage</a></li>
+			</ol>
+        </div>
+		<h1 class="my-5 text-center">Modification du voyage {{trip.departure}} - {{trip.arrival}} </h1>
+		
+		{{form_start(adminTripForm)}}
+		<div class="row">
+			<div class="col">
+				<div class="card bg-light">
+					<div class="card-header">
+						<h4 class="card-title">Corriger le voyage ?</h4>
+					</div>
+					<div class="card-body">
+						{{form_widget(adminTripForm)}}
+						<button type="submit" class="btn btn-danger btn-lg center">
+							<i class="icon-check"></i>
+							Enregistrer les modifications
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card bg-light">
+					<div class="card-header">
+						<h4 class="card-title">Les réservations</h4>
+					</div>
+					<div class="card-body">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Id</th>
+									<th>Voyageur</th>
+									<th>Date de réservation</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for tripbooking in trip.tripbookings %}
+								<tr>
+									<td>{{tripbooking.id}}</td>
+									<td><img style="width:50%;" src="{{tripbooking.tripbooker.picture}}" alt="Avatar de {{tripbooking.tripbooker.fullName}}" class="rounded-circle avatar img-thumbnail mr-2">{{tripbooking.tripbooker.fullName}}</td>
+									<td>{{tripbooking.createdAt|date('d/m/Y H:i')}}</td>
+									<td>
+										<a href="#" class="btn btn-warning"><i class="icon-pencil2"></i></a>
+									</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="card bg-light mt-5">
+					<div class="card-header">
+						<h4 class="card-title">Les commentaires</h4>
+					</div>
+					<div class="card-body">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Id</th>
+									<th>Voyageur</th>
+									<th>Note</th>
+									<th>Commentaire</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for tripcomment in trip.tripcomments %}
+								<tr>
+									<td>{{tripcomment.id}}</td>
+									<td><img style="width:50%;" src="{{tripcomment.author.picture}}" alt="Avatar de {{tripcomment.author.fullName}}" class="rounded-circle avatar img-thumbnail mr-2">{{tripcomment.author.fullName}}</td>
+									<td>{{tripcomment.rating}}</td>
+									<td>{{tripcomment.content}}</td>
+									<td>
+										<a href="{{path('admintripcomment_edit', {'id': tripcomment.id })}}" class="btn btn-warning"><i class="icon-edit"></i></a>
+									</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{{form_end(adminTripForm)}}
+	</div>
+{% endblock %}
+

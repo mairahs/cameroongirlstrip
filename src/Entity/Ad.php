@@ -319,9 +319,7 @@ class Ad
             $notAvailableDays = array_merge($notAvailableDays, $days);
         }
 
-        return $notAvailableDays;
-
-       
+        return $notAvailableDays;     
     }
 
     /**

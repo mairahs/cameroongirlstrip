@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="Maïrah" content="Tu aimes voyager ? Découvrir les magnifiques régions de notre beau pays le Cameroun ? Hélas, tu es seule. Rejoins des groupes de filles et partez toutes ensemble, vivre des aventures extraordinaires, faites de découvertes, de partages et de complicité féminine." />
+        <title>{% block title %}CameroonGirlsTrip {% endblock %}</title>
+           <!--! Stylesheets -->
+        {% include "admin/inc/stylesheets.html.twig" %}      
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body class="stretched no-transition">
+        <div id="wrapper" class="clearfix">
+            <header id="header" class="transparent-header dark" data-sticky-class="not-dark">
+                <div id="header-wrap">
+                    <div class="container clearfix">
+                        <div id="primary-menu-trigger"><i class="icon-reorder"></i></div>
+                                <!--! logo -->
+                        {# {% include "inc/logo.html.twig" %} #}
+                                <!--! navigation -->
+                        {% include "admin/inc/nav.html.twig" %}
+                    </div>
+                </div>
+            </header>
+            {% block body %}{% endblock %}
+            {% block fos_user_content %}{% endblock %}  
+
+            <div class="container topmargin clearfix">
+                <div class="row clearfix">
+                    <div class="col-lg-6">
+                       <div id="instagram" class="widget clearfix">
+                           <h4 class="mb-2 ls1 t700" style=" font-family: 'Cabin Sketch', cursive;text-transform:none; color: #ffffff;font-weight: bold; font-size:20px;"><i class="icon-instagram2"  style="font-size:25px;"></i> Fil Instagram...   #cameroongirlstrip </h4>
+                           <div id="instagram-photos" class="instagram-photos masonry-thumbs mt-2 grid-3" data-user="5834720953" data-count="6" data-type="user">             
+                           </div>
+                        </div>
+                    </div>
+                    
+                <div class="col-lg-6">
+                    <div id="oc-testi" class="owl-carousel testimonials-carousel carousel-widget" data-nav="false" data-animate-in="slideInUp" data-animate-out="slideOutUp" data-autoplay="5000" data-loop="true" data-stage-padding="5" data-margin="10" data-items-sm="1" data-items-md="1" data-items-xl="1" autoplay:true>
+                        <div class="oc-item">
+                            <div class="testimonial topmargin-sm">
+                                <div class="testi-image">
+                                    <a href="#"><img src="#" alt="Customer Testimonails"></a>
+                                </div>
+                                <div class="testi-content">
+                                    <p>Ligula scelerisque, tempus dicta eros dolorum itaque fugit, tempore pellentesque, leo dolor, aenean, inceptos aptent nostra adipisci harum etiam explicabo.</p>
+                                    <div class="testi-meta">
+                                    John Doe &middot;
+                                        <span>XYZ Inc.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="testimonial topmargin-sm">
+                                <div class="testi-image">
+                                    <a href="#"><img src="#" alt="Customer Testimonails"></a>
+                                            </div>
+                                <div class="testi-content">
+                                    <p>Sint quae anim enim quaerat! Assumenda esse metus torquent, senectus similique tempor? Massa lacus a, dignissim sequi officiis, elementum non.</p>
+                                    <div class="testi-meta">
+                                        John Doe &middot;
+                                        <span>XYZ Inc.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="oc-item">
+                            <div class="testimonial topmargin-sm">
+                                <div class="testi-image">
+                                    <a href="#">
+                                    <img src="#" alt="Customer Testimonails"></a>
+                                </div>
+                                <div class="testi-content">
+                                    <p>Placeat ultrices perferendis omnis consequat molestie quos pretium! Donec deserunt ratione ultrices laborum vehicula rutrum deserunt! Torquent officiis? Et occaecati.</p>
+                                    <div class="testi-meta">
+                                        John Doe &middot;
+                                        <span>XYZ Inc.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="testimonial topmargin-sm">
+                                <div class="testi-image">
+                                    <a href="#"><img src="#" alt="Customer Testimonails"></a>
+                                </div>
+                                <div class="testi-content">
+                                    <p>Occaecat autem turpis mollis ac nam cubilia, culpa adipiscing per cubilia porta fugit numquam dignissim sequi. Aspernatur aliquip. Ornare molestias.</p>
+                                    <div class="testi-meta">
+                                        John Doe &middot;
+                                        <span>XYZ Inc.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                  <div class="line line-sm"></div> 
+            </div>
+
+                    <!--! footer -->
+            {% include "admin/inc/footer.html.twig" %}
+
+        </div>
+        <div id="gotoTop" class="icon-angle-up"></div>
+        <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+        <script src="/js/jquery.js"></script>
+        <script src="/js/plugins.js"></script>
+        <script src="/js/functions.js"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
+    
+
+
+
+
+
+
+

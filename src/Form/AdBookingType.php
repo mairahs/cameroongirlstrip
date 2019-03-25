@@ -32,7 +32,8 @@ class AdBookingType extends ApplicationType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => AdBooking::class,
+            'data_class'        => AdBooking::class,
+            'validation_groups' => ['Default', 'front']
         ]);
     }
 }

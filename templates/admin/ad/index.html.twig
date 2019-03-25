@@ -1,0 +1,52 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %} Administration des annonces| {{parent()}}{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1 class="my-5 text-center">Gestion des {{ads|length}} annonces</h1>
+		<table class="table table-hover" >
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Titre</th>
+					<th>Auteur</th>
+					<th class="text-center">Réservations</th>
+					<th class="text-center">Note</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for ad in ads %}
+				<tr>
+					<td>{{ad.id}}</td>
+					<td>{{ad.title}}</td>
+					<td><img src="{{ad.author.picture}}" alt="Avatar de {{ad.author.fullName}}" class="rounded-circle avatar img-thumbnail mr-2">{{ad.author.fullName}}</td>
+					<td class="text-center"><span class="badge badge-pill badge-info">{{ad.adbookings | length }}</span></td>
+					<td class="text-center"><span class="badge badge-pill badge-info">{{ad.avgRatings| number_format(1,',','')}}<span class="badge badge-pill badge-info"></td>
+					<td>
+						<a href="{{path('adminad_edit', {'id':ad.id})}}" class="btn btn-warning"><i class="icon-edit2"></i></a>
+						<a href="{{path('adminad_delete', {'id':ad.id})}}" class="btn btn-danger"><i class="icon-trash-alt1"></i></a>
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+
+		{# <div class="d-flex justify-content-center">
+		  <ul class="pagination">
+		    <li class="page-item {% if page == 1 %}disabled{% endif %}">
+		      <a class="page-link" href="{{path('admin_ads_index', {'page':page - 1 })}}">&laquo;</a>
+		    </li>
+		    {% for i in 1..pagesNumber %}
+		    <li class="page-item {% if page == i %}active{% endif %}">
+		      <a class="page-link" href="{{path('admin_ads_index', {'page':i})}}">{{i}}</a>
+		    </li>
+			{% endfor %}
+		    <li class="page-item {% if page == pagesNumber %}disabled{% endif %}">
+		      <a class="page-link" href="{{path('admin_ads_index', {'page':page + 1 })}}">&raquo;</a>
+		    </li>
+		  </ul>
+		</div> #}
+
+	</div>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %} Modification du commentaire numéro  {{tripComment.id}} pour le voyage {{tripComment.trip.departure}} - {{tripComment.trip.arrival}}| {{parent()}}{% endblock %}
+
+{% block body %}
+    
+	<div class="container">	
+        <div>
+			<ol class="breadcrumb" style="margin-top:20px!important;">
+                <li class="breadcrumb-item"><a href="{{path('admintripcomment_index')}}"><i class="icon-image"></i> Gestion des commentaires sur les voyages</a></li>
+				<li class="breadcrumb-item active" aria-current="page"><a href="{{path('admintripcomment_edit', {'id': tripComment.id})}}"><i class="icon-edit"></i> Modifier un commentaire</a></li>
+			</ol>
+        </div>
+		<h1 class="my-5 text-center">Modification du commentaire numéro {{tripComment.id}} sur le voyage {{tripComment.trip.departure}} - {{tripComment.trip.arrival}}</h1>
+		
+		{{form_start(adminTripCommentForm)}}
+		<div class="row">
+			<div class="col">
+				<div class="card bg-light">
+					<div class="card-header">
+						<h4 class="card-title">Corriger le commentaire ?</h4>
+					</div>
+					<div class="card-body">
+						{{form_widget(adminTripCommentForm)}}
+                        {{form_row(adminTripCommentForm.rating, {'label': 'Note sur 5', 'attr': {'placeholder': 'GirlTripeuse, note le logement que tu as occupé de 0 à 5'}})}}
+                        {{form_row(adminTripCommentForm.content)}}
+						<button type="submit" class="btn btn-danger btn-lg center">
+							<i class="icon-check"></i>
+							Enregistrer les modifications
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card bg-light">
+					<div class="card-header">
+						<h4 class="card-title">Voyage lié à ce commentaire</h4>
+					</div>
+					<div class="card-body">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Id</th>
+									<th>Ville de départ</th>
+									<th>Ville d'arrivée</th>
+                                    <th>Nombre de personnes</th>
+                                    <th>Prix</th>
+                                    <th>Créé par</th>
+								</tr>
+							</thead>
+							<tbody>
+								
+								<tr>
+									<td>{{tripComment.trip.id}}</td>
+									<td>{{tripComment.trip.departure}}</td>
+                                    <td>{{tripComment.trip.arrival}}</td>
+                                    <td>{{tripComment.trip.numberPersons}}</td>
+                                    <td>{{tripComment.trip.price}}</td>
+									<td><img style="width:50%;" src="{{tripComment.trip.traveller.picture}}" alt="Avatar de {{tripComment.trip.traveller.fullName}}" class="rounded-circle avatar img-thumbnail mr-2">{{tripComment.trip.traveller.fullName}}</td>
+									<td>
+										<a href="{{path('trip_view', {'slug':tripComment.trip.slug})}}" class="btn btn-warning"><i class="icon-eye-open"></i></a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{{form_end(adminTripCommentForm)}}
+	</div>
+{% endblock %}

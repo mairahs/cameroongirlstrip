@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<title>Connexion à l'dministration</title>
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+	<style type="text/css">
+		body{
+			display: flex;
+			justify-content: center;
+			height: 100vh;
+		}
+		.card{
+			margin-top: 10%;
+		}
+	</style>
+</head>
+<body>
+	<div class="col-md-4">
+		<div class="card bg-light">
+			<div class="card-header">
+				<h4 class="card-title">
+					<i class="icon-lock1"></i>
+					Connexion Admin CameroonGirlsTrip
+				</h4>
+			</div>
+			<div class="card-body">
+				{% if has_error %}
+					<div class="alert alert-danger">
+						<p>Les informations d'authentification sont erronées.</p>
+					</div>
+				{% endif %}
+				<form action="{{path('adminsecurity_login')}}" method="post">
+					<div class="form-group">
+						<label for="_username">Email</label>
+						<input type="text" class="form-control" placeholder="Adresse Email..." name="_username" value="{{username}}">
+					</div>
+					<div class="form-group">
+						<label for="_password">Mot de passe</label>
+						<input type="password" class="form-control" placeholder="Mot de passe..." name="_password">
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-danger btn-lg">
+							<i class="icon-unlocked"></i>
+							Connexion
+						</button>
+						{# <a href="{{path('homepage')}}" class="btn btn-link">
+							<i class="icon-arrow-left2"></i>
+							Retour vers la page d'accueil	
+						</a> #}
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>

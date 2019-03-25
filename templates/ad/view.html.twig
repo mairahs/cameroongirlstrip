@@ -28,7 +28,7 @@
                 </div>       
                 <div id="single" class="heading-block">
                     <h2 style="margin-left:100px;">{{ad.title}}</h2>
-                    <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; margin-left:100px;">Girl Tripeuse, voici toutes les informations relatives à cet hébergement.</p>
+                    <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; margin-left:100px;">{{app.user.firstName}}, voici toutes les informations relatives à cet hébergement.</p>
                 </div>
                 <div class="entry-overlay-meta" style="margin-bottom:-80px;">
 					<h2 style="text-transform:none; font-family:'Cabin Sketch', cursive; font-size:20px;" class="center"><a href="#">{{ad.title}}</a></h2>
@@ -110,6 +110,64 @@
 							<a href="{{path('ad_delete', {'slug':ad.slug})}}" class="button button-border button-light button-rounded button-reveal button-large topmargin" onclick="return confirm(`Es tu sûre de vouloir supprimer ton annonce {{ad.title}} ?`)">Supprime ton annonce</a>
                         </div>
 						{% endif %}
+						
+						<div class="clear"></div>
+						{% if ad.adBookings is empty %}
+						<p style ="margin-bottom:-20px!important; margin-top:25px!important; font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Ce logement ne possède pas encore de réservations pour le moment. <br> Sois la première à le réserver.</p>
+						{% else %}
+						<h4 style="margin-top:15px; font-family:'Cabin Sketch', cursive;font-size:17px; color:#4897d8;">Elles ont également réservé ce logement:</h4>
+						{% endif %}
+				
+						<div id="posts" class="events small-thumbs">
+							{% for booking in ad.adBookings %}
+							
+							<div class="entry clearfix">
+									{% if app.user == booking.adBooker %}
+									<div class="entry-image">
+										<a href="{{path('user_view', {'slug': booking.adBooker.slug})}}">
+											<img style="width:130px!important;" src="{{booking.adBooker.picture}}" alt="Avatar de {{booking.adBooker.fullName}}"  class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
+										</a>
+									</div>
+									{% else %}
+									<div class="entry-image">
+										<a href="{{path('user_view', {'slug': booking.adBooker.slug})}}">
+											<img style="width:150px!important;" src="{{booking.adBooker.picture}}" alt="Avatar de {{booking.adBooker.fullName}}"  class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
+										</a>
+									</div>
+									{% endif %}   
+									<div class="entry-c">
+									{% if app.user == booking.adBooker %}
+
+										<div class="entry-title">
+											<h2><a href="#"><i class="icon-female1"></i> Hello {{app.user.firstName}} <i class="icon-smile-beam1"></i></a></h2>
+										</div>
+									{% else %}
+										<div class="entry-title">
+											<h2><a href="#"><i class="icon-female1"></i> {{booking.adBooker.fullName}}</a></h2>
+										</div>
+									{% endif %}
+									{% if app.user == booking.adBooker %}
+										<div class="entry-content">
+											<p style:"text-align:justify;">Tu as également réservé ce logement.</p>		
+										</div>
+									{% else %}
+										<div class="entry-content">
+											<p style:"text-align:justify;">{{booking.adBooker.introduction}}</p>
+										
+											<div class="row">
+												<div class="col-md-12">
+													<a href="{{path('user_view', {'slug': booking.adBooker.slug})}}" class="btn btn-danger">Plus d'infos sur {{booking.adBooker.firstName}}</a>
+												</div>
+												
+											</div>
+											
+										</div>
+									{% endif %}
+									
+									</div>
+								</div>
+								{% endfor %}
+							</div>
 
 					</div>
 					<div class="clear"></div>
@@ -155,7 +213,7 @@
 								</div>						
 							{% endfor %}
 						{% else %}
-							<p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Cette annonce n'a pas encore reçu de commentaires pour le moment.</p>
+							<p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Ce logement n'a pas encore reçu de commentaires pour le moment.<br> Sois la première à commenter.</p>
 						{% endif %}
 
 					</div>

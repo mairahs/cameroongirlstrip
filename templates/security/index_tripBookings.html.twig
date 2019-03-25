@@ -50,28 +50,21 @@
                                     </div>
                                     <ul class="entry-meta clearfix">
                                         <li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;">Réservation numéro {{tripBooking.id}}</span></li>
-                                        <li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-calendar21"></i>Du <strong>{{format_created_at(tripBooking)}}</strong></span></li>
+                                        <li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-calendar21"></i> du <strong>{{format_created_at(tripBooking)}}</strong></span></li>
                                         <li><span class="badge badge-warning">{{tripBooking.amount | number_format(0,'.',' ')}} FCFA </span></li>
                                         {% if tripBooking.comment %}
                                         <li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-comment2"></i><strong>{{tripBooking.comment|nl2br}}</strong></span></li>
                                         {% else %}
-                                          <li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-comment2"></i><strong>Tu n'a fait aucun commentaire pour cette réservation.</strong></span></li>
+                                          <li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-comment2"></i><strong>Aucune question pour cette réservation.</strong></span></li>
                                         {% endif %}
+										<li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-bookmark2"></i><strong>{{tripBooking.numberPlaces}} place réservée {#Gérer le pluriel#}</strong></span></li>
                                     </ul>
-                                    <div class="entry-content">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <a href="{{path('tripbooking_view', {'id':tripBooking.id})}}" class="btn btn-secondary">Plus d'informations</a>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <a href="#" class="btn btn-danger">Modifie ta réservation</a>
-                                            </div> 
-                                            <div class="col-md-4">
-                                                <a href="#" class="btn btn-danger">Supprime ta réservation</a>
-                                            </div>                
-                                        </div>
-	
-					                </div>
+									<div class="entry-content">	
+										<div class="center">
+											<a href="{{path('tripbooking_view', {'id':tripBooking.id})}}" class="btn btn-danger">Plus d'informations</a>
+										</div>          
+									</div>
+
 				                </div>
 			                </div>
 

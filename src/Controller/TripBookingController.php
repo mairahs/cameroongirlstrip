@@ -12,6 +12,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Check\TripBooking\numberPlacesAndPersonsCheck;
 use App\Check\TripBooking\travellerDifferentOfBookerCheck;
+use App\Check\TripBooking\fullTripCheck;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -92,4 +93,5 @@ class TripBookingController extends AbstractController
             'tripCommentForm' => $tripCommentForm->createView()
         ]);
     }
+
 }

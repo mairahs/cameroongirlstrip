@@ -1,10 +1,6 @@
-{% extends 'base.html.twig' %}
+{# {% extends 'base.html.twig' %}
 
-{% block title %} Création d'un  nouveau voyage | {{parent()}}{% endblock %}
-
-{% block stylesheets %}
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" />
-{% endblock %}
+{% block title %} Modification de la réservation de voyage numéro {{tripBooking.id}} | {{parent()}}{% endblock %}
 
 {% block body %}
 
@@ -14,71 +10,37 @@
 		<div class="container clearfix">
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item"><a href="{{path('homepage')}}"><i class="icon-line2-home"></i> Accueil</a></li>
-				<li class="breadcrumb-item active" aria-current="page"><a href="{{path('ad_new')}}"><i class="icon-line-file-add"></i> Ajouter un trajet</a></li>
+                <li class="breadcrumb-item"><a href="{{path('tripbooking_view', {'id': tripBooking.id })}}"><i class="icon-image"></i> Détail de la réservation</a></li>
+				<li class="breadcrumb-item active" aria-current="page"><a href="{{path('tripbooking_edit', {'id': tripBooking.id })}}"><i class="icon-edit"></i> Modifier une réservation</a></li>
 			</ol>
 		</div>			
         <section id="section-about" class="page-section">
             <div class="container clearfix">
                 <div class="heading-block divcenter nobottomborder nobottommargin">
-                    <i class="icon-line-file-add d-block h1 mb-4" style="color:#f8a055;"></i> 
+                    <i class="icon-edit d-block h1 mb-4" style="color:#f8a055;"></i> 
                 </div>        
                 <div class="heading-block">
-                    <h2>Créer un voyage </h2>
-                    <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Tu as une envie irrépressible d'évasion ? Partir quelques jours à la découvertes d'autres cultures du Cameroun ? <br>Alors crée un trajet et propose le aux autres GirlsTripeuses. </p>
+                    <h2>Modifie ta réservation numéro {{tripBooking.id}}</h2>
+                    <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Tu souhaites modifier ta réservation ? Tu es au bon endroit.</p>
                 </div>
-                <div class="postcontent nobottommargin">
-                
-				{{form_start(tripForm,{'attr': {'novalidate': 'novalidate'}})}} 
-				
-					<div class="form-row">
-						<div class="form-group col-md-6">
-							{{form_row(tripForm.departure)}}
-						</div>
-						<div class="form-group col-md-6">
-							{{form_row(tripForm.arrival)}}
-						</div>				
-					</div>
-					
-					<div class="form-row">
-						<div class="form-group col-md-6">
-							{{form_row(tripForm.departureDate)}}
-						</div>		
-						<div class="form-group col-md-6">
-							{{form_row(tripForm.returnDate)}}
-						</div>				
-					</div>
-					<div class="form-row">
-						<div class="form-group col-md-6">
-							{{form_row(tripForm.tripHour)}}
-						</div>		
-						<div class="form-group col-md-6">
-							{{form_row(tripForm.price)}}
-						</div>				
-					</div>
+				<div class="postcontent nobottommargin">
+                {{form_start(tripBookingForm)}}
 
-					<div class="form-row">
-						<div class="form-group col-md-4">
-							{{form_row(tripForm.fixedNumberPersons, {'label': 'Nombre de personne attendu'})}}
-						</div>
-						<div class="form-group col-md-4">
-							{{form_row(tripForm.category, {'label': 'Sélectionne une catégorie de voyage'})}}
-						
-						</div>
-						<div class="form-group col-md-4">
-							{{form_row(tripForm.coverImage)}}
-						</div>				
-					</div> 
-					<div class="form-group">
-						{{form_row(tripForm.description)}}
-					</div>                 
+					<div class="row">
+                        <div class="col">
+							{{form_row(tripBookingForm.numberPlaces, {'label': 'Nombre de places', 'attr': {'placeholder': 'Pour combien de personnes effectues-tu la réservation ?'}})}}
+                            {{form_row(tripBookingForm.comment)}}
+                        </div>
+                            
+                    </div>               
                     <div class="form-group">
                        <div class="center">                                                    
                             <button type='submit' class="button button-border button-light button-rounded button-reveal button-large topmargin">
-                                Enregistre ton trajet
+                                Modifie ta réservation
                             </button>
                         </div>
                     </div>                      
-                 {{form_end(tripForm)}}              
+                 {{form_end(tripBookingForm)}}              
 				</div>
                 	<div class="sidebar nobottommargin col_last clearfix">
 						<div class="sidebar-widgets-wrap">
@@ -86,7 +48,7 @@
 							<div class="widget clearfix">
 
 								<div class="entry-title center">
-										<h4 style="font-family:'Cabin Sketch', cursive;"><a href="#" style="color:#4897d8!important;" ><i class="icon-line2-home"></i> Nos dernieres annonces de location d'hébergements</a></h4>
+										<h4 style="font-family:'Cabin Sketch', cursive;"><a href="#" style="color:#4897d8!important;" ><i class="icon-line2-home"></i> Nos dernieres annonces</a></h4>
 								</div>
 								<div id="post-list-footer">
 
@@ -217,16 +179,4 @@
         <div class="container clearfix"></div>       
 </section>
 
-{% endblock %}
-{% block javascripts %}
- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
-<script>
-	$(document).ready(function(){
-		$('#trip_departureDate, #trip_returnDate').datepicker({
-			format: 'dd/mm/yyyy',
-			startDate: new Date()
-		}			
-		);
-	});
-</script>
-{% endblock %}
+{% endblock %} #}

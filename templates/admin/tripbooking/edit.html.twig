@@ -1,0 +1,44 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %} Modification de la réservation numéro {{tripBooking.id}} pour le voyage {{tripBooking.trip.departure}} - {{tripBooking.trip.arrival}}| {{parent()}}{% endblock %}
+
+{% block body %}
+    
+	<div class="container">	
+        <div>
+			<ol class="breadcrumb" style="margin-top:20px!important;">
+                <li class="breadcrumb-item"><a href="{{path('admintripbooking_index')}}"><i class="icon-image"></i> Gestion des réservations sur les voyages</a></li>
+				<li class="breadcrumb-item active" aria-current="page"><a href="{{path('admintripbooking_edit', {'id': tripBooking.id})}}"><i class="icon-edit"></i> Modifier une réservation</a></li>
+			</ol>
+        </div>
+		<h1 class="my-5 text-center">Modification de la réservation numéro {{tripBooking.id}} sur le voyage {{tripBooking.trip.departure}} - {{tripBooking.trip.arrival}}</h1>
+		
+		{{form_start(adminTripBookingForm)}}
+		<div class="row">
+			<div class="col">
+				<div class="card bg-light">
+					<div class="card-header">
+						<h4 class="card-title">Corriger la réservation ?</h4>
+					</div>
+					<div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                {{form_row(adminTripBookingForm.numberPlaces)}}
+                                {{form_row(adminTripBookingForm.comment)}}
+                            </div>
+                            <div class="col">
+                                {{form_row(adminTripBookingForm.tripBooker)}}
+                                 {{form_row(adminTripBookingForm.trip)}}
+                            </div>
+                        </div>
+						
+						<button type="submit" class="btn btn-danger btn-lg center">
+							<i class="icon-check"></i>
+							Enregistrer les modifications
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		{{form_end(adminTripBookingForm)}}
+	</div>
+{% endblock %}

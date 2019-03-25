@@ -30,7 +30,7 @@
 								<li class="breadcrumb-item"><a href="{{path('homepage')}}"><i class="icon-line2-home"> Accueil</i></a></li>
 								<li class="breadcrumb-item"><a href="{{path('trip_index')}}"><i class="icon-list"></i> Liste des voyages</a></li>
                                 <li class="breadcrumb-item"><a href="{{path('trip_view', {'slug': trip.slug})}}"><i class="icon-image"></i> Détail du voyage</a></li>
-								<li class="breadcrumb-item active" aria-current="page"><i class="icon-image"></i> Réserver le voyage </li>
+								<li class="breadcrumb-item active" aria-current="page"><i class="icon-image"></i> Détail de la réservation </li>
 							</ol>
 						</div>
 			
@@ -38,7 +38,7 @@
                 </div>       
                 <div id="single" class="heading-block">
                     <h2 style="margin-left:100px;">Détail de la réservation numéro {{tripBooking.id}}</h2>
-                    <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; margin-left:100px;">Girl Tripeuse, voici toutes les informations relatives à ta réservation pour le voyage proposé par <strong>{{traveller.fullName}}</strong>.</p>
+                    <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; margin-left:100px;">{{app.user.firstName}}, voici toutes les informations relatives à ta réservation pour le voyage proposé par <strong>{{traveller.fullName}}</strong>.</p>
                 </div>
                 <div class="entry-overlay-meta" style="margin-bottom:-80px;">
 					<h2 style="text-transform:none; font-family:'Cabin Sketch', cursive; font-size:20px;" class="center"><a href="#">Réservation numéro {{tripBooking.id}}</a></h2>
@@ -54,12 +54,12 @@
 			<div class="container clearfix">
 				<div class="postcontent nobottommargin clearfix"> 
 					<div class="col_three_fourth">
-						<h3 style="margin-top:-300px; color:#555!important;"><i class="icon-comment2"></i> Ton commentaire pour cette réservation:</h3>
+						<h3 style="margin-top:-300px; color:#555!important;"><i class="icon-comment2"></i> Ta question pour cette réservation:</h3>
                         <div class="entry-title">
 							{% if tripBooking.comment %}
                             	<blockquote><p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">"{{tripBooking.comment}}"</p></blockquote>
 							{% else %}
-								<p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Aucun commentaire pour l'instant.</p>
+								<p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">{{app.user.firstName}}, tu n'as posé aucune question pour le moment.</p>
 							{% endif %}
 						</div>
                         <div id="post-list-footer">

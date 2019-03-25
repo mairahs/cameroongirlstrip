@@ -32,7 +32,13 @@ class TripType extends ApplicationType
             ->add('tripHour', TimeType::class, $this->getConfiguration('Heure de départ du voyage', 'Renseigne l\'horaire de départ'))
             ->add('returnDate', TextType::class, $this->getConfiguration('Date de ton retour', 'Renseigne la date de ton retour'))
             ->add('description', TextareaType::class, $this->getConfiguration('Description détaillée du voyage', 'Donne une description complète et attractive du voyage que tu proposes'))
-            ->add('numberPersons', IntegerType::class, $this->getConfiguration('Nombre de personnes attendu', 'Indique le nombre de personnes que tu souhaites pour ce voyage...'))
+            ->add('fixedNumberPersons', IntegerType::class, ['attr' => 
+                [
+                'min'  => 2,
+                'max'  => 5,
+                'step' => 1
+                ]
+            ], $this->getConfiguration('Nombre de personnes attendu', 'Indique le nombre de personnes que tu souhaites pour ce voyage...'))
             ->add('price', MoneyType::class, $this->getConfigurationBis('Prix du voyage', 'Renseigne un prix global pour le voyage','XAF'))
             ->add('coverImage', TextType::class, $this->getConfiguration('Ajoute une image', 'Télécharge une illustration attractive pour le voyage que tu proposes.'))
             ->add('category', EntityType::class, [

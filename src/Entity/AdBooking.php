@@ -33,7 +33,7 @@ class AdBooking
     /**
      * @ORM\Column(type="datetime")
      * @Assert\Date(message="Attention, ta date d'entrée dans le logement n'est pas au bon format")
-     * @Assert\GreaterThan("today", message="La date d'entrée doit être ultérieure à la date du jour")
+     * @Assert\GreaterThan("today", message="La date d'entrée doit être ultérieure à la date du jour", groups={"front"})
      */
     private $startDate;
 
@@ -152,6 +152,7 @@ class AdBooking
      * 
      * Used to automatically generate the ad creation date on today's date
      * @ORM\PrePersist
+     * @ORM\PreUpdate
      */
     public function prePersist()
     {
