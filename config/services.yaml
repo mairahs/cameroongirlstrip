@@ -30,6 +30,12 @@ services:
         
     App\Check\TripBooking\travellerDifferentOfBookerCheck:
 
+    App\Pagination\Pagination:
+        arguments:
+            $templatePath: '/admin/inc/pagination.html.twig'
+            
+       
+
             
     
             
