@@ -47,4 +47,22 @@ class AdRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * provide the best ads created by the users
+     * @param  integer $limit
+     *@return Trip[] Returns an array of Ad objects
+     */
+    public function getBestAds($limit)
+    {
+        return $this->createQueryBuilder('a')
+                    ->select('a as ad, AVG(adc.rating) as avgRatings')
+                    ->join('a.author', 'auth')
+                    ->join('a.adComments', 'adc')
+                    ->groupBy('a')
+                    ->orderBy('avgRatings', 'DESC')
+                    ->setMaxResults($limit)
+                    ->getQuery()
+                    ->getResult();
+    }
 }

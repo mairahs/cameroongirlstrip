@@ -47,4 +47,21 @@ class TripRepository extends ServiceEntityRepository
         ;
     }
     */
+    
+    /**
+     * provide the last trips created by the users
+     * @param  integer $limit
+     *@return Trip[] Returns an array of Trip objects
+     */
+    public function getLastTrips($limit)
+    {
+        return $this->createQueryBuilder('t')
+                    ->select('t as trip')
+                    ->join('t.traveller', 'tra')
+                    ->groupBy('t')
+                    ->orderBy('t.createdAt', 'DESC')
+                    ->setMaxResults($limit)
+                    ->getQuery()
+                    ->getResult();
+    }
 }

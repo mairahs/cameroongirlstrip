@@ -128,74 +128,36 @@
                     <div class="heading-block divcenter nobottomborder nobottommargin center">
                         <i class="icon-paper-plane d-block h1 mb-4" style="color:#f8a055;"></i> 
                     </div>
-                    <h2>Prochains voyages
-                    </h2>
+                    <h2>Prochains voyages</h2>
                     <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Girl Tripeuse, voici les derniers trajets enregistrés par la communauté.</p>
                 </div>          
             </div>
             <div class="row justify-content-between">
+            {% for lastTrip in lastTrips %}
+                {% for trip in lastTrip%}
                 <div class="col-lg-6">
+                    
                     <div class="media row">
-                        <img class="col-sm-5 p-5 p-sm-0 pr-sm-3" src="images/img/piggy.jpg" alt="photo avatar" width="230">
-                        <div class="col-sm-7 media-body">
-                            <h3 class="mb-3" style ="font-family:'Cabin Sketch', cursive; color:#4897d8!important; font-weight:bold;">Paris-New York</h3>
-                            <li style="list-style-type:none;"><i class="icon-user3"></i> <strong>Par {# {{ trip.user.username }} #}</strong></li>
-                            <li style="list-style-type:none;"><i class="icon-calendar2"></i><strong> Le   {# {{ trip.date|localizeddate('none', 'none', 'fr', null, ' d MMMM Y') }} #}</strong> </li>
-                            <li style="list-style-type:none;" ><a href="#" style="color:#4897d8!important; font-family:'Roboto', sans-serif; font-weight:bold;"><i class="icon-line2-speech" style="font-size:15px;"></i><blockquote style="line-height:18px;">{#{{ trip.description|truncate(truncate, false) }}#}Cras sit amet nibh libero, in gravida nulla.</blockquote></a></li>
-                            <li style="list-style-type:none;" ><a href="#" style="color:#4897d8!important; font-family:'Roboto', sans-serif; font-weight:bold;"><i class="icon-comments"style="font-size:15px;"></i> Voir les <strong>32 avis</strong> sur  {# {{ trip.user.username }} #}</a></li>
-                            <li style="list-style-type:none; margin-top:10px;"><a href="{# {{ path('ywn_trip_view_trip_by_user', {'id_trip' : trip.id, 'id_user' : trip.user.id}) }} #}" class="button button-shadow button-rounded t400 ls0 nomargin nott"><i class="icon-signin"></i><span>En savoir plus</span></a></li>
-                            
+                        <img style="width:120px!important; height:120px!important;" src="{{trip.traveller.picture}}" alt="Avatar de {{trip.traveller.fullName}}"  class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
+                        <div class="col-sm-7 media-body mb-5">
+                            <h3 class="mb-3" style ="font-family:'Cabin Sketch', cursive; color:#4897d8!important; font-weight:bold;"><i class="icon-map-signs"></i> {{trip.departure}} - {{trip.arrival}}</h3>
+                            <li class="mb-3" style="list-style-type:none;"> <i class="icon-user1"></i><strong> Créé par  {{trip.traveller.fullName}}</strong></li>
+                            <li class="mb-3" style="list-style-type:none;"><i class="icon-calendar2"></i><strong> Le {{format_created_at_trip(trip)}}</strong> </li>
+                            <li class="mb-3" style="list-style-type:none;"><i class="icon-money"></i> <strong>Prix <span class="badge"> {{trip.price|number_format(0,'.',' ')}} FCFA</span></strong> </li>
+                            <li class="mb-3" style="list-style-type:none;" ><a href="#"><i class="icon-line2-speech" style="font-size:15px;"></i><blockquote style="line-height:18px;">{{ trip.description|truncate(100, false) }}</blockquote></a></li>
+                            <li class="mb-3" style="list-style-type:none;" ><a href="{{path('user_indexTripComments', {'slug': trip.traveller.slug})}}"><i class="icon-comments"style="font-size:15px;"></i> Voir les <strong>{{tripCommentsOnUser|length}} avis</strong> sur  {{ trip.traveller.firstName }}</a></li>
+                            {% if tripCommentsOnUser|length < 1 %}
+                             <li class="mb-3" style="list-style-type:none;" ><a href="#"><i class="icon-comments"style="font-size:15px;"></i> Il n'y a pas encore de commentaire sur {{ trip.traveller.firstName }}</a></li>
+                             {% endif %}
+                            <li style="list-style-type:none; margin-top:10px;"><a href="{{ path('trip_view', {'slug' : trip.slug}) }}" class="button button-shadow button-rounded t400 ls0 nomargin nott"><i class="icon-signin"></i><span>En savoir plus sur ce voyage</span></a></li>                          
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 mt-5 mt-lg-0">
-                    <div class="media row">
-                        <img class="col-sm-5 p-5 p-sm-0 pr-sm-3" src="images/img/piggy.jpg" alt="photo avatar" width="230">
-                        <div class="col-sm-7 media-body">
-                            <h3 class="mb-3" style ="font-family:'Cabin Sketch', cursive; color:#4897d8!important; font-weight:bold;">Paris-New York</h3>
-                            <li style="list-style-type:none;"><i class="icon-user3"></i> <strong>Par {# {{ trip.user.username }} #}</strong></li>
-                            <li style="list-style-type:none;"><i class="icon-calendar2"></i><strong> Le   {# {{ trip.date|localizeddate('none', 'none', 'fr', null, ' d MMMM Y') }} #}</strong> </li>
-                            <li style="list-style-type:none;"><i class="icon-box"></i><strong>{#  {{ trip.kilogramsAvailable }} #} kilos disponibles</strong></li>
-                            <li style="list-style-type:none;" ><a href="#" style="color:#5d3e51; font-family:'Roboto', sans-serif; font-weight:bold;"><i class="icon-line2-speech" style="font-size:15px;"></i><blockquote style="line-height:18px;">{#{{ trip.description|truncate(truncate, false) }}#}Cras sit amet nibh libero, in gravida nulla.</blockquote></a></li>
-                            <li style="list-style-type:none;" ><a href="#" style="color:#5d3e51; font-family:'Roboto', sans-serif; font-weight:bold;"><i class="icon-comments"style="font-size:15px;"></i> Voir les <strong>32 avis</strong> sur  {# {{ trip.user.username }} #}</a></li>
-                            <li style="list-style-type:none; margin-top:10px;"><a href="{# {{ path('ywn_trip_view_trip_by_user', {'id_trip' : trip.id, 'id_user' : trip.user.id}) }} #}" class="button button-shadow button-rounded t400 ls0 nomargin nott"><i class="icon-signin"></i><span>En savoir plus</span></a></li>
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 mt-5">
-                    <div class="media row">
-                        <img class="col-sm-5 p-5 p-sm-0 pr-sm-3" src="images/img/piggy.jpg" alt="photo avatar" width="230">
-                        <div class="col-sm-7 media-body">
-                            <h3 class="mb-3" style ="font-family:'Cabin Sketch', cursive; color:#5d3e51; font-weight:bold;">Paris-New York</h3>
-                            <li style="list-style-type:none;"><i class="icon-user3"></i> <strong>Par {# {{ trip.user.username }} #}</strong></li>
-                            <li style="list-style-type:none;"><i class="icon-calendar2"></i><strong> Le   {# {{ trip.date|localizeddate('none', 'none', 'fr', null, ' d MMMM Y') }} #}</strong> </li>
-                            <li style="list-style-type:none;"><i class="icon-box"></i><strong>{#  {{ trip.kilogramsAvailable }} #} kilos disponibles</strong></li>
-                            <li style="list-style-type:none;" ><a href="#" style="color:#5d3e51; font-family:'Roboto', sans-serif; font-weight:bold;"><i class="icon-line2-speech" style="font-size:15px;"></i><blockquote style="line-height:18px;">{#{{ trip.description|truncate(truncate, false) }}#}Cras sit amet nibh libero, in gravida nulla.</blockquote></a></li>
-                            <li style="list-style-type:none;" ><a href="#" style="color:#5d3e51; font-family:'Roboto', sans-serif; font-weight:bold;"><i class="icon-comments"style="font-size:15px;"></i> Voir les <strong>32 avis</strong> sur  {# {{ trip.user.username }} #}</a></li>
-                            <li style="list-style-type:none; margin-top:10px;"><a href="{# {{ path('ywn_trip_view_trip_by_user', {'id_trip' : trip.id, 'id_user' : trip.user.id}) }} #}" class="button button-shadow button-rounded t400 ls0 nomargin nott"><i class="icon-signin"></i><span>En savoir plus</span></a></li>
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 mt-5">
-                    <div class="media row">
-                        <img class="col-sm-5 p-5 p-sm-0 pr-sm-3" src="images/img/piggy.jpg" alt="photo avatar" width="230">
-                        <div class="col-sm-7 media-body">
-                            <h3 class="mb-3" style ="font-family:'Cabin Sketch', cursive; color:#5d3e51; font-weight:bold;">Paris-New York</h3>
-                            <li style="list-style-type:none;"><i class="icon-user3"></i> <strong>Par {# {{ trip.user.username }} #}</strong></li>
-                            <li style="list-style-type:none;"><i class="icon-calendar2"></i><strong> Le   {# {{ trip.date|localizeddate('none', 'none', 'fr', null, ' d MMMM Y') }} #}</strong> </li>
-                            <li style="list-style-type:none;"><i class="icon-box"></i><strong>{#  {{ trip.kilogramsAvailable }} #} kilos disponibles</strong></li>
-                            <li style="list-style-type:none;" ><a href="#" style="color:#5d3e51; font-family:'Roboto', sans-serif; font-weight:bold;"><i class="icon-line2-speech" style="font-size:15px;"></i><blockquote style="line-height:18px;">{#{{ trip.description|truncate(truncate, false) }}#}Cras sit amet nibh libero, in gravida nulla.</blockquote></a></li>
-                            <li style="list-style-type:none;" ><a href="#" style="color:#5d3e51; font-family:'Roboto', sans-serif; font-weight:bold;"><i class="icon-comments"style="font-size:15px;"></i> Voir les <strong>32 avis</strong> sur  {# {{ trip.user.username }} #}</a></li>
-                            <li style="list-style-type:none; margin-top:10px;"><a href="{# {{ path('ywn_trip_view_trip_by_user', {'id_trip' : trip.id, 'id_user' : trip.user.id}) }} #}" class="button button-shadow button-rounded t400 ls0 nomargin nott"><i class="icon-signin"></i><span>En savoir plus</span></a></li>                           
-                        </div>
-                    </div>
-                </div>
-
+                {% endfor %}
+            {% endfor %}
             </div> 
             <div class="center">    
-                <a href="#" class="button button-border button-light button-rounded button-reveal button-large topmargin"><i class="icon-signin"></i><span>Voir tous les voyages</span></a>
+                <a href="{{path('trip_index')}}" class="button button-border button-light button-rounded button-reveal button-large topmargin"><i class="icon-signin"></i><span>Voir tous les voyages</span></a>
                  <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; font-size:20px; margin-top:60px;">Sinon, sélectionner des critères pour une recherche précise.</p>
                     <form action="#" method="post" role="form" class="landing-wide-form clearfix">
                         <div class="col_four_fifth nobottommargin">
@@ -225,74 +187,40 @@
                     <div class="heading-block divcenter nobottomborder nobottommargin center">
                         <i class="icon-line2-home d-block h1 mb-4" style="color:#f8a055;"></i> 
                     </div>
-                    <h2>Nouveaux logements disponibles</h2>
-                    <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Girl Tripeuse, voici les dernières offres d'hébergement enregistrées par la communauté. Appartements, chambres chez l'habitant pour tous les budgets.</p>
-                </div>               
+                    <h2>Logements Stars disponibles</h2>
+                    <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Girl Tripeuse, voici les offres d'hébergement les mieux notées et enregistrées par la communauté. Appartements, chambres chez l'habitant pour tous les budgets.</p>
+                </div>             
             </div>                
             <div class="row justify-content-between">
+            {% for bestAd in bestAds %}
+            
                 <div class="col-lg-6">
                     <div class="media row">
-                        <img class="col-sm-5 p-5 p-sm-0 pr-sm-3" src="images/img/piggy.jpg" alt="photo avatar" width="230">
-                        <div class="col-sm-7 media-body">
-                            <h3 class="mb-3" style ="font-family:'Cabin Sketch', cursive; color:#5d3e51; font-weight:bold;">Paris-New York</h3>
-                            <li style="list-style-type:none;"><i class="icon-user3"></i> <strong>Par {# {{ trip.user.username }} #}</strong></li>
-                            <li style="list-style-type:none;"><i class="icon-calendar2"></i><strong> Le   {# {{ trip.date|localizeddate('none', 'none', 'fr', null, ' d MMMM Y') }} #}</strong> </li>
-                            <li style="list-style-type:none;"><i class="icon-box"></i><strong>{#  {{ trip.kilogramsAvailable }} #} kilos disponibles</strong></li>
-                            <li style="list-style-type:none;" ><a href="#" style="color:#5d3e51; font-family:'Roboto', sans-serif; font-weight:bold;"><i class="icon-line2-speech" style="font-size:15px;"></i><blockquote style="line-height:18px;">{#{{ trip.description|truncate(truncate, false) }}#}Cras sit amet nibh libero, in gravida nulla.</blockquote></a></li>
-                            <li style="list-style-type:none;" ><a href="#" style="color:#5d3e51; font-family:'Roboto', sans-serif; font-weight:bold;"><i class="icon-comments"style="font-size:15px;"></i> Voir les <strong>32 avis</strong> sur  {# {{ trip.user.username }} #}</a></li>
-                            <li style="list-style-type:none; margin-top:10px;"><a href="{# {{ path('ywn_trip_view_trip_by_user', {'id_trip' : trip.id, 'id_user' : trip.user.id}) }} #}" class="button button-shadow button-rounded t400 ls0 nomargin nott"><i class="icon-signin"></i><span>En savoir plus</span></a></li>
+                        <img style="width:120px!important; height:120px!important;" src="{{bestAd.ad.author.picture}}" alt="Avatar de {{bestAd.ad.author.fullName}}"  class="alignleft img-circle img-thumbnail nomargin image_fade testi-image"> 
+                        <div class="col-sm-7 media-body mb-5">
+                            <h3 class="mb-3" style ="font-family:'Cabin Sketch', cursive; color:#5d3e51!important; font-weight:bold;">{{bestAd.ad.title}}</h3>
+                            {% if bestAd.ad.adComments |length > 0 %}
+				                <p style:"text-align:center; font-weight:bold;">{% include 'inc/rating.html.twig' with {'rating':bestAd.ad.avgRatings}  %}</p>
+				            {% else %}
+				                <p style:"text-align:center; font-weight:bold!important;">Ce logement n'a pas encore été noté.</p>
+				            {% endif %}
+                             <li class="mb-3" style="list-style-type:none;"><i class="icon-user3"></i> <strong>Loué par {{bestAd.ad.author.fullName}}</strong></li>
+                            <li class="mb-3" style="list-style-type:none;"><i class="icon-line-map"></i> <strong>Situé à {{ bestAd.ad.location }}</strong></li>
+                            <li class="mb-3" style="list-style-type:none;"><i class="icon-bed"></i><strong> {{bestAd.ad.rooms}} chambres disponibles</strong> </li>
+                            <li class="mb-3" style="list-style-type:none;"><i class="icon-money"></i><strong> Prix: <span class="badge"> {{bestAd.ad.price|number_format(0,'.',' ')}} FCFA</span></strong> </li>
+                            <li class="mb-3" style="list-style-type:none;" ><a href="#"><i class="icon-line2-speech" style="font-size:15px;"></i><blockquote style="line-height:18px;">{{ bestAd.ad.introduction|truncate(100, false) }}</blockquote></a></li>
+                            <li style="list-style-type:none;" ><a href="#"><i class="icon-comments"style="font-size:15px;"></i> Voir les <strong>32 avis</strong> sur {{ bestAd.ad.author.fullName }}</a></li>
+                            <li style="list-style-type:none; margin-top:10px;"><a href="{{ path('ad_view', {'slug' : bestAd.ad.slug}) }}" class="button button-shadow button-rounded t400 ls0 nomargin nott"><i class="icon-signin"></i><span>En savoir plus sur ce logement</span></a></li>
                             
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 mt-5 mt-lg-0">
-                    <div class="media row">
-                        <img class="col-sm-5 p-5 p-sm-0 pr-sm-3" src="images/img/piggy.jpg" alt="photo avatar" width="230">
-                        <div class="col-sm-7 media-body">
-                            <h3 class="mb-3" style ="font-family:'Cabin Sketch', cursive; color:#5d3e51; font-weight:bold;">Paris-New York</h3>
-                            <li style="list-style-type:none;"><i class="icon-user3"></i> <strong>Par {# {{ trip.user.username }} #}</strong></li>
-                            <li style="list-style-type:none;"><i class="icon-calendar2"></i><strong> Le   {# {{ trip.date|localizeddate('none', 'none', 'fr', null, ' d MMMM Y') }} #}</strong> </li>
-                            <li style="list-style-type:none;"><i class="icon-box"></i><strong>{#  {{ trip.kilogramsAvailable }} #} kilos disponibles</strong></li>
-                            <li style="list-style-type:none;" ><a href="#" style="color:#5d3e51; font-family:'Roboto', sans-serif; font-weight:bold;"><i class="icon-line2-speech" style="font-size:15px;"></i><blockquote style="line-height:18px;">{#{{ trip.description|truncate(truncate, false) }}#}Cras sit amet nibh libero, in gravida nulla.</blockquote></a></li>
-                            <li style="list-style-type:none;" ><a href="#" style="color:#5d3e51; font-family:'Roboto', sans-serif; font-weight:bold;"><i class="icon-comments"style="font-size:15px;"></i> Voir les <strong>32 avis</strong> sur  {# {{ trip.user.username }} #}</a></li>
-                            <li style="list-style-type:none; margin-top:10px;"><a href="{# {{ path('ywn_trip_view_trip_by_user', {'id_trip' : trip.id, 'id_user' : trip.user.id}) }} #}" class="button button-shadow button-rounded t400 ls0 nomargin nott"><i class="icon-signin"></i><span>En savoir plus</span></a></li>
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 mt-5">
-                    <div class="media row">
-                        <img class="col-sm-5 p-5 p-sm-0 pr-sm-3" src="images/img/piggy.jpg" alt="photo avatar" width="230">
-                        <div class="col-sm-7 media-body">
-                            <h3 class="mb-3" style ="font-family:'Cabin Sketch', cursive; color:#5d3e51; font-weight:bold;">Paris-New York</h3>
-                            <li style="list-style-type:none;"><i class="icon-user3"></i> <strong>Par {# {{ trip.user.username }} #}</strong></li>
-                            <li style="list-style-type:none;"><i class="icon-calendar2"></i><strong> Le   {# {{ trip.date|localizeddate('none', 'none', 'fr', null, ' d MMMM Y') }} #}</strong> </li>
-                            <li style="list-style-type:none;"><i class="icon-box"></i><strong>{#  {{ trip.kilogramsAvailable }} #} kilos disponibles</strong></li>
-                            <li style="list-style-type:none;" ><a href="#" style="color:#5d3e51; font-family:'Roboto', sans-serif; font-weight:bold;"><i class="icon-line2-speech" style="font-size:15px;"></i><blockquote style="line-height:18px;">{#{{ trip.description|truncate(truncate, false) }}#}Cras sit amet nibh libero, in gravida nulla.</blockquote></a></li>
-                            <li style="list-style-type:none;" ><a href="#" style="color:#5d3e51; font-family:'Roboto', sans-serif; font-weight:bold;"><i class="icon-comments"style="font-size:15px;"></i> Voir les <strong>32 avis</strong> sur  {# {{ trip.user.username }} #}</a></li>
-                            <li style="list-style-type:none; margin-top:10px;"><a href="{# {{ path('ywn_trip_view_trip_by_user', {'id_trip' : trip.id, 'id_user' : trip.user.id}) }} #}" class="button button-shadow button-rounded t400 ls0 nomargin nott"><i class="icon-signin"></i><span>En savoir plus</span></a></li>
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 mt-5">
-                    <div class="media row">
-                        <img class="col-sm-5 p-5 p-sm-0 pr-sm-3" src="images/img/piggy.jpg" alt="photo avatar" width="230">
-                        <div class="col-sm-7 media-body">
-                            <h3 class="mb-3" style ="font-family:'Cabin Sketch', cursive; color:#5d3e51; font-weight:bold;">Paris-New York</h3>
-                            <li style="list-style-type:none;"><i class="icon-user3"></i> <strong>Par {# {{ trip.user.username }} #}</strong></li>
-                            <li style="list-style-type:none;"><i class="icon-calendar2"></i><strong> Le   {# {{ trip.date|localizeddate('none', 'none', 'fr', null, ' d MMMM Y') }} #}</strong> </li>
-                            <li style="list-style-type:none;"><i class="icon-box"></i><strong>{#  {{ trip.kilogramsAvailable }} #} kilos disponibles</strong></li>
-                            <li style="list-style-type:none;" ><a href="#" style="color:#5d3e51; font-family:'Roboto', sans-serif; font-weight:bold;"><i class="icon-line2-speech" style="font-size:15px;"></i><blockquote style="line-height:18px;">{#{{ trip.description|truncate(truncate, false) }}#}Cras sit amet nibh libero, in gravida nulla.</blockquote></a></li>
-                            <li style="list-style-type:none;" ><a href="#" style="color:#5d3e51; font-family:'Roboto', sans-serif; font-weight:bold;"><i class="icon-comments"style="font-size:15px;"></i> Voir les <strong>32 avis</strong> sur  {# {{ trip.user.username }} #}</a></li>
-                            <li style="list-style-type:none; margin-top:10px;"><a href="{# {{ path('ywn_trip_view_trip_by_user', {'id_trip' : trip.id, 'id_user' : trip.user.id}) }} #}" class="button button-shadow button-rounded t400 ls0 nomargin nott"><i class="icon-signin"></i><span>En savoir plus</span></a></li>
-                            
-                        </div>
-                    </div>
-                </div>
+            
+            {% endfor %}
+
             </div>
             <div class="center">
-                    <a href="#" class="button button-border button-light button-rounded button-reveal button-large topmargin"><i class="icon-signin"></i><span>Voir toutes les offres de location</span></a>
+                    <a href="{{path('ad_index')}}" class="button button-border button-light button-rounded button-reveal button-large topmargin"><i class="icon-signin"></i><span>Voir toutes les offres de location</span></a>
                   <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; font-size:20px; margin-top:60px;">Sinon, sélectionner des critères pour une recherche précise.</p>
                     <form action="#" method="post" role="form" class="landing-wide-form clearfix">
                         <div class="col_four_fifth nobottommargin">

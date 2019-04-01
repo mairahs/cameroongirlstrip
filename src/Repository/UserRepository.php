@@ -47,4 +47,33 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getBestAuthorUsers($limit)
+    {
+        return $this->createQueryBuilder('u')
+                    ->join('u.ads', 'a')
+                    ->join('a.adComments', 'adc')
+                    ->select('u as user, AVG(adc.rating) as avgRating, COUNT(adc) as sumADC')
+                    ->groupBy('u')
+                    ->orderBy('avgRating', 'DESC')
+                    ->having('sumADC > 3')
+                    ->setMaxResults($limit)
+                    ->getQuery()
+                    ->getResult();
+    }
+
+    public function getBestTravellerUsers($limit)
+    {
+        return $this->createQueryBuilder('u')
+                    ->join('u.trips', 't')
+                    ->join('t.tripComments', 'trc')
+                    ->select('u as user, AVG(trc.rating) as avgRating, COUNT(trc) as sumTRC')
+                    ->groupBy('u')
+                    ->orderBy('avgRating', 'DESC')
+                    ->having('sumtrc > 3')
+                    ->setMaxResults($limit)
+                    ->getQuery()
+                    ->getResult();
+
+    }
 }

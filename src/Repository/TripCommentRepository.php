@@ -47,4 +47,16 @@ class TripCommentRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getTripCommentsOnUser($traveller)
+    {
+        return $this->createQueryBuilder('trc')
+                    ->select('trc as tripComment, t as trip')
+                    ->join('trc.trip', 't')
+                    ->join('t.traveller', 'tra')
+                    ->where('t.traveller = :traveller')
+                    ->setParameter('traveller', $traveller)
+                    ->getQuery()
+                    ->getResult();
+    }
 }

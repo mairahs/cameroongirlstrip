@@ -1,0 +1,215 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %} Tableau de bord| {{parent()}}{% endblock %}
+
+{% block body %}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-4">		
+				<div class="card-body card bg-warning text-white mb-3 text-center">
+					<div class="row">
+						<div class="col-4">
+							<i style="font-size:20px;" class="icon-users"></i>
+						</div>
+						<div class="col-8">
+							<h4 style="color:#fff; font-size:20px;" class="card-title">{{stats.usersNumber}} utilisatrices</h4>
+						</div>
+					</div>
+				</div>
+			</div>
+            <div class="col-md-4">
+				<div class="card-body card bg-secondary text-white mb-3 text-center">
+					<div class="row">
+						<div class="col-4">
+							<i style="font-size:20px;" class="icon-line-move"></i>
+						</div>
+						<div class="col-8">
+							<h4 style="font-size:20px; color:#fff;" class="card-title">{{stats.usersNumber}} trajets</h4>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="card-body card bg-dark text-white mb-3 text-center">
+					<div class="row">
+						<div class="col-4">
+							<i style="font-size:20px;" class="icon-hotel"></i>
+						</div>
+						<div class="col-8">
+							<h4 style="font-size:20px; color:#fff;" class="card-title">{{stats.adsNumber}} logements</h4>
+						</div>
+					</div>	
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3">
+				<div class="card-body card bg-danger text-white mb-3 text-center">
+					<div class="row">
+						<div class="col-4">
+							<i style="font-size:20px;" class="icon-hotel"></i>
+						</div>
+						<div class="col-8">
+							<h4 style="font-size:20px; color:#fff;" class="card-title">{{stats.adBookingsNumber}} réservations logements</h4>
+						</div>
+					</div>
+				</div>
+			</div>
+            <div class="col-md-3">
+				<div class="card-body card bg-dark text-white mb-3 text-center">
+					<div class="row">
+						<div class="col-4">
+							<i style="font-size:20px;" class="icon-paper-plane"></i>
+						</div>
+						<div class="col-8">
+							<h4 style="font-size:20px; color:#fff;" class="card-title">{{stats.adBookingsNumber}} réservations  voyages</h4>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="card-body card bg-success text-white mb-3 text-center">
+					<div class="row">
+						<div class="col-4">
+							<i style="font-size:20px;" class="icon-comment2"></i>
+						</div>
+						<div class="col-8">
+							<h4 style="font-size:20px; color:#fff;" class="card-title">{{stats.adCommentsNumber}} commentaires logements </h4>
+						</div>
+					</div>
+				</div>
+			</div>
+            	<div class="col-md-3">
+					<div class="card-body  card bg-warning text-white mb-3 text-center">
+						<div class="row">
+							<div class="col-4">
+								<i style="font-size:20px;" class="icon-comment2"></i>
+							</div>
+							<div class="col-8">
+								<h4 style="font-size:20px; color:#fff;" class="card-title">{{stats.tripCommentsNumber}} commentaires voyages </h4>
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col">
+				<div class="alert alert-success">
+					<h2 class="alert-heading my-3 text-center"><i class="icon-arrow-up"></i>
+						Les annonces populaires</h2>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Annonces</th>
+								<th>Auteur</th>
+								<th>Moyenne</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for ad in bestAds %}
+							<tr>
+								<td>{{ad.title}}</td>
+								<td><img src="{{ad.picture}}" alt="" class="rounded-circle avatar mr-2">{{ad.firstName}} {{ad.lastName}}
+								</td>
+								<td class="text-center">
+									<span class="badge badge-dark">{{ad.note | number_format(1, ",", " ")}}</span>
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+						
+					</table>
+				</div>
+			</div>
+			<div class="col">
+				<div class="alert alert-danger">
+					<h2 class="alert-heading my-3 text-center"><i class="icon-arrow-down"></i>
+						Les annonces pourries</h2>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Annonces</th>
+								<th>Auteur</th>
+								<th>Moyenne</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for ad in worstAds %}
+							<tr>
+								<td>{{ad.title}}</td>
+								<td><img src="{{ad.picture}}" alt="Photo de profil de {{ad.firstName}} {{ad.lastName}}" class="rounded-circle avatar mr-2">{{ad.firstName}} {{ad.lastName}}
+								</td>
+								<td class="text-center">
+									<span class="badge badge-dark">{{ad.note | number_format(1, ",", " ")}}</span>
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+						
+					</table>
+				</div>
+			</div>
+		</div>
+        <div class="row">
+			<div class="col">
+				<div class="alert alert-success">
+					<h2 class="alert-heading my-3 text-center"><i class="icon-arrow-up"></i>
+						Les voyages populaires</h2>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Voyages</th>
+								<th>Voyageuses</th>
+								<th>Moyenne</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for trip in bestTrips %}
+							<tr>
+								<td>{{trip.departure}} - {{trip.arrival}}</td>
+								<td><img src="{{trip.picture}}" alt="Photo de profil de {{trip.firstName}} {{trip.lastName}}" class="rounded-circle avatar mr-2">{{trip.firstName}} {{trip.lastName}}
+								</td>
+								<td class="text-center">
+									<span class="badge badge-dark">{{trip.note | number_format(1, ",", " ")}}</span>
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+						
+					</table>
+				</div>
+			</div>
+			<div class="col">
+				<div class="alert alert-danger">
+					<h2 class="alert-heading my-3 text-center"><i class="icon-arrow-down"></i>
+						Les voyages pourris</h2>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Voyages</th>
+								<th>Voyageuses</th>
+								<th>Moyenne</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for trip in worstTrips %}
+							<tr>
+								<td>{{trip.departure}} - {{trip.arrival}}</td>
+								<td><img src="{{trip.picture}}" alt="Photo de profil de {{trip.firstName}} {{trip.lastName}}" class="rounded-circle avatar mr-2">{{trip.firstName}} {{trip.lastName}}
+								</td>
+								<td class="text-center">
+									<span class="badge badge-dark">{{trip.note | number_format(1, ",", " ")}}</span>
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+						
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+
+

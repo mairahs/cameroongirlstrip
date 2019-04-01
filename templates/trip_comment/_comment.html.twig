@@ -1,0 +1,30 @@
+
+    <div id="posts" class="events small-thumbs">
+        {% for comment in tripComment %}
+			<div class="entry clearfix">
+				<div class="entry-image">
+             
+					<a href="#">
+						 <img style="width:200px!important; height:200px!important;" src="{{comment.author.picture}}" alt="Avatar de {{comment.author.fullName}}"  class="alignleft img-circle img-thumbnail nomargin image_fade testi-image"> 
+                    </a>
+                </div>    
+				<div class="entry-c">
+					<div class="entry-title">
+						<h2><a href="{{path('trip_view', {'slug':comment.trip.slug})}}"><i class="icon-line-move"></i> Voyage {{comment.trip.departure}} - {{comment.trip.arrival}} du {{format_created_at_trip(comment.trip)}}</a></h2>
+					</ul></a></h2>
+                        <div class="entry-content">
+                            <blockquote style:"text-align:justify;">{{comment.content|nl2br}}</blockquote>
+                        </div>
+						<p style:"text-align:center; font-weight:bold;">{% include 'inc/rating.html.twig' with {'rating':comment.trip.avgRatings}  %}</p>		
+					</div>
+					<ul class="entry-meta clearfix">
+						<li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-user4"></i> {{comment.author.fullName}}</span></li>
+						<li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-calendar3"></i> le {{format_created_at_trip_comment(comment)}}</span></li>
+					</ul>
+				</div>
+			</div>
+        {% endfor %}
+	</div> 
+
+       
+
