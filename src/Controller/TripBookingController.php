@@ -15,6 +15,7 @@ use App\Check\TripBooking\travellerDifferentOfBookerCheck;
 use App\Check\TripBooking\fullTripCheck;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class TripBookingController extends AbstractController
 {
@@ -65,8 +66,8 @@ class TripBookingController extends AbstractController
     /**
      * View one booking
      * @Route("/tripbooking/{id}", name="tripbooking_view")
-     * @isGranted("ROLE_TRAVELLER", message="Hélas, tu n'as pas accès à cette ressource.")
-     * @isGranted("ROLE_RENTER",  message="Hélas, tu n'as pas accès à cette ressource.")
+     * @Security("is_granted('ROLE_RENTER') and user === tripBooking.getTripBooker()", message="Cette réservation n'est pas la tienne. Tu ne peux donc pas la visualiser.")
+     * @Security("is_granted('ROLE_TRAVELLER') and user === tripBooking.gettripBooker()", message="Cette réservation n'est pas la tienne. Tu ne peux donc pas la visualiser.")
      * @param TripBooking $tripBooking
      * @return Response
      */

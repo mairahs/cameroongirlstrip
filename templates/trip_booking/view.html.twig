@@ -38,7 +38,7 @@
                 </div>       
                 <div id="single" class="heading-block">
                     <h2 style="margin-left:100px;">Détail de la réservation numéro {{tripBooking.id}}</h2>
-                    <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; margin-left:100px;">{{app.user.firstName}}, voici toutes les informations relatives à ta réservation pour le voyage proposé par <strong>{{traveller.fullName}}</strong>.</p>
+                    <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; margin-left:100px;">{{tripBooking.tripBooker.firstName}}, voici toutes les informations relatives à ta réservation pour le voyage proposé par <strong>{{traveller.fullName}}</strong>.</p>
                 </div>
                 <div class="entry-overlay-meta" style="margin-bottom:-80px;">
 					<h2 style="text-transform:none; font-family:'Cabin Sketch', cursive; font-size:20px;" class="center"><a href="#">Réservation numéro {{tripBooking.id}}</a></h2>
@@ -59,7 +59,7 @@
 							{% if tripBooking.comment %}
                             	<blockquote><p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">"{{tripBooking.comment}}"</p></blockquote>
 							{% else %}
-								<p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">{{app.user.firstName}}, tu n'as posé aucune question pour le moment.</p>
+								<p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">{{tripBooking.tripBooker.firstName}}, tu n'as posé aucune question pour le moment.</p>
 							{% endif %}
 						</div>
                         <div id="post-list-footer">
@@ -114,7 +114,7 @@
 								</div>
 
 								<div class="spost clearfix">
-									<h4 id="tripComment" style="margin-top:20px; font-family:'Cabin Sketch', cursive;font-size:17px;"><a href="#" style="color:#4897d8!important; text-transform:none;" ><i class="icon-comment2 h1"></i> {{app.user.firstName}}, ton avis compte pour nous</a></h4>
+									<h4 id="tripComment" style="margin-top:20px; font-family:'Cabin Sketch', cursive;font-size:17px;"><a href="#" style="color:#4897d8!important; text-transform:none;" ><i class="icon-comment2 h1"></i> {{tripBooking.tripBooker.firstName}}, ton avis compte pour nous</a></h4>
 									
 										<div class="entry-c">
 											{% if date() > date(tripBooking.trip.returnDate) %}
@@ -144,7 +144,7 @@
 												{% endif %}
 
 											{% else %}
-											<p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">{{app.user.firstName}}, tu pourras noter ce voyage une fois celui-ci effectué. </p> 
+											<p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">{{tripBooking.tripBooker.firstName}}, tu pourras noter ce voyage une fois celui-ci effectué. </p> 
 											{% endif %}	
 										</div>
 								</div>

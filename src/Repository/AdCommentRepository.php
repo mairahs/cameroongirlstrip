@@ -47,13 +47,12 @@ class AdCommentRepository extends ServiceEntityRepository
         ;
     }
     */
-
     public function getAdCommentsOnUser($author)
     {
         return $this->createQueryBuilder('adc')
                     ->select('adc as adComment, a as ad')
                     ->join('adc.ad', 'a')
-                    ->join('a.author', 'auth')
+                    ->join('a.author', 'aau')
                     ->where('a.author = :author')
                     ->setParameter('author', $author)
                     ->getQuery()

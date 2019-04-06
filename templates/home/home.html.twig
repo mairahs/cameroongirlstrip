@@ -145,7 +145,7 @@
                             <li class="mb-3" style="list-style-type:none;"><i class="icon-calendar2"></i><strong> Le {{format_created_at_trip(trip)}}</strong> </li>
                             <li class="mb-3" style="list-style-type:none;"><i class="icon-money"></i> <strong>Prix <span class="badge"> {{trip.price|number_format(0,'.',' ')}} FCFA</span></strong> </li>
                             <li class="mb-3" style="list-style-type:none;" ><a href="#"><i class="icon-line2-speech" style="font-size:15px;"></i><blockquote style="line-height:18px;">{{ trip.description|truncate(100, false) }}</blockquote></a></li>
-                            <li class="mb-3" style="list-style-type:none;" ><a href="{{path('user_indexTripComments', {'slug': trip.traveller.slug})}}"><i class="icon-comments"style="font-size:15px;"></i> Voir les <strong>{{tripCommentsOnUser|length}} avis</strong> sur  {{ trip.traveller.firstName }}</a></li>
+                            <li class="mb-3" style="list-style-type:none;" ><a href="{{path('user_indexTripComments', {'slug': trip.traveller.slug})}}"><i class="icon-comments"style="font-size:15px;"></i> Voir les tous avis sur <strong>{{ trip.traveller.firstName }}</strong></a></li>
                             {% if tripCommentsOnUser|length < 1 %}
                              <li class="mb-3" style="list-style-type:none;" ><a href="#"><i class="icon-comments"style="font-size:15px;"></i> Il n'y a pas encore de commentaire sur {{ trip.traveller.firstName }}</a></li>
                              {% endif %}
@@ -209,7 +209,10 @@
                             <li class="mb-3" style="list-style-type:none;"><i class="icon-bed"></i><strong> {{bestAd.ad.rooms}} chambres disponibles</strong> </li>
                             <li class="mb-3" style="list-style-type:none;"><i class="icon-money"></i><strong> Prix: <span class="badge"> {{bestAd.ad.price|number_format(0,'.',' ')}} FCFA</span></strong> </li>
                             <li class="mb-3" style="list-style-type:none;" ><a href="#"><i class="icon-line2-speech" style="font-size:15px;"></i><blockquote style="line-height:18px;">{{ bestAd.ad.introduction|truncate(100, false) }}</blockquote></a></li>
-                            <li style="list-style-type:none;" ><a href="#"><i class="icon-comments"style="font-size:15px;"></i> Voir les <strong>32 avis</strong> sur {{ bestAd.ad.author.fullName }}</a></li>
+                            <li style="list-style-type:none;" ><a href="{{path('user_indexAdComments', {'slug': bestAd.ad.author.slug})}}"><i class="icon-comments"style="font-size:15px;"></i> Voir tous les avis sur <strong>{{ bestAd.ad.author.fullName }}</strong></a></li>
+                             {% if adCommentsOnUser|length < 1 %}
+                             <li class="mb-3" style="list-style-type:none;" ><a href="#"><i class="icon-comments"style="font-size:15px;"></i> Il n'y a pas encore de commentaire sur {{ bestAd.ad.author.fullName }}</a></li>
+                             {% endif %}
                             <li style="list-style-type:none; margin-top:10px;"><a href="{{ path('ad_view', {'slug' : bestAd.ad.slug}) }}" class="button button-shadow button-rounded t400 ls0 nomargin nott"><i class="icon-signin"></i><span>En savoir plus sur ce logement</span></a></li>
                             
                         </div>
