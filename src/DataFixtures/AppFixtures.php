@@ -88,6 +88,7 @@ class AppFixtures extends Fixture
                 ->setDepartureDate($faker->dateTimeBetween('now', '+1 years', 'Africa/Lagos'))
                 ->setReturnDate($faker->dateTimeBetween('now', '+2 years', 'Africa/Lagos'))
                 ->setDescription($faker->paragraph(10, true))
+                ->setFixedNumberPersons(mt_rand(2,5))
                 ->setNumberPersons(mt_rand(2,5))
                 ->setPrice(mt_rand(40,200))
                 ->setTripHour($faker->dateTimeThisYear('now'))
