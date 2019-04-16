@@ -12,6 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use App\Entity\TripSearch;
+use App\Form\TripSearchType;
 
 class TripController extends AbstractController
 {
@@ -19,11 +21,15 @@ class TripController extends AbstractController
      * View all trips
      * @Route("/trips", name="trip_index")
      */
-    public function index(TripRepository $repository)
+    public function index(TripRepository $repository, Request $request)
     {
-        $trips = $repository->findAll();
+        $tripSearch = new TripSearch; 
+        $tripSearchForm = $this->createForm(TripSearchType::class, $tripSearch);
+        $tripSearchForm->handleRequest($request);
+        $trips = $repository->getAllTripsSearch($tripSearch);
         return $this->render('trip/index.html.twig', [
-            'trips' => $trips
+            'trips'          => $trips,
+            'tripSearchForm' => $tripSearchForm->createView()
         ]);
     }
 

@@ -19,9 +19,32 @@
                     <i class="icon-list1 d-block h1 mb-4" style="color:#f8a055;"></i> 
                 </div>        
                 <div class="heading-block center">
-                    <h2>Tous nos voyages disponibles</h2>
-                    <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Girl Tripeuse, tu trouveras, sans aucun doute, ton bonheur dans cette liste.</p>
+                    <h2>Liste des voyages correspondant à ta recherche</h2>
+                    <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Girl Tripeuse, sélectionne au moins un critère de ton choix parmi ceux proposés pour effectuer une recherche précise..</p>
                 </div>
+				<div class="center">
+					    {{form_start(tripSearchForm,{'attr': {'novalidate': 'novalidate', 'class': 'landing-wide-form clearfix'}})}} 
+						<div class="col_four_fifth nobottommargin">
+							<div class="col_one_third nobottommargin"> 
+								{{form_row(tripSearchForm.departureDate)}}
+							</div>
+							<div class="col_one_third nobottommargin">
+								{{form_row(tripSearchForm.arrival)}}
+							</div>
+							<div class="col_one_third col_last nobottommargin">
+								{{form_row(tripSearchForm.price)}}
+							</div>
+						</div>
+						<div class="col_one_fifth col_last nobottommargin">
+							<button class="btn btn-danger btn-block nomargin" type="submit"><i class="icon-search3"></i></button>
+						</div>
+            			{{form_end(tripSearchForm)}}
+						{% if trips is empty %}
+						<p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; font-size:20px; margin-top:60px;">Hélas, aucun voyage ne correspond à ta recherche. <br>Tu peux modifier tes critères ou créer <a href="{{path('trip_new')}}">un nouveau voyage</a>.</p>
+						{% else %}
+						<p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; font-size:20px; margin-top:60px;">{{trips|length}} voyages correspondent à au moins un de tes critères.</p>
+						{% endif %}
+				</div>
                 <div class="postcontent nobottommargin">
 
 						<div id="posts" class="events small-thumbs">
@@ -177,6 +200,17 @@
                         
         <div class="container clearfix"></div>       
 </section>
-
-
 {% endblock %}
+{% block javascripts %}
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('#trip_search_departureDate').datepicker({
+			format: 'dd/mm/yyyy',
+			startDate: new Date()
+		}			
+		);
+	});
+</script>
+{% endblock %}
+

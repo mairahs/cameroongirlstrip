@@ -8,6 +8,7 @@ use App\Repository\TripRepository;
 use App\Repository\UserRepository;
 use App\Repository\AdCommentRepository;
 use App\Repository\TripCommentRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -16,29 +17,11 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="homepage")
      */
-    public function index(TripRepository $tripRepository, AdRepository $adRepository, TripCommentRepository $tripCommentRepository, AdCommentRepository $adCommentRepository)
+    public function index(TripRepository $tripRepository, AdRepository $adRepository, TripCommentRepository $tripCommentRepository, AdCommentRepository $adCommentRepository, Request $request)
     {
-        $lastTrips = $tripRepository->getLastTrips(4); 
-        $bestAds   = $adRepository->getBestAds(4);
-    
-        foreach($lastTrips as $lastTrip)
-        {
-            foreach($lastTrip as $trip)
-            {
-                $tripCommentsOnUser = $tripCommentRepository->getTripCommentsOnUser($trip->getTraveller());
-            }
-        } 
-        
-        // foreach($bestAds as $bestAd)
-        // {
-        //   $adCommentsOnUser = $adCommentRepository->getAdCommentsOnUser($bestAd['ad']->getAuthor());
-        //   dump($adCommentsOnUser);  
-        // }
-
-        // dump($bestAds[0]['ad']->getAuthor());
-        // die();
-
-        //$adCommentsOnUser = $adCommentRepository->getAdCommentsOnUser($bestAds[0]['ad']->getAuthor());
+        $lastTrips = $tripRepository->getLastTrips(3);
+        $bestAds   = $adRepository->getBestAds(3);
+        $tripCommentsOnUser = $tripCommentRepository->getTripCommentsOnUser($lastTrips[0]['trip']->getTraveller());
         $adCommentsOnUser = $adCommentRepository->getAdCommentsOnUser($bestAds[0]['ad']->getAuthor());
       
         return $this->render('home/home.html.twig', [

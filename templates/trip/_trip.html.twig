@@ -2,6 +2,7 @@
     <div id="posts" class="events small-thumbs">
     
 			{% set url = path('trip_view', {'slug': trip.slug})%}
+			{% set unitPrice = trip.price/trip.fixedNumberPersons %}
 			<div class="entry clearfix">
 				<div class="entry-image">
 					<a href="{{url}}">
@@ -19,8 +20,9 @@
 						{% if trip.tripComments |length > 0 %}
 						<p style:"text-align:center; font-weight:bold;">{% include 'inc/rating.html.twig' with {'rating':trip.avgRatings}  %}</p>
 						{% else %}
-						<p style:"text-align:center; font-weight:bold!important;">Ce voyage n'a pas encore été noté.</p>
+						<p style:"text-align:center; font-weight:bold;">Ce voyage n'a pas encore été noté.</p>
 						{% endif %}
+						<p style:"text-align:center; font-weight:bold;"><i class="icon-money"></i> Prix total: <span class="badge">{{trip.price|number_format(0,'.',' ')}} FCFA</span> soit la place de voyage à <strong>{{unitPrice|number_format(0,'.',' ')}} FCFA</strong></p>
 					</div>
 					<ul class="entry-meta clearfix">
 						<li><span class="badge badge-warning">{% if trip.category.name == 'bus' %}<i class="icon-bus-alt"></i> {% else %} <i class="icon-car-alt"></i>{% endif %}</span></li>

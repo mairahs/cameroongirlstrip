@@ -133,49 +133,30 @@
                 </div>          
             </div>
             <div class="row justify-content-between">
-            {% for lastTrip in lastTrips %}
-                {% for trip in lastTrip%}
-                <div class="col-lg-6">
-                    
+           
+            {% for lastTrip in lastTrips %}   
+                <div class="col-lg-4">  
                     <div class="media row">
-                        <img style="width:120px!important; height:120px!important;" src="{{trip.traveller.picture}}" alt="Avatar de {{trip.traveller.fullName}}"  class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
+                        <img style="width:60px!important; height:60px!important;" src="{{lastTrip.trip.traveller.picture}}" alt="Avatar de {{lastTrip.trip.traveller.fullName}}"  class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
                         <div class="col-sm-7 media-body mb-5">
-                            <h3 class="mb-3" style ="font-family:'Cabin Sketch', cursive; color:#4897d8!important; font-weight:bold;"><i class="icon-map-signs"></i> {{trip.departure}} - {{trip.arrival}}</h3>
-                            <li class="mb-3" style="list-style-type:none;"> <i class="icon-user1"></i><strong> Créé par  {{trip.traveller.fullName}}</strong></li>
-                            <li class="mb-3" style="list-style-type:none;"><i class="icon-calendar2"></i><strong> Le {{format_created_at_trip(trip)}}</strong> </li>
-                            <li class="mb-3" style="list-style-type:none;"><i class="icon-money"></i> <strong>Prix <span class="badge"> {{trip.price|number_format(0,'.',' ')}} FCFA</span></strong> </li>
-                            <li class="mb-3" style="list-style-type:none;" ><a href="#"><i class="icon-line2-speech" style="font-size:15px;"></i><blockquote style="line-height:18px;">{{ trip.description|truncate(100, false) }}</blockquote></a></li>
-                            <li class="mb-3" style="list-style-type:none;" ><a href="{{path('user_indexTripComments', {'slug': trip.traveller.slug})}}"><i class="icon-comments"style="font-size:15px;"></i> Voir les tous avis sur <strong>{{ trip.traveller.firstName }}</strong></a></li>
+                            <h3 class="mb-3" style ="font-family:'Cabin Sketch', cursive; color:#4897d8!important; font-weight:bold;"><i class="icon-map-signs"></i> {{lastTrip.trip.departure}} - {{lastTrip.trip.arrival}}</h3>
+                            <li class="mb-3" style="list-style-type:none;"> <i class="icon-user1"></i><strong> Créé par  {{lastTrip.trip.traveller.fullName}}</strong></li>
+                            <li class="mb-3" style="list-style-type:none;"><i class="icon-calendar2"></i><strong> Le {{format_created_at_trip(lastTrip.trip)}}</strong> </li>
+                            <li class="mb-3" style="list-style-type:none;"><i class="icon-money"></i> <strong>Prix <span class="badge"> {{lastTrip.trip.price|number_format(0,'.',' ')}} FCFA</span></strong> </li>
+                            <li class="mb-3" style="list-style-type:none;" ><a href="#"><i class="icon-line2-speech" style="font-size:15px;"></i><blockquote style="line-height:18px;">{{ lastTrip.trip.description|truncate(100, false)|nl2br }}</blockquote></a></li>
+                            <li class="mb-3" style="list-style-type:none;" ><a href="{{path('user_indexTripComments', {'slug': lastTrip.trip.traveller.slug})}}"><i class="icon-comments"style="font-size:15px;"></i> Voir les tous avis sur <strong>{{ lastTrip.trip.traveller.firstName }}</strong></a></li>
                             {% if tripCommentsOnUser|length < 1 %}
-                             <li class="mb-3" style="list-style-type:none;" ><a href="#"><i class="icon-comments"style="font-size:15px;"></i> Il n'y a pas encore de commentaire sur {{ trip.traveller.firstName }}</a></li>
+                             <li class="mb-3" style="list-style-type:none;" ><a href="#"><i class="icon-comments"style="font-size:15px;"></i> Il n'y a pas encore de commentaire sur {{ lastTrip.trip.traveller.firstName }}</a></li>
                              {% endif %}
-                            <li style="list-style-type:none; margin-top:10px;"><a href="{{ path('trip_view', {'slug' : trip.slug}) }}" class="button button-shadow button-rounded t400 ls0 nomargin nott"><i class="icon-signin"></i><span>En savoir plus sur ce voyage</span></a></li>                          
+                            <li style="list-style-type:none; margin-top:10px;"><a href="{{ path('trip_view', {'slug' : lastTrip.trip.slug}) }}" class="button button-shadow button-rounded t400 ls0 nomargin nott"><i class="icon-signin"></i><span>En savoir plus </span></a></li>                          
                         </div>
                     </div>
                 </div>
-                {% endfor %}
             {% endfor %}
-            </div> 
-            <div class="center">    
-                <a href="{{path('trip_index')}}" class="button button-border button-light button-rounded button-reveal button-large topmargin"><i class="icon-signin"></i><span>Voir tous les voyages</span></a>
-                 <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; font-size:20px; margin-top:60px;">Sinon, sélectionner des critères pour une recherche précise.</p>
-                    <form action="#" method="post" role="form" class="landing-wide-form clearfix">
-                        <div class="col_four_fifth nobottommargin">
-                            <div class="col_one_third nobottommargin">
-                                <input type="date" class="form-control input-lg not-dark" value="" placeholder="Date de départ*">
-                            </div>
-                            <div class="col_one_third nobottommargin">
-                                <input type="text" class="form-control input-lg not-dark" value="" placeholder="Lieu de départ*">
-                            </div>
-                            <div class="col_one_third col_last nobottommargin">
-                                <input type="text" class="form-control input-lg not-dark" value="" placeholder="Lieu de destination*">
-                            </div>
-                        </div>
-                        <div class="col_one_fifth col_last nobottommargin">
-                            <button class="btn btn-danger btn-block nomargin" type="submit"><i class="icon-search3"></i></button>
-                        </div>
-                    </form>
-            </div> 
+            </div>
+            <div class="center">
+                 <a href="{{path('trip_index')}}" class="button button-border button-light button-rounded button-reveal button-large topmargin"><i class="icon-signin"></i><span>Voir tous les voyages</span></a>
+            </div>
     </div>
 </div>
    <div class="clear"style="margin-top: -50px;"></div>
@@ -223,7 +204,7 @@
 
             </div>
             <div class="center">
-                    <a href="{{path('ad_index')}}" class="button button-border button-light button-rounded button-reveal button-large topmargin"><i class="icon-signin"></i><span>Voir toutes les offres de location</span></a>
+                  <a href="{{path('ad_index')}}" class="button button-border button-light button-rounded button-reveal button-large topmargin"><i class="icon-signin"></i><span>Voir toutes les offres de location</span></a>
                   <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; font-size:20px; margin-top:60px;">Sinon, sélectionner des critères pour une recherche précise.</p>
                     <form action="#" method="post" role="form" class="landing-wide-form clearfix">
                         <div class="col_four_fifth nobottommargin">

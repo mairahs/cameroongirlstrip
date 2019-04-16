@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Trip;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\TripSearch;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Trip|null find($id, $lockMode = null, $lockVersion = null)
@@ -47,15 +48,45 @@ class TripRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * provide all trips created by the users which are not empty
+     *@return Trip[] Returns an array of Trip objects
+     */
+    public function getAllTripsSearch(TripSearch $tripSearch)
+    {
+        $query = $this->findEmptyTrips();
+
+        if($tripSearch->getDepartureDate())
+        {
+            $query = $query->andWhere('t.departureDate >= :departureDate')
+                           ->setParameter('departureDate', $tripSearch->getDepartureDate())
+                           ->orderBy('t.departureDate', 'ASC');
+        }
+
+        if($tripSearch->getArrival())
+        {
+            $query = $query->andWhere('t.arrival = :arrival')
+                           ->setParameter('arrival', $tripSearch->getArrival());
+        }
+
+        if($tripSearch->getPrice())
+        {
+            $query = $query->andWhere('t.price <= :price')
+                           ->setParameter('price', $tripSearch->getPrice());
+        }
+        return $query->getQuery()
+                     ->getResult();            
+    }
     
     /**
      * provide the last trips created by the users
      * @param  integer $limit
-     *@return Trip[] Returns an array of Trip objects
+     * @return Trip[] Returns an array of Trip objects
      */
     public function getLastTrips($limit)
     {
-        return $this->createQueryBuilder('t')
+        return $this->findEmptyTrips()
                     ->select('t as trip')
                     ->join('t.traveller', 'tra')
                     ->groupBy('t')
@@ -64,4 +95,25 @@ class TripRepository extends ServiceEntityRepository
                     ->getQuery()
                     ->getResult();
     }
+
+    private function findEmptyTrips()
+    {
+        return $this->createQueryBuilder('t')
+                    ->where('t.numberPersons != 0');
+    }
+
+    /**
+     * provide all trips created by the users which are not empty
+     *@return Trip[] Returns an array of Trip objects
+     */
+    public function getAllTrips()
+    {
+        return $this->findEmptyTrips()
+                    ->join('t.traveller', 'tra')
+                    ->groupBy('t')
+                    ->orderBy('t.createdAt', 'DESC')
+                    ->getQuery()
+                    ->getResult();
+    }
+    
 }
