@@ -19,9 +19,33 @@
                     <i class="icon-list1 d-block h1 mb-4" style="color:#f8a055;"></i> 
                 </div>        
                 <div class="heading-block center">
-                    <h2>Toutes nos annonces de location disponibles</h2>
-                    <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Girl Tripeuse, tu trouveras, sans aucun doute, le logement de tes rêves dans cette liste lors de ton voyage.</p>
+                    <h2>Liste des logements correspondant à ta recherche</h2>
+                    <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Girl Tripeuse, sélectionne au moins un critère de ton choix parmi ceux proposés pour effectuer une recherche précise...</p>
                 </div>
+				<div class="center">
+                  	{{form_start(adSearchForm,{'attr': {'novalidate': 'novalidate', 'class': 'landing-wide-form clearfix'}})}} 
+						<div class="col_four_fifth nobottommargin">
+							<div class="col_one_third nobottommargin"> 
+								{{form_row(adSearchForm.location)}}
+							</div>
+							<div class="col_one_third nobottommargin">
+								{{form_row(adSearchForm.price)}}
+							</div>
+							<div class="col_one_third col_last nobottommargin">
+								{{form_row(adSearchForm.rooms)}}
+							</div>
+						</div>
+						<div class="col_one_fifth col_last nobottommargin">
+							<button class="btn btn-danger btn-block nomargin" type="submit"><i class="icon-search3"></i></button>
+						</div>
+            		{{form_end(adSearchForm)}}
+					{% if ads is empty %}
+						<p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; font-size:20px; margin-top:60px;"> Hélas, aucun logement ne correspond à ta recherche. <br>Tu peux modifier tes critères ou créer <a href="{{path('ad_new')}}">un nouvelle offre de location de logement</a>.</p>
+						{% else %}
+						<p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; font-size:20px; margin-top:60px;">Ces logements correspondent à au moins un de tes critères.</p>
+					{% endif %}
+
+				</div>
                 <div class="postcontent nobottommargin">
 
 						<div id="posts" class="events small-thumbs">
@@ -37,6 +61,9 @@
 								<a href="#" class="btn btn-outline-secondary float-left">&larr; Précédent</a>
 								<a href="#" class="btn btn-outline-dark float-right">Suivant &rarr;</a>
 							</div>
+						</div>
+						<div class="pagination">
+							{{knp_pagination_render(ads)}}
 						</div>
 						<!-- .pager end -->
 

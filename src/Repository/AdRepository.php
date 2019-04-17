@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Ad;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\AdSearch;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Ad|null find($id, $lockMode = null, $lockVersion = null)
@@ -64,5 +65,44 @@ class AdRepository extends ServiceEntityRepository
                     ->setMaxResults($limit)
                     ->getQuery()
                     ->getResult();
+    }
+
+    /**
+     * provide all ads created by the users
+     *@return Ad[] Returns an array of Ad objects
+     */
+    public function getAllAds()
+    {
+        return $this->createQueryBuilder('a')
+                    ->join('a.author', 'auth')
+                    ->groupBy('a')
+                    ->getQuery()
+                    ->getResult();
+    }
+
+    /**
+     * provide all ads created by the users
+     * @return Query
+     */
+    public function getAllAdsSearch(AdSearch $adSearch)
+    {
+        $query = $this->createQueryBuilder('a');
+        if($adSearch->getLocation())
+        {
+            $query = $query->andWhere('a.location = :location')
+                           ->setParameter('location', $adSearch->getLocation());
+        }
+        if($adSearch->getPrice())
+        {
+            $query = $query->andWhere('a.price <= :price')
+                           ->setParameter('price', $adSearch->getPrice());
+        }
+        if($adSearch->getRooms())
+        {
+            $query = $query->andWhere('a.rooms >= :rooms')
+                           ->setParameter('rooms', $adSearch->getRooms());
+        }
+        return $query->getQuery();
+        
     }
 }

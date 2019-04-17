@@ -4,14 +4,17 @@ namespace App\Controller;
 
 use App\Entity\Ad;
 use App\Entity\Image;
+use App\Entity\AdSearch;
 use App\Form\AnnonceType;
+use App\Form\AdSearchType;
 use App\Repository\AdRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdController extends AbstractController
 {
@@ -19,11 +22,18 @@ class AdController extends AbstractController
      * View all ads
      * @Route("/ads", name="ad_index")
      */
-    public function index(AdRepository $repository)
+    public function index(AdRepository $repository, Request $request, PaginatorInterface $paginator)
     {
-        $ads = $repository->findAll();
+    
+        $adSearch = new AdSearch;
+        $adSearchForm = $this->createForm(AdSearchType::class, $adSearch);
+        $adSearchForm->handleRequest($request);
+        $ads = $paginator->paginate($repository->getAllAdsSearch($adSearch),
+                $request->query->getInt('page', 1), 5);
+                
         return $this->render('ad/index.html.twig', [
-            'ads' => $ads
+            'ads' => $ads,
+            'adSearchForm' => $adSearchForm->createView()
         ]);
     }
 

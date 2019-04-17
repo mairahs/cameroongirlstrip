@@ -139,7 +139,7 @@
                     <div class="media row">
                         <img style="width:60px!important; height:60px!important;" src="{{lastTrip.trip.traveller.picture}}" alt="Avatar de {{lastTrip.trip.traveller.fullName}}"  class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
                         <div class="col-sm-7 media-body mb-5">
-                            <h3 class="mb-3" style ="font-family:'Cabin Sketch', cursive; color:#4897d8!important; font-weight:bold;"><i class="icon-map-signs"></i> {{lastTrip.trip.departure}} - {{lastTrip.trip.arrival}}</h3>
+                            <h3 class="mb-3" style ="font-size:16px!important; font-family:'Cabin Sketch', cursive; color:#4897d8!important; font-weight:bold;"><i class="icon-map-signs"></i> {{lastTrip.trip.departure}} - {{lastTrip.trip.arrival}}</h3>
                             <li class="mb-3" style="list-style-type:none;"> <i class="icon-user1"></i><strong> Créé par  {{lastTrip.trip.traveller.fullName}}</strong></li>
                             <li class="mb-3" style="list-style-type:none;"><i class="icon-calendar2"></i><strong> Le {{format_created_at_trip(lastTrip.trip)}}</strong> </li>
                             <li class="mb-3" style="list-style-type:none;"><i class="icon-money"></i> <strong>Prix <span class="badge"> {{lastTrip.trip.price|number_format(0,'.',' ')}} FCFA</span></strong> </li>
@@ -175,11 +175,11 @@
             <div class="row justify-content-between">
             {% for bestAd in bestAds %}
             
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <div class="media row">
-                        <img style="width:120px!important; height:120px!important;" src="{{bestAd.ad.author.picture}}" alt="Avatar de {{bestAd.ad.author.fullName}}"  class="alignleft img-circle img-thumbnail nomargin image_fade testi-image"> 
+                        <img style="width:60px!important; height:60px!important;" src="{{bestAd.ad.author.picture}}" alt="Avatar de {{bestAd.ad.author.fullName}}"  class="alignleft img-circle img-thumbnail nomargin image_fade testi-image"> 
                         <div class="col-sm-7 media-body mb-5">
-                            <h3 class="mb-3" style ="font-family:'Cabin Sketch', cursive; color:#5d3e51!important; font-weight:bold;">{{bestAd.ad.title}}</h3>
+                            <h3 class="mb-3" style ="font-size:16px!important; font-family:'Cabin Sketch', cursive; color:#4897d8!important; font-weight:bold;"><i class="icon-map-signs"></i> {{bestAd.ad.title}}</h3>
                             {% if bestAd.ad.adComments |length > 0 %}
 				                <p style:"text-align:center; font-weight:bold;">{% include 'inc/rating.html.twig' with {'rating':bestAd.ad.avgRatings}  %}</p>
 				            {% else %}
@@ -188,13 +188,13 @@
                              <li class="mb-3" style="list-style-type:none;"><i class="icon-user3"></i> <strong>Loué par {{bestAd.ad.author.fullName}}</strong></li>
                             <li class="mb-3" style="list-style-type:none;"><i class="icon-line-map"></i> <strong>Situé à {{ bestAd.ad.location }}</strong></li>
                             <li class="mb-3" style="list-style-type:none;"><i class="icon-bed"></i><strong> {{bestAd.ad.rooms}} chambres disponibles</strong> </li>
-                            <li class="mb-3" style="list-style-type:none;"><i class="icon-money"></i><strong> Prix: <span class="badge"> {{bestAd.ad.price|number_format(0,'.',' ')}} FCFA</span></strong> </li>
+                            <li class="mb-3" style="list-style-type:none;"><i class="icon-money"></i><strong> Prix: <span class="badge"> {{bestAd.ad.price|number_format(0,'.',' ')}} FCFA par nuit</span></strong> </li>
                             <li class="mb-3" style="list-style-type:none;" ><a href="#"><i class="icon-line2-speech" style="font-size:15px;"></i><blockquote style="line-height:18px;">{{ bestAd.ad.introduction|truncate(100, false) }}</blockquote></a></li>
                             <li style="list-style-type:none;" ><a href="{{path('user_indexAdComments', {'slug': bestAd.ad.author.slug})}}"><i class="icon-comments"style="font-size:15px;"></i> Voir tous les avis sur <strong>{{ bestAd.ad.author.fullName }}</strong></a></li>
                              {% if adCommentsOnUser|length < 1 %}
                              <li class="mb-3" style="list-style-type:none;" ><a href="#"><i class="icon-comments"style="font-size:15px;"></i> Il n'y a pas encore de commentaire sur {{ bestAd.ad.author.fullName }}</a></li>
                              {% endif %}
-                            <li style="list-style-type:none; margin-top:10px;"><a href="{{ path('ad_view', {'slug' : bestAd.ad.slug}) }}" class="button button-shadow button-rounded t400 ls0 nomargin nott"><i class="icon-signin"></i><span>En savoir plus sur ce logement</span></a></li>
+                            <li style="list-style-type:none; margin-top:10px;"><a href="{{ path('ad_view', {'slug' : bestAd.ad.slug}) }}" class="button button-shadow button-rounded t400 ls0 nomargin nott"><i class="icon-signin"></i><span>En savoir plus</span></a></li>
                             
                         </div>
                     </div>
@@ -205,24 +205,7 @@
             </div>
             <div class="center">
                   <a href="{{path('ad_index')}}" class="button button-border button-light button-rounded button-reveal button-large topmargin"><i class="icon-signin"></i><span>Voir toutes les offres de location</span></a>
-                  <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; font-size:20px; margin-top:60px;">Sinon, sélectionner des critères pour une recherche précise.</p>
-                    <form action="#" method="post" role="form" class="landing-wide-form clearfix">
-                        <div class="col_four_fifth nobottommargin">
-                            <div class="col_one_third nobottommargin">
-                                <input type="date" class="form-control input-lg not-dark" value="" placeholder="Date de départ*">
-                            </div>
-                            <div class="col_one_third nobottommargin">
-                                <input type="text" class="form-control input-lg not-dark" value="" placeholder="Lieu de départ*">
-                            </div>
-                            <div class="col_one_third col_last nobottommargin">
-                                <input type="text" class="form-control input-lg not-dark" value="" placeholder="Lieu de destination*">
-                            </div>
-                        </div>
-                        <div class="col_one_fifth col_last nobottommargin">
-                            <button class="btn btn-lg btn-danger btn-block nomargin" value="submit" type="submit" style=""><i class="icon-search3"></i></button>
-                        </div>
-                    </form>
-                </div>   
+            </div>   
     </div>
 </div>
  
