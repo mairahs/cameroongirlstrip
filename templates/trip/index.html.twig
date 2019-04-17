@@ -40,9 +40,9 @@
 						</div>
             			{{form_end(tripSearchForm)}}
 						{% if trips is empty %}
-						<p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; font-size:20px; margin-top:60px;">Hélas, aucun voyage ne correspond à ta recherche. <br>Tu peux modifier tes critères ou créer <a href="{{path('trip_new')}}">un nouveau voyage</a>.</p>
+						<p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; font-size:20px; margin-top:60px;"> Hélas, aucun voyage ne correspond à ta recherche. <br>Tu peux modifier tes critères ou créer <a href="{{path('trip_new')}}">un nouveau voyage</a>.</p>
 						{% else %}
-						<p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; font-size:20px; margin-top:60px;">{{trips|length}} voyages correspondent à au moins un de tes critères.</p>
+						<p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; font-size:20px; margin-top:60px;">Ces voyages correspondent à au moins un de tes critères.</p>
 						{% endif %}
 				</div>
                 <div class="postcontent nobottommargin">
@@ -60,6 +60,10 @@
 								<a href="#" class="btn btn-outline-secondary float-left">&larr; Précédent</a>
 								<a href="#" class="btn btn-outline-dark float-right">Suivant &rarr;</a>
 							</div>
+						</div>
+
+						<div class="pagination">
+							{{knp_pagination_render(trips)}}
 						</div>
 						<!-- .pager end -->
 

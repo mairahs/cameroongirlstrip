@@ -51,7 +51,7 @@ class TripRepository extends ServiceEntityRepository
 
     /**
      * provide all trips created by the users which are not empty
-     *@return Trip[] Returns an array of Trip objects
+     * @return Query
      */
     public function getAllTripsSearch(TripSearch $tripSearch)
     {
@@ -75,8 +75,8 @@ class TripRepository extends ServiceEntityRepository
             $query = $query->andWhere('t.price <= :price')
                            ->setParameter('price', $tripSearch->getPrice());
         }
-        return $query->getQuery()
-                     ->getResult();            
+        return $query->getQuery();
+                                 
     }
     
     /**

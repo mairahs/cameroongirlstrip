@@ -4,16 +4,17 @@ namespace App\Controller;
 
 use App\Entity\Trip;
 use App\Form\TripType;
+use App\Entity\TripSearch;
+use App\Form\TripSearchType;
 use App\Repository\TripRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use App\Entity\TripSearch;
-use App\Form\TripSearchType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TripController extends AbstractController
 {
@@ -21,12 +22,13 @@ class TripController extends AbstractController
      * View all trips
      * @Route("/trips", name="trip_index")
      */
-    public function index(TripRepository $repository, Request $request)
+    public function index(TripRepository $repository, Request $request, PaginatorInterface $paginator)
     {
         $tripSearch = new TripSearch; 
         $tripSearchForm = $this->createForm(TripSearchType::class, $tripSearch);
         $tripSearchForm->handleRequest($request);
-        $trips = $repository->getAllTripsSearch($tripSearch);
+        $trips = $paginator->paginate($repository->getAllTripsSearch($tripSearch),
+                 $request->query->getInt('page', 1), 5);
         return $this->render('trip/index.html.twig', [
             'trips'          => $trips,
             'tripSearchForm' => $tripSearchForm->createView()
