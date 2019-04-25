@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Ad;
+use App\Entity\AdOption;
 use App\Form\AnnonceType;
 use App\Pagination\Pagination;
 use App\Repository\AdRepository;

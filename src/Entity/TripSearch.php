@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class TripSearch
@@ -17,7 +18,7 @@ class TripSearch
      */
     private $arrival;
 
-     /**
+    /**
      * @var int|null
      */
     private $price;

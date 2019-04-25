@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class AdSearch
@@ -21,6 +22,16 @@ class AdSearch
      * @var int|null
      */
     private $rooms;
+
+    /**
+     * @var ArrayCollection
+     */
+    private $adOptions;
+
+    public function __construct()
+    {
+        $this->adOptions = new ArrayCollection();
+    }
 
 
     public function getLocation(): ?string
@@ -57,6 +68,22 @@ class AdSearch
         $this->rooms = $rooms;
 
         return $this;
+    }
+
+    /**
+     * @return ArrayCollection $adOptions
+    */
+    public function getAdOptions(): ArrayCollection
+    {
+        return $this->adOptions;
+    }
+
+    /**
+     * @param ArrayCollection $adOptions
+     */
+    public function setAdOptions(ArrayCollection $adOptions): void
+    {
+        $this->adOptions = $adOptions;
     }
 
 

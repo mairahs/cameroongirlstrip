@@ -1,0 +1,34 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %} Modification de l'option {{adOption.name}} pour le logement ?| {{parent()}}{% endblock %}
+
+{% block body %}
+    
+	<div class="container">	
+        <div>
+			<ol class="breadcrumb" style="margin-top:20px!important;">
+                <li class="breadcrumb-item"><a href="{{path('adminadoption_index')}}"><i class="icon-image"></i> Gestion des options sur les logements</a></li>
+				<li class="breadcrumb-item active" aria-current="page"><a href="{{path('adminadoption_edit', {'id': adOption.id})}}"><i class="icon-edit"></i> Modifier une option</a></li>
+			</ol>
+        </div>
+		<h1 class="my-5 text-center">Modification de l'option {{adOption.name}} sur l'annonce ?</h1>
+			{{form_start(adminAdOptionForm,{'attr': {'novalidate': 'novalidate'}})}} 
+				
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							{{form_row(adminAdOptionForm.name)}}
+						</div>
+						{# <div class="form-group col-md-6">
+							{{form_row(adminAdOptionForm.ads)}}
+						</div>				 #}
+					</div>                
+                    <div class="form-group">
+                       <div class="center">                                                    
+                            <button type='submit' class="button button-border button-rounded button-reveal button-large topmargin">
+                                Modifie ton option
+                            </button>
+                        </div>
+                    </div>                      
+            {{form_end(adminAdOptionForm)}}    
+	
+	</div>
+{% endblock %}

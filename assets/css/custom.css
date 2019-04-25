@@ -282,7 +282,7 @@ blockquote{
 
 /* formulaire de recherche */
 .form-control{
-    border: 2px solid #ffdb5c;
+    border: 2px solid #ffdb5c!important;
 }
 
 /* Personnalisation de l'onglet "Enregistre un nouveau voyage" */

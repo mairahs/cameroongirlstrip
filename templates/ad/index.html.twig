@@ -24,18 +24,21 @@
                 </div>
 				<div class="center">
                   	{{form_start(adSearchForm,{'attr': {'novalidate': 'novalidate', 'class': 'landing-wide-form clearfix'}})}} 
-						<div class="col_four_fifth nobottommargin">
-							<div class="col_one_third nobottommargin"> 
+						<div class="row nobottommargin">
+							<div class="col-md-3 nobottommargin"> 
 								{{form_row(adSearchForm.location)}}
 							</div>
-							<div class="col_one_third nobottommargin">
+							<div class="col-md-3 nobottommargin">
 								{{form_row(adSearchForm.price)}}
 							</div>
-							<div class="col_one_third col_last nobottommargin">
+							<div class="col-md-3 nobottommargin">
 								{{form_row(adSearchForm.rooms)}}
 							</div>
+							<div class="col-md-3 nobottommargin">
+								{{form_row(adSearchForm.adOptions)}}
+							</div>
 						</div>
-						<div class="col_one_fifth col_last nobottommargin">
+						<div class=" col_last nobottommargin">
 							<button class="btn btn-danger btn-block nomargin" type="submit"><i class="icon-search3"></i></button>
 						</div>
             		{{form_end(adSearchForm)}}

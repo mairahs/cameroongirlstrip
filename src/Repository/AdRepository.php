@@ -102,6 +102,16 @@ class AdRepository extends ServiceEntityRepository
             $query = $query->andWhere('a.rooms >= :rooms')
                            ->setParameter('rooms', $adSearch->getRooms());
         }
+        if($adSearch->getAdOptions()->count() > 0)
+        {
+            $k = 0;
+            foreach($adSearch->getAdOptions() as $adOption)
+            {
+                $k++;
+                $query = $query->andWhere(":adOption$k MEMBER OF a.adOptions")
+                               ->setParameter("adOption$k", $adOption);
+            }
+        }
         return $query->getQuery();
         
     }

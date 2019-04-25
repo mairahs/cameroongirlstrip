@@ -1,0 +1,26 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %} Création des options de logement| {{parent()}}{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1 class="my-5 text-center">Création des options de logement</h1>
+			{{form_start(adminAdOptionForm,{'attr': {'novalidate': 'novalidate'}})}} 
+				
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							{{form_row(adminAdOptionForm.name)}}
+						</div>
+						{# <div class="form-group col-md-6">
+							{{form_row(adminAdOptionForm.ads)}}
+						</div>				 #}
+					</div>                
+                    <div class="form-group">
+                       <div class="center">                                                    
+                            <button type='submit' class="button button-border button-rounded button-reveal button-large topmargin">
+                                Enregistre ton option
+                            </button>
+                        </div>
+                    </div>                      
+            {{form_end(adminAdOptionForm)}}              
+    </div>
+{% endblock %}

@@ -4,9 +4,11 @@ namespace App\Form;
 
 use App\Entity\Ad;
 use App\Form\ImageType;
+use App\Entity\AdOption;
 use App\Form\ApplicationType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
@@ -33,6 +35,11 @@ class AnnonceType extends ApplicationType
                  ]
             ], $this->getConfiguration('Nombre de chambres', 'Renseigne le nombre de chambres disponibles'))
             ->add('price', MoneyType::class, $this->getConfigurationBis('Prix par nuit', 'Renseigne un tarif pour la nuit','XAF'))
+            ->add('adOptions', EntityType::class,[
+                'class'        => AdOption::class,
+                'choice_label' => 'name',
+                'multiple'     => true
+            ])
             ->add('images', CollectionType::class, [
                 'entry_type' => ImageType::class,
                 'allow_add'  => true,

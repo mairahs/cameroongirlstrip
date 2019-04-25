@@ -23,8 +23,7 @@ class AdminAdCommentController extends AbstractController
             'adComments' => $adComments
         ]);
     }
-
-    
+   
     /**
      * avoid to edit adcomment
      * @Route("/admin/adcomment/{id}/edit", name="adminadcomment_edit")

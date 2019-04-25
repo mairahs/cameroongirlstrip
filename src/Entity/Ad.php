@@ -101,12 +101,18 @@ class Ad
      * @ORM\OneToMany(targetEntity="App\Entity\AdComment", mappedBy="ad", orphanRemoval=true)
      */
     private $adComments;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\AdOption", inversedBy="ads")
+     */
+    private $adOptions;
     
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->adBookings = new ArrayCollection();
         $this->adComments = new ArrayCollection();
+        $this->adOptions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -389,6 +395,34 @@ class Ad
         }else{
             return 0;
         }
+    }
+
+    /**
+     * @return Collection|AdOption[]
+     */
+    public function getAdOptions(): Collection
+    {
+        return $this->adOptions;
+    }
+
+    public function addAdOption(AdOption $adOption): self
+    {
+        if (!$this->adOptions->contains($adOption)) {
+            $this->adOptions[] = $adOption;
+            $adOption->addAd($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdOption(AdOption $adOption): self
+    {
+        if ($this->adOptions->contains($adOption)) {
+            $this->adOptions->removeElement($adOption);
+            $adOption->removeAd($this);
+        }
+
+        return $this;
     }
 
    
