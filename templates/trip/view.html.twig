@@ -58,12 +58,22 @@
 				<div class="postcontent nobottommargin clearfix"> 
 					<div class="col_three_fourth">
 						<h3 style="margin-top:-350px;"></h3>
-						<p style="margin-top:50px!important; text-align:justify;">{{trip.description}}</p>
+						 <h3 style="margin-top:20px; font-family:'Cabin Sketch', cursive;font-size:17px;color:#4897d8!important;">Description du voyage</h3>
+						<p style="margin-top:20px!important; text-align:justify;">{{trip.description}}</p>
 						<div class="entry-image">
                             <a href="">
                             	<img src="{{trip.coverImage}}" alt="Photo de l'image du voyage {{trip.departure}} - {{trip.arrival}} ">
                             </a>
                         </div>
+						<h3 style="margin-top:20px; font-family:'Cabin Sketch', cursive;font-size:17px;color:#4897d8!important;">Option(s) du voyage</h3>                    
+						<div class="col_half nobottommargin">
+							<ul class="iconlist nobottommargin">
+							{% for tripOption in trip.tripOptions %}
+								<li><i class="icon-ok"></i>{{tripOption.name}}</li>
+							{% endfor %}
+							</ul>
+						</div>
+						<div class="clear"></div>
 						{% if app.user == trip.traveller %}
 						 <div class="center" style="margin-bottom:50px;">
                             <a href="{{path('trip_edit', {'slug':trip.slug})}}" class="button button-border button-light button-rounded button-reveal button-large topmargin">Modifie ton voyage</a>

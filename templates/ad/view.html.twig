@@ -80,30 +80,19 @@
                                     <span class="sr-only">Next</span>
                                 </a>
                         </div>
-		                <h3 style="margin-top:20px; font-family:'Cabin Sketch', cursive;font-size:17px;color:#4897d8!important;">Description du bien</h3>
+		                <h3 style="margin-top:20px; font-family:'Cabin Sketch', cursive;font-size:17px;color:#4897d8!important;">Description du logement</h3>
                             <div style="text-align:justify;margin-bottom:30px;">
 								 {{ad.content|raw}} 
-							</div>                     
+							</div> 
+						<h3 style="margin-top:20px; font-family:'Cabin Sketch', cursive;font-size:17px;color:#4897d8!important;">Option(s) du logement</h3>                    
 						<div class="col_half nobottommargin">
 							<ul class="iconlist nobottommargin">
-								<li><i class="icon-ok"></i> Return Flight Tickets</li>
-								<li><i class="icon-ok"></i> All Local/Airport Transfers</li>
-								<li><i class="icon-ok"></i> Resort Accomodation</li>
-								<li><i class="icon-ok"></i> All Meals Included</li>
-								<li><i class="icon-ok"></i> Adventure Activities</li>
-							</ul>
-
-						</div>
-						<div class="col_half nobottommargin col_last">
-							<ul class="iconlist nobottommargin">
-								<li><i class="icon-ok"></i> Logical Games</li>
-								<li><i class="icon-ok"></i> Local Guides</li>
-								<li><i class="icon-ok"></i> Support Staff</li>
-								<li><i class="icon-ok"></i> Personal Security</li>
-								<li><i class="icon-ok"></i> VISA Fees &amp; Medical Insurance</li>
+							{% for adOption in ad.adOptions %}
+								<li><i class="icon-ok"></i>{{adOption.name}}</li>
+							{% endfor %}
 							</ul>
 						</div>
-
+						<div class="clear"></div>
 						{% if app.user == ad.author %}
 						 <div class="center">
                             <a href="{{path('ad_edit', {'slug':ad.slug})}}" class="button button-border button-light button-rounded button-reveal button-large topmargin">Modifie ton annonce</a>
