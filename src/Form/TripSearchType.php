@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\TripOption;
 use App\Entity\TripSearch;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,26 +23,24 @@ class TripSearchType extends AbstractType
                 'format'   => 'dd/MM/yyyy',
                 'widget'   => 'single_text',
                 'required' => false,
-                'label'    => false,
-                'html5'    => false,
-                'attr'     => [
-                    'placeholder' => 'Quand souhaites-tu partir ?'
-                ]
+                'label'    => 'Date de départ',
+                'html5'    => false
             ])
             ->add('arrival',  TextType::class, [
                 'required' => false,
-                'label'    => false,
-                'attr'     => [
-                    'placeholder' => 'Où souhaites-tu aller ?'
-                ]
+                'label'    => 'Destination'
             ])
             ->add('price', MoneyType::class, [
                 'required' => false,
-                'label'    => false,
-                'currency' => 'XAF',
-                'attr'     => [
-                    'placeholder' => 'Quel est ton budget max ?'
-                ]
+                'label'    => 'Budget maximum',
+                'currency' => 'XAF'
+            ])
+            ->add('tripOptions', EntityType::class,[
+                'required'     => false,
+                'label'        => 'Sélectionne une ou des options',
+                'class'        => TripOption::class,
+                'choice_label' => 'name',
+                'multiple'     => true
             ]);
            
     }
@@ -53,5 +52,10 @@ class TripSearchType extends AbstractType
             'method'          => 'get',
             'csrf_protection' => false
         ]);
+    }
+
+    public function getBlockPrefix()
+    {
+        return '';
     }
 }

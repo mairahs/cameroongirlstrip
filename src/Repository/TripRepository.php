@@ -75,6 +75,17 @@ class TripRepository extends ServiceEntityRepository
             $query = $query->andWhere('t.price <= :price')
                            ->setParameter('price', $tripSearch->getPrice());
         }
+
+        if($tripSearch->getTripOptions()->count() > 0)
+        {
+            $k = 0;
+            foreach($tripSearch->getTripOptions() as $tripOption)
+            {
+                $k++;
+                $query = $query->andWhere(":tripOption$k MEMBER OF t.tripOptions")
+                               ->setParameter("tripOption$k", $tripOption);
+            }
+        }
         return $query->getQuery();
                                  
     }

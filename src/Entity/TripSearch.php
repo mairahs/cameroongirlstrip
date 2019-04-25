@@ -23,6 +23,16 @@ class TripSearch
      */
     private $price;
 
+    /**
+     * @var ArrayCollection
+     */
+    private $tripOptions;
+
+    public function __construct()
+    {
+        $this->tripOptions = new ArrayCollection();
+    }
+
     public function getDepartureDate(): ?\DateTimeInterface
     {
         return $this->departureDate;
@@ -57,6 +67,22 @@ class TripSearch
         $this->price = $price;
 
         return $this;
+    }
+
+    /**
+     * @return ArrayCollection $adOptions
+    */
+    public function getTripOptions(): ArrayCollection
+    {
+        return $this->tripOptions;
+    }
+
+    /**
+     * @param ArrayCollection $adOptions
+     */
+    public function setTripOptions(ArrayCollection $tripOptions): void
+    {
+        $this->tripOptions = $tripOptions;
     }
 
 }

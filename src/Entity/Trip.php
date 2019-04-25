@@ -124,6 +124,12 @@ class Trip
      */
     private $fixedNumberPersons;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\TripOption", inversedBy="trips")
+     */
+    private $tripOptions;
+    
+
     public function getId(): ?int
     {
         return $this->id;
@@ -255,6 +261,7 @@ class Trip
         $this->createdAt = new \DateTime();
         $this->tripBookings = new ArrayCollection();
         $this->tripComments = new ArrayCollection();
+        $this->tripOptions = new ArrayCollection();
     }
 
     public function getCategory(): ?Category
@@ -479,6 +486,34 @@ class Trip
     public function setFixedNumberPersons(int $fixedNumberPersons): self
     {
         $this->fixedNumberPersons = $fixedNumberPersons;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TripOption[]
+     */
+    public function getTripOptions(): Collection
+    {
+        return $this->tripOptions;
+    }
+
+    public function addTripOption(TripOption $tripOption): self
+    {
+        if (!$this->tripOptions->contains($tripOption)) {
+            $this->tripOptions[] = $tripOption;
+            $tripOption->addTrip($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTripOption(TripOption $tripOption): self
+    {
+        if ($this->tripOptions->contains($tripOption)) {
+            $this->tripOptions->removeElement($tripOption);
+            $tripOption->removeTrip($this);
+        }
 
         return $this;
     }    

@@ -86,5 +86,4 @@ class AdSearch
         $this->adOptions = $adOptions;
     }
 
-
 }

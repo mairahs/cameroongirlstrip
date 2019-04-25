@@ -23,22 +23,26 @@
                     <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Girl Tripeuse, sélectionne au moins un critère de ton choix parmi ceux proposés pour effectuer une recherche précise..</p>
                 </div>
 				<div class="center">
-					    {{form_start(tripSearchForm,{'attr': {'novalidate': 'novalidate', 'class': 'landing-wide-form clearfix'}})}} 
-						<div class="col_four_fifth nobottommargin">
-							<div class="col_one_third nobottommargin"> 
+					{{form_start(tripSearchForm,{'attr': {'novalidate': 'novalidate', 'class': 'landing-wide-form clearfix'}})}} 
+						<div class="row nobottommargin">
+							<div class="col-md-3 nobottommargin"> 
 								{{form_row(tripSearchForm.departureDate)}}
 							</div>
-							<div class="col_one_third nobottommargin">
+							<div class="col-md-3 nobottommargin">
 								{{form_row(tripSearchForm.arrival)}}
 							</div>
-							<div class="col_one_third col_last nobottommargin">
+							<div class="col-md-3 nobottommargin">
 								{{form_row(tripSearchForm.price)}}
 							</div>
+							<div class="col-md-3 nobottommargin">
+								{{form_row(tripSearchForm.tripOptions)}}
+							</div>
 						</div>
-						<div class="col_one_fifth col_last nobottommargin">
+						<div class=" col_last nobottommargin">
 							<button class="btn btn-danger btn-block nomargin" type="submit"><i class="icon-search3"></i></button>
 						</div>
-            			{{form_end(tripSearchForm)}}
+            		{{form_end(tripSearchForm)}}
+
 						{% if trips is empty %}
 						<p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; font-size:20px; margin-top:60px;"> Hélas, aucun voyage ne correspond à ta recherche. <br>Tu peux modifier tes critères ou créer <a href="{{path('trip_new')}}">un nouveau voyage</a>.</p>
 						{% else %}
