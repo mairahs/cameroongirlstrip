@@ -281,7 +281,7 @@ blockquote{
 }
 
 /* formulaire de recherche */
-.form-control{
+.form-control, select2{
     border: 2px solid #ffdb5c!important;
 }
 

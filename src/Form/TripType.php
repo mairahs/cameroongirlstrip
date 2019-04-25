@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Trip;
+use App\Entity\TripOption;
 use App\Form\ApplicationType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -44,7 +45,12 @@ class TripType extends ApplicationType
             ->add('category', EntityType::class, [
                 'class' => 'App\Entity\Category',
                 'choice_label' => 'name']
-            ); 
+            )
+            ->add('tripOptions', EntityType::class,[
+                'class'        => TripOption::class,
+                'choice_label' => 'name',
+                'multiple'     => true
+            ]); 
         $builder->get('departureDate')->addModelTransformer($this->transformer);
         $builder->get('returnDate')->addModelTransformer($this->transformer);        
     }

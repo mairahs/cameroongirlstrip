@@ -1,0 +1,29 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %} Administration des options sur les utilisatrices| {{parent()}}{% endblock %}
+
+{% block body %}
+ <div class="container">
+		<h1 class="my-5 text-center">Gestion des {{userOptions|length}} options sur les GirlsTripeuses</h1>
+		<table class="table table-hover" >
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Nom</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for userOption in userOptions %}
+				<tr>
+					<td>{{userOption.id}}</td>
+					<td>{{userOption.name}}</td>
+					<td>
+						<a href="{{path('adminuseroption_edit', {'id':userOption.id})}}" class="btn btn-warning"><i class="icon-edit2"></i></a> 
+						<a href="{{path('adminuseroption_delete', {'id':userOption.id})}}" class="btn btn-danger"><i class="icon-trash-alt1"></i></a>
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div> 
+{% endblock %}

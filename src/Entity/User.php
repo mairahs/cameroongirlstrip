@@ -117,6 +117,11 @@ class User implements UserInterface
      */
     private $tripComments;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\UserOption", inversedBy="users")
+     */
+    private $userOptions;
+
     public function getRoles()
     {
     $roles = $this->userRoles->map(function($role){
@@ -159,6 +164,7 @@ class User implements UserInterface
         $this->tripBookings = new ArrayCollection();
         $this->adComments = new ArrayCollection();
         $this->tripComments = new ArrayCollection();
+        $this->userOptions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -492,6 +498,34 @@ class User implements UserInterface
             if ($tripComment->getAuthor() === $this) {
                 $tripComment->setAuthor(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserOption[]
+     */
+    public function getUserOptions(): Collection
+    {
+        return $this->userOptions;
+    }
+
+    public function addUserOption(UserOption $userOption): self
+    {
+        if (!$this->userOptions->contains($userOption)) {
+            $this->userOptions[] = $userOption;
+            $userOption->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserOption(UserOption $userOption): self
+    {
+        if ($this->userOptions->contains($userOption)) {
+            $this->userOptions->removeElement($userOption);
+            $userOption->removeUser($this);
         }
 
         return $this;
