@@ -61,9 +61,15 @@
 						 <h3 style="margin-top:20px; font-family:'Cabin Sketch', cursive;font-size:17px;color:#4897d8!important;">Description du voyage</h3>
 						<p style="margin-top:20px!important; text-align:justify;">{{trip.description}}</p>
 						<div class="entry-image">
+							{% if trip.fileName %}
                             <a href="">
-                            	<img src="{{trip.coverImage}}" alt="Photo de l'image du voyage {{trip.departure}} - {{trip.arrival}} ">
+                            	<img style="width:100%; height:auto;" src="{{vich_uploader_asset(trip, 'imageFile') | imagine_filter('medium')}}" alt="Photo de l'image du voyage {{trip.departure}} - {{trip.arrival}} ">
                             </a>
+							{% else %}
+							<a href="">
+                            	<img style="width:100%; height:auto;" src="/images/img/imagedefault.jpg" alt="Photo de l'image du voyage {{trip.departure}} - {{trip.arrival}} ">
+                            </a>
+							{% endif %}
                         </div>
 						<h3 style="margin-top:20px; font-family:'Cabin Sketch', cursive;font-size:17px;color:#4897d8!important;">Option(s) du voyage</h3>                    
 						<div class="col_half nobottommargin">

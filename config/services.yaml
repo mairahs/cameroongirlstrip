@@ -35,6 +35,10 @@ services:
             $templatePath: '/admin/inc/pagination.html.twig'
             
     App\Statistics\Statistics:
+
+    App\Listener\ImageCacheSubscriber:
+        tags:
+        -  {  name: doctrine.event_subscriber }
             
        
 

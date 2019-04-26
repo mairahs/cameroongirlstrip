@@ -3,11 +3,13 @@
 namespace App\Form;
 
 use App\Entity\Trip;
+use App\Entity\Category;
 use App\Entity\TripOption;
 use App\Form\ApplicationType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use App\Form\DataTransformer\FrenchToDateTimeTransformer;
@@ -41,9 +43,11 @@ class TripType extends ApplicationType
                 ]
             ], $this->getConfiguration('Nombre de personnes attendu', 'Indique le nombre de personnes que tu souhaites pour ce voyage...'))
             ->add('price', MoneyType::class, $this->getConfigurationBis('Prix du voyage', 'Renseigne un prix global pour le voyage','XAF'))
-            ->add('coverImage', TextType::class, $this->getConfiguration('Ajoute une image', 'Télécharge une illustration attractive pour le voyage que tu proposes.'))
+            ->add('imageFile', FileType::class, [
+                'required' => false
+            ] )
             ->add('category', EntityType::class, [
-                'class' => 'App\Entity\Category',
+                'class' => Category::class,
                 'choice_label' => 'name']
             )
             ->add('tripOptions', EntityType::class,[

@@ -57,19 +57,20 @@
 					</div>
 
 					<div class="form-row">
-						<div class="form-group col-md-3">
+						<div class="form-group col-md-6">
 							{{form_row(tripForm.fixedNumberPersons, {'label': 'Nombre de personne attendu'})}}
 						</div>
-						<div class="form-group col-md-3">
-							{{form_row(tripForm.category, {'label': 'Sélectionne une catégorie de voyage'})}}
-						
-						</div>
-						<div class="form-group col-md-3">
-							{{form_row(tripForm.coverImage)}}
-						</div>
-						<div class="form-group col-md-3">
-							{{form_row(tripForm.tripOptions, {'label': 'Sélectionne des options'})}}
+						<div class="form-group col-md-6">
+							{{form_row(tripForm.imageFile, {'label': 'Télécharge une image attractive pour ton voyage'})}}
 						</div>				
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							{{form_row(tripForm.category, {'label': 'Sélectionne une catégorie de voyage'})}}
+						</div>		
+						<div class="form-group col-md-6">
+							{{form_row(tripForm.tripOptions, {'label': 'Sélectionne une ou plusieurs options de voyage'})}}
+						</div>	
 					</div> 
 					<div class="form-group">
 						{{form_row(tripForm.description)}}

@@ -57,7 +57,7 @@ class AdminTripController extends AbstractController
        {
         $this->addFlash('warning', "Attention, tu ne peux pas supprimer le voyage {$trip->getDeparture()} - {$trip->getArrival()} car il possède des réservations" );
        }else{
-        $manager->remove($ad);
+        $manager->remove($trip);
         $manager->flush();
         $this->addFlash('success', "le voyage {$trip->getDeparture()} - {$trip->getArrival()} a bien été supprimé");
        }

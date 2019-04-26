@@ -134,13 +134,21 @@
             </div>
             <div class="row justify-content-between">
            
-            {% for lastTrip in lastTrips %}   
+            {% for lastTrip in lastTrips %} 
                 <div class="col-lg-4">  
                     <div class="media row">
-                        <img style="width:60px!important; height:60px!important;" src="{{lastTrip.trip.traveller.picture}}" alt="Avatar de {{lastTrip.trip.traveller.fullName}}"  class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
-                        <div class="col-sm-7 media-body mb-5">
+                    {% if lastTrip.trip.fileName %}
+                        <div class="entry-image">
+                             <img style="width:360px!important; height:230px!important;"src="{{vich_uploader_asset(lastTrip.trip, 'imageFile') | imagine_filter('thumb')}}" alt="Photo du voyage {{lastTrip.trip.departure}} - {{lastTrip.trip.arrival}}">
+                        </div>
+                    {% else %}
+                        <div class="entry-image">
+                             <img style="width:360px!important; height:230px!important;" src="/images/img/imagedefault.jpg" alt="Photo du voyage {{lastTrip.trip.departure}} - {{lastTrip.trip.arrival}}">
+                        </div>
+                    {% endif %}
+                        <div class="col-sm-12 media-body mb-5">
                             <h3 class="mb-3" style ="font-size:16px!important; font-family:'Cabin Sketch', cursive; color:#4897d8!important; font-weight:bold;"><i class="icon-map-signs"></i> {{lastTrip.trip.departure}} - {{lastTrip.trip.arrival}}</h3>
-                            <li class="mb-3" style="list-style-type:none;"> <i class="icon-user1"></i><strong> Créé par  {{lastTrip.trip.traveller.fullName}}</strong></li>
+                            <li class="mb-3" style="list-style-type:none;"><strong><img style="height:40px!important; width:40px!important;" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image" src="{{lastTrip.trip.traveller.picture}}" alt="Avatar de {{lastTrip.trip.traveller.fullName}}"> Créé par <br>{{lastTrip.trip.traveller.fullName}}</strong></li>
                             <li class="mb-3" style="list-style-type:none;"><i class="icon-calendar2"></i><strong> Le {{format_created_at_trip(lastTrip.trip)}}</strong> </li>
                             <li class="mb-3" style="list-style-type:none;"><i class="icon-money"></i> <strong>Prix <span class="badge"> {{lastTrip.trip.price|number_format(0,'.',' ')}} FCFA</span></strong> </li>
                             <li class="mb-3" style="list-style-type:none;" ><a href="#"><i class="icon-line2-speech" style="font-size:15px;"></i><blockquote style="line-height:18px;">{{ lastTrip.trip.description|truncate(100, false)|nl2br }}</blockquote></a></li>

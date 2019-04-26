@@ -6,12 +6,16 @@ use App\Entity\User;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TripRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @Vich\Uploadable
  */
 class Trip
 {
@@ -21,6 +25,21 @@ class Trip
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @Assert\Image(
+     *     mimeTypes = "image/jpeg"
+     * )
+     * @Vich\UploadableField(mapping="trip_image", fileNameProperty="fileName")
+     * @var File|null
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @var string|null
+     */
+    private $fileName;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -67,12 +86,6 @@ class Trip
      * @ORM\Column(type="float")
      */
     private $price;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     *  @Assert\Url()
-     */
-    private $coverImage;
 
     /**
      * @ORM\Column(type="datetime")
@@ -128,7 +141,11 @@ class Trip
      * @ORM\ManyToMany(targetEntity="App\Entity\TripOption", inversedBy="trips")
      */
     private $tripOptions;
-    
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updated_at;
 
     public function getId(): ?int
     {
@@ -228,18 +245,6 @@ class Trip
     public function setPrice(float $price): self
     {
         $this->price = $price;
-
-        return $this;
-    }
-
-    public function getCoverImage(): ?string
-    {
-        return $this->coverImage;
-    }
-
-    public function setCoverImage(string $coverImage): self
-    {
-        $this->coverImage = $coverImage;
 
         return $this;
     }
@@ -516,6 +521,47 @@ class Trip
         }
 
         return $this;
-    }    
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?file $imageFile): self
+    {
+        $this->imageFile = $imageFile;
+        
+        if ($this->imageFile instanceof UploadedFile)
+         {
+            $this->updated_at = new \DateTime('now');
+        }
+
+        return $this;
+    } 
+
+    public function getFileName(): ?String
+    {
+        return $this->fileName;
+    }
+
+    public function setFileName(?string $fileName): self
+    {
+        $this->fileName = $fileName;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
+
+        return $this;
+    }
 
 }
