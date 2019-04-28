@@ -20,7 +20,12 @@
                     <li><a href="{{path('security_logout')}}"><div><i class="icon-line2-logout"></i>Déconnexion</div></a></li>
                 </ul>
             </li>
-                <img src="{{app.user.picture}}" alt="Avatar de {{app.user.fullName}}" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
+         
+                  {% if app.user.fileName %}
+                        <img src="{{vich_uploader_asset(app.user, 'avatarFile') | imagine_filter('thumb')}}" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image" alt="Avatar">
+					{% else %}
+						<img class="alignleft img-circle img-thumbnail nomargin image_fade testi-image" src="/images/img/avatardefault.jpg" alt="Photo de l'avatar par défaut de l'utilisatrice {{app.user.fullName}}">  
+					{% endif %}  
         {% else %}
             <li class="bgcolor">
             	<a href="{{path('security_login')}}">

@@ -8,7 +8,7 @@ use App\Form\ApplicationType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -22,7 +22,9 @@ class RegistrationType extends ApplicationType
             ->add('firstName', TextType::class, $this->getConfiguration('Ton prénom', 'Renseigne ton prénom'))
             ->add('lastName', TextType::class, $this->getConfiguration('Ton nom', 'Renseigne ton nom de famille'))
             ->add('email', EmailType::class, $this->getConfiguration('Ton email', 'Renseigne ton adresse email') )
-            ->add('picture', UrlType::class, $this->getConfiguration('Ton avatar (sinon, un avatar par défaut te sera attribué)', 'Renseigne l\'url de ta photo de profil'))
+            ->add('avatarFile', FileType::class, [
+                'required' => false
+            ] )
             ->add('hash', PasswordType::class, $this->getConfiguration('Ton mot de passe', 'Renseigne ton mot de passe'))
             ->add('passwordConfirm', PasswordType::class, $this->getConfiguration('Confirme ton mot de passe', 'Renseigne à nouveau ton mot de passe'))
             ->add('introduction', TextType::class, $this->getConfiguration('Qui est tu ?', 'Présente toi en quelques mots aux autres GirlsTripeuses'))

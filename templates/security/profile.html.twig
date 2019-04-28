@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Gère librement ton profil utillisatrice | {{parent()}}{% endblock %}
+{% block title %} Gère librement ton profil utillisateur | {{parent()}}{% endblock %}
 
 {% block body %}
 
@@ -34,7 +34,7 @@
                         {{form_row(securityForm.email)}}
                     </div>
                     <div class="col_full">
-                        {{form_row(securityForm.picture)}}
+                        {{form_row(securityForm.avatarFile)}}
                     </div>
                     <div class="col_full">
                         {{form_row(securityForm.introduction)}}

@@ -9,12 +9,16 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity(
  * fields={"email"}, message="Une autre GirlTripeuse possède déjà le même email. Meri de rectifier STP.")
+ * @Vich\Uploadable
  */
 class User implements UserInterface
 {
@@ -24,6 +28,21 @@ class User implements UserInterface
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @Assert\Image(
+     *     mimeTypes = "image/jpeg"
+     * )
+     * @Vich\UploadableField(mapping="user_image", fileNameProperty="fileName")
+     * @var File|null
+     */
+    private $avatarFile;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @var string|null
+     */
+    private $fileName;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -42,12 +61,6 @@ class User implements UserInterface
      *  @Assert\Email(message="Renseigne une adresse email valide STP.")
      */
     private $email;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Url(message="Renseigne une url valide STP.")
-     */
-    private $picture;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -76,6 +89,11 @@ class User implements UserInterface
      * )
      */
     private $description;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updated_at;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -204,18 +222,6 @@ class User implements UserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    public function getPicture(): ?string
-    {
-        return $this->picture;
-    }
-
-    public function setPicture(?string $picture): self
-    {
-        $this->picture = $picture;
 
         return $this;
     }
@@ -527,6 +533,47 @@ class User implements UserInterface
             $this->userOptions->removeElement($userOption);
             $userOption->removeUser($this);
         }
+
+        return $this;
+    }
+
+    public function getAvatarFile(): ?File
+    {
+        return $this->avatarFile;
+    }
+
+    public function setAvatarFile(?file $avatarFile): self
+    {
+        $this->avatarFile = $avatarFile;
+        
+        if ($this->avatarFile instanceof UploadedFile)
+         {
+            $this->updated_at = new \DateTime('now');
+        }
+
+        return $this;
+    }
+    
+    public function getFileName(): ?String
+    {
+        return $this->fileName;
+    }
+
+    public function setFileName(?string $fileName): self
+    {
+        $this->fileName = $fileName;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
 
         return $this;
     }

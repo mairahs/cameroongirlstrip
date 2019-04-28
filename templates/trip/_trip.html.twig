@@ -6,7 +6,12 @@
 			<div class="entry clearfix">
 				<div class="entry-image">
 					<a href="{{url}}">
-						<img src="{{trip.coverImage}}" alt="Photo du voyage {{trip.departure}} - {{trip.arrival}}">
+						
+						{% if trip.fileName %}
+                            <img src="{{vich_uploader_asset(trip, 'imageFile') | imagine_filter('medium')}}" alt="Photo du voyage {{trip.departure}} - {{trip.arrival}} " >
+						{% else %}
+							<img src="/images/img/imagedefault.jpg" alt="Photo de l'image du voyage par défaut {{trip.departure}} - {{trip.arrival}} ">
+                        {% endif %}
 					    <div class="entry-date"><span style="font-weight:bold; font-size:15px;"> {{format_date_departure(trip)}}</span></div>
                     </a>
                 </div>    

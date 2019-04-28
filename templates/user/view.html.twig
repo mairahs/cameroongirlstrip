@@ -26,7 +26,11 @@
                          <div class="heading-block nobottomborder nobottommargin">
                             <i class="icon-sitemap d-block h1 mb-4" style="color:#f8a055; margin-top:20px; margin-left:120px;"></i> 
                         </div> 
-                         <img src="{{user.picture}}" class="alignleft img-circle img-thumbnail notopmargin nobottommargin" alt="Avatar" style="max-width: 100px;">  
+                        {% if user.fileName %}
+                            <img src="{{vich_uploader_asset(user, 'avatarFile') | imagine_filter('thumb')}}" class="alignleft img-circle img-thumbnail notopmargin nobottommargin" alt="Avatar" style="max-width: 100px;">
+						{% else %}
+							<img style="max-width: 100px;" src="/images/img/avatardefault.jpg" alt="Photo de l'avatar par défaut de l'utilisatrice {{user.fullName}}" class="alignleft img-circle img-thumbnail notopmargin nobottommargin">  
+						{% endif %}  
                         <div id="singled" class="heading-block">
                             <h2 style="margin-left:100px;">{{user.fullName}}</h2>
                             <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; margin-left:100px;">Girl Tripeuse, voici toutes les informations relatives à {{user.firstName}}.</p>
@@ -52,7 +56,9 @@
 				<div class="postcontent nobottommargin clearfix"> 
 					<div class="col_three_fourth">
 						<h3 style="margin-top:-300px;"></h3>
-                        <h3 style="margin-top:50px; font-family:'Cabin Sketch', cursive;font-size:17px;color:#4897d8!important;">Qui est-elle ?</h3>                                                                                                                                                                                                                                                                                                                           
+                        <h3 style="margin-top:50px; font-family:'Cabin Sketch', cursive;font-size:17px;color:#4897d8!important;">Qui est-elle ?</h3>
+                        <p style="margin-top:20px!important; text-align:justify;">{{user.introduction| raw}}</p>
+                        <hr>
 						<p style="margin-top:20px!important; text-align:justify;">{{user.description| raw}}</p>	
 						<h3 style="margin-top:20px; font-family:'Cabin Sketch', cursive;font-size:17px;color:#4897d8!important;">Ses hobbies</h3>
 						<div class="col_half nobottommargin">
