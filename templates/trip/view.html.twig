@@ -208,7 +208,15 @@
 							<div id="post-list-footer">
 								<div class="spost clearfix">
 									<div class="entry-image">
-										<a href="{{path('user_view', {'slug': t.slug})}}" class="nobg"><img style="width:200px!important;" src="{{t.picture}}" alt="Avatar de {{t.fullName}}" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image"></a>
+							
+										<a href="{{path('user_view', {'slug': t.slug})}}" class="nobg">
+										
+											{% if trip.fileName %}
+													<img style="width:200px!important;" src="{{vich_uploader_asset(t, 'avatarFile') | imagine_filter('medium')}}" alt="Avatar de {{t.fullName}}" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
+											{% else %}
+													<img style="width:200px!important;" src="/images/img/avatardefault.jpg" alt="Avatar par défaut de {{t.fullName}}" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
+											{% endif %}								
+										</a>
 									</div>
 									<div class="entry-c">
 										<div class="entry-title mb-3">
