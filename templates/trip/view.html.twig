@@ -23,6 +23,16 @@
 								<li class="breadcrumb-item active" aria-current="page"><i class="icon-image"></i> Détail du trajet</li>
 							</ol>
 						</div>
+						{% for message in app.flashes('success') %}
+							<div class="alert alert-success">
+								{{message}}
+							</div>
+						{% endfor %}
+						{% if not tripContactForm.vars.valid %}
+							<div class="alert alert-danger">
+								Erreur lors du remplissage du remplissage du formulaire de contact 
+							</div>
+						{% endif %}
                     <i class="icon-sitemap d-block h1 mb-4" style="color:#f8a055; margin-top:20px; margin-left:100px;"></i> 
                 </div>        
                 <div id="single" class="heading-block">
@@ -244,6 +254,46 @@
 								</div>
 							</div>
 						</div>
+						<div class="widget quick-contact-widget clearfix">
+
+							<h4 style="margin-top:-0px; font-family:'Cabin Sketch', cursive;font-size:17px;"><a href="#" style="color:#4897d8!important; text-transform:none;" ><i class="icon-comment-alt h1"></i> Contacte {{t.firstName}} </a></h4>                    
+							<div class="quick-contact-form-result"></div>
+							<div id="tripContactForm">
+								{{form_start(tripContactForm)}}
+										<div class="form-row">
+											<div class="form-group col-md-12">
+												{{form_row(tripContactForm.firstName, {'label': 'Ton prénom'})}}
+											</div>	
+										</div>
+										<div class="form-row">
+											<div class="form-group col-md-12">
+												{{form_row(tripContactForm.lastName, {'label': 'Ton nom'})}}
+											</div>				
+										</div>
+										<div class="form-row">
+											<div class="form-group col-md-12">
+												{{form_row(tripContactForm.phone, {'label': 'Ton téléphone'})}}
+											</div>		
+										</div>
+										<div class="form-row">
+											<div class="form-group col-md-12">
+												{{form_row(tripContactForm.email, {'label': 'Ton email'})}}
+											</div>		
+										</div>
+										<div class="form-row">
+											<div class="form-group col-md-12">
+												{{form_row(tripContactForm.message, {'label': 'Ton message'})}}
+											</div>				
+										</div>
+										<div class="form-group">
+											<button type='submit' class="button button-border button-light button-rounded button-reveal button-large topmargin">
+												Envoie ton message
+											</button>
+                    					</div>
+								
+								{{form_end(tripContactForm)}}							
+							</div>
+						</div>
 					<div class="widget clearfix">
 
 							<h4  style="font-family:'Cabin Sketch', cursive; font-size:17px;"><a href="#" style="color:#4897d8!important; text-transform:none;"><i class="icon-line-star h1"></i> Nos locations STARS </a></h4>
@@ -286,30 +336,6 @@
 								</div>
 
 						</div>
-
-						<div class="widget clearfix">
-
-							<h4>Recent Event in Video</h4>
-							<iframe src="//player.vimeo.com/video/103927232" width="500" height="250" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-
-						</div>
-
-						<div class="widget quick-contact-widget clearfix">
-
-							<h4>Quick Contact</h4>
-							<div class="quick-contact-form-result"></div>
-							<form id="quick-contact-form" name="quick-contact-form" action="include/quickcontact.php" method="post" class="quick-contact-form nobottommargin">
-								<div class="form-process"></div>
-
-								<input type="text" class="required sm-form-control input-block-level" id="quick-contact-form-name" name="quick-contact-form-name" value="" placeholder="Full Name" />
-								<input type="text" class="required sm-form-control email input-block-level" id="quick-contact-form-email" name="quick-contact-form-email" value="" placeholder="Email Address" />
-								<textarea class="required sm-form-control input-block-level short-textarea" id="quick-contact-form-message" name="quick-contact-form-message" rows="4" cols="30" placeholder="Message"></textarea>
-								<input type="text" class="hidden" id="quick-contact-form-botcheck" name="quick-contact-form-botcheck" value="" />
-								<button type="submit" id="quick-contact-form-submit" name="quick-contact-form-submit" class="button button-small button-3d nomargin" value="submit">Send Email</button>
-							</form>
-
-						</div>
-
 					</div>
 				</div>
 

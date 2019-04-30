@@ -5,9 +5,12 @@ namespace App\Controller;
 use App\Entity\Trip;
 use App\Form\TripType;
 use App\Entity\TripSearch;
+use App\Entity\TripContact;
 use App\Form\TripSearchType;
+use App\Form\TripContactType;
 use App\Repository\TripRepository;
 use Knp\Component\Pager\PaginatorInterface;
+use App\Notification\TripContactNotification;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
@@ -104,11 +107,23 @@ class TripController extends AbstractController
      * @isGranted("ROLE_RENTER",  message="Hélas, tu n'as pas accès à cette ressource.")
      * @return Response
      */
-    public function view(Trip $trip)
+    public function view(Trip $trip, Request $request, TripContactNotification $notification)
     {
-
-        return $this->render('trip/view.html.twig', [
-            'trip' => $trip
+        $tripContact = new TripContact;
+        $tripContact->setTrip($trip);
+        $tripContactForm = $this->createForm(TripContactType::class, $tripContact);
+        $tripContactForm->handleRequest($request);
+        if ( $tripContactForm->isSubmitted() &&  $tripContactForm->isValid())
+        {
+            $notification->notify($tripContact);
+            $this->addFlash("success", "Ton email a bien été envoyé à {$tripContact->getTrip()->getTraveller()->getFirstName()}.");
+            return $this->redirectToRoute('trip_view', [
+                 'slug' => $trip->getSlug()
+                 ]);
+        }
+           return $this->render('trip/view.html.twig', [
+            'trip'            => $trip,
+            'tripContactForm' => $tripContactForm->createView()
         ]);
     }
 

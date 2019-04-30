@@ -1,0 +1,25 @@
+<mjml>
+  <mj-body>
+    <mj-section>
+      <mj-column>
+
+        <mj-image width="100px" src="/images/img/imagedefault.jpg"></mj-image>
+
+        <mj-divider border-color="#ffdb5c"></mj-divider>
+
+        <mj-text font-size="20px" color="#F45E43" font-family="helvetica">Hello {{tripContact.trip.traveller.fullName}}.<br></mj-text>
+        <mj-text font-size="18px">Tu viens de recevoir un message de {{tripContact.firstName}} {{tripContact.lastName}} à propos de ton trajet <a href="{{url('trip_view', {'slug':tripContact.trip.slug})}}">{{tripContact.trip.departure}} - {{tripContact.trip.arrival}}</a> du {{format_date_departure(tripContact.trip)}}.</mj-text>
+     <mj-text> 
+     <hr>
+     <mj-text font-size="20px" color="#F45E43" font-family="helvetica">
+        Son téléphone : <i class="icon-phone3"></i> {{tripContact.phone}}
+     </mj-text><br> 
+     <mj-text font-size="20px" color="#F45E43" font-family="helvetica">
+        Son email : <i class="icon-email3"></i> {{tripContact.email}}
+     </mj-text><br> 
+     <mj-text font-size="20px" color="#F45E43" font-family="helvetica">
+        Son message : <i class="icon-comment2"></i> "{{tripContact.message}}"
+    </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

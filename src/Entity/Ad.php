@@ -27,7 +27,7 @@ class Ad
 
     /**
      * @ORM\Column(type="string", length=255)
-     *  * @Assert\Length(
+     *   @Assert\Length(
      *      min = 10,
      *      max = 255,
      *      minMessage = "Le titre de ton annonce doit faire au moins 1O caractères.",
