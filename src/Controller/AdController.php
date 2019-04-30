@@ -5,9 +5,12 @@ namespace App\Controller;
 use App\Entity\Ad;
 use App\Entity\Image;
 use App\Entity\AdSearch;
+use App\Entity\AdContact;
 use App\Form\AnnonceType;
 use App\Form\AdSearchType;
+use App\Form\AdContactType;
 use App\Repository\AdRepository;
+use App\Notification\AdContactNotification;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -110,10 +113,24 @@ class AdController extends AbstractController
      * @Route("/ad/{slug}", name="ad_view")
      * @return Response
      */
-    public function view(Ad $ad)
+    public function view(Ad $ad, AdContactNotification $notification, Request $request)
     {
+        
+        $adContact = new AdContact;
+        $adContact->setAd($ad);
+        $adContactForm = $this->createForm(AdContactType::class, $adContact);
+        $adContactForm->handleRequest($request);
+        if ( $adContactForm->isSubmitted() &&  $adContactForm->isValid())
+        {
+            $notification->notify($adContact);
+            $this->addFlash("success", "Ton email a bien été envoyé à {$adContact->getAd()->getAuthor()->getFirstName()}.");
+            return $this->redirectToRoute('ad_view', [
+                 'slug' => $ad->getSlug()
+                 ]);
+        }
         return $this->render('ad/view.html.twig', [
-            'ad' => $ad
+            'ad' => $ad,
+            'adContactForm' => $adContactForm->createView()
         ]);
     }
 

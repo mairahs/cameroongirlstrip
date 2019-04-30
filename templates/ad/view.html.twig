@@ -27,6 +27,16 @@
     				<i class="icon-sitemap h1 mb-4" style="color:#f8a055; margin-top:20px; margin-left:100px;"></i> 
                 </div>       
                 <div id="single" class="heading-block">
+						{% for message in app.flashes('success') %}
+							<div class="alert alert-success">
+								{{message}}
+							</div>
+						{% endfor %}
+						{% if not adContactForm.vars.valid %}
+							<div class="alert alert-danger">
+								Erreur lors du remplissage du remplissage du formulaire de contact 
+							</div>
+						{% endif %}
                     <h2 style="margin-left:100px;">{{ad.title}}</h2>
                     <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; margin-left:100px;">{{app.user.firstName}}, voici toutes les informations relatives à cet hébergement.</p>
                 </div>
@@ -114,13 +124,22 @@
 									{% if app.user == booking.adBooker %}
 									<div class="entry-image">
 										<a href="{{path('user_view', {'slug': booking.adBooker.slug})}}">
-											<img style="width:130px!important;" src="{{booking.adBooker.picture}}" alt="Avatar de {{booking.adBooker.fullName}}"  class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
+											
+											{% if booking.adBooker.fileName %}
+													<img style="width:150px!important;" src="{{vich_uploader_asset(booking.adBooker, 'avatarFile') | imagine_filter('medium')}}" alt="Avatar de {{booking.adBooker.fullName}}" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
+											{% else %}
+													<img style="width:150px!important;" src="/images/img/avatardefault.jpg" alt="Avatar par défaut de {{booking.adBooker.fullName}}" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
+											{% endif %}	
 										</a>
 									</div>
 									{% else %}
 									<div class="entry-image">
 										<a href="{{path('user_view', {'slug': booking.adBooker.slug})}}">
-											<img style="width:150px!important;" src="{{booking.adBooker.picture}}" alt="Avatar de {{booking.adBooker.fullName}}"  class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
+											{% if booking.adBooker.fileName %}
+													<img style="width:150px!important;" src="{{vich_uploader_asset(booking.adBooker, 'avatarFile') | imagine_filter('medium')}}" alt="Avatar de {{booking.adBooker.fullName}}" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
+											{% else %}
+													<img style="width:150px!important;" src="/images/img/avatardefault.jpg" alt="Avatar par défaut de {{booking.adBooker.fullName}}" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
+											{% endif %}	
 										</a>
 									</div>
 									{% endif %}   
@@ -214,7 +233,12 @@
 							<div id="post-list-footer">
 								<div class="spost clearfix">
 									<div class="entry-image">
-										<a href="{{path('user_view', {'slug': a.slug})}}" class="nobg"><img style="width:200px!important;" src="{{a.picture}}" alt="Avatar de {{a.fullName}}" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image"></a>
+										
+										{% if a.fileName %}
+											<a href="{{path('user_view', {'slug': a.slug})}}" class="nobg"><img style="width:200px!important;" src="{{vich_uploader_asset(a, 'avatarFile') | imagine_filter('medium')}}" alt="Avatar de {{a.fullName}}" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image"></a>
+										{% else %}
+											<a href="{{path('user_view', {'slug': a.slug})}}" class="nobg"><img style="width:200px!important;" src="/images/img/avatardefault.jpg" alt="Avatar par défaut de {{a.fullName}}" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image"></a>
+										{% endif %}	
 									</div>
 									<div class="entry-c">
 										<div class="entry-title mb-3">
@@ -240,6 +264,46 @@
 										</div>
 									</div>
 								</div>
+							</div>
+						</div>
+						<div class="widget quick-contact-widget clearfix">
+
+							<h4 style="margin-top:-0px; font-family:'Cabin Sketch', cursive;font-size:17px;"><a href="#" style="color:#4897d8!important; text-transform:none;" ><i class="icon-comment-alt h1"></i> Contacte {{a.firstName}} </a></h4>                    
+							<div class="quick-contact-form-result"></div>
+							<div id="adContactForm">
+								{{form_start(adContactForm)}}
+										<div class="form-row">					
+											<div class="form-group col-md-12">
+												{{form_row(adContactForm.firstName, {'label': 'Ton prénom', 'value': app.user.firstName })}}
+											</div>	
+										</div>
+										<div class="form-row">
+											<div class="form-group col-md-12">
+												{{form_row(adContactForm.lastName, {'label': 'Ton nom', 'value': app.user.lastName})}}
+											</div>				
+										</div>
+										<div class="form-row">
+											<div class="form-group col-md-12">
+												{{form_row(adContactForm.phone, {'label': 'Ton téléphone'})}}
+											</div>		
+										</div>
+										<div class="form-row">
+											<div class="form-group col-md-12">
+												{{form_row(adContactForm.email, {'label': 'Ton email'})}}
+											</div>		
+										</div>
+										<div class="form-row">
+											<div class="form-group col-md-12">
+												{{form_row(adContactForm.message, {'label': 'Ton message'})}}
+											</div>				
+										</div>
+										<div class="form-group">
+											<button type='submit' class="button button-border button-light button-rounded button-reveal button-large topmargin">
+												Envoie ton message
+											</button>
+                    					</div>
+								
+								{{form_end(adContactForm)}}							
 							</div>
 						</div>
 						<div class="widget clearfix">
@@ -289,22 +353,6 @@
 
 							<h4>Recent Event in Video</h4>
 							<iframe src="//player.vimeo.com/video/103927232" width="500" height="250" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-
-						</div>
-
-						<div class="widget quick-contact-widget clearfix">
-
-							<h4>Quick Contact</h4>
-							<div class="quick-contact-form-result"></div>
-							<form id="quick-contact-form" name="quick-contact-form" action="include/quickcontact.php" method="post" class="quick-contact-form nobottommargin">
-								<div class="form-process"></div>
-
-								<input type="text" class="required sm-form-control input-block-level" id="quick-contact-form-name" name="quick-contact-form-name" value="" placeholder="Full Name" />
-								<input type="text" class="required sm-form-control email input-block-level" id="quick-contact-form-email" name="quick-contact-form-email" value="" placeholder="Email Address" />
-								<textarea class="required sm-form-control input-block-level short-textarea" id="quick-contact-form-message" name="quick-contact-form-message" rows="4" cols="30" placeholder="Message"></textarea>
-								<input type="text" class="hidden" id="quick-contact-form-botcheck" name="quick-contact-form-botcheck" value="" />
-								<button type="submit" id="quick-contact-form-submit" name="quick-contact-form-submit" class="button button-small button-3d nomargin" value="submit">Send Email</button>
-							</form>
 
 						</div>
 

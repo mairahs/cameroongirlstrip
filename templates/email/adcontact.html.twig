@@ -1,0 +1,25 @@
+<mjml>
+  <mj-body>
+    <mj-section>
+      <mj-column>
+
+        <mj-image width="100px" src="/images/img/imagedefault.jpg"></mj-image>
+
+        <mj-divider border-color="#ffdb5c"></mj-divider>
+
+        <mj-text font-size="20px" color="#F45E43" font-family="helvetica">Hello {{adContact.ad.author.fullName}}.<br></mj-text>
+        <mj-text font-size="18px">Tu viens de recevoir un message de {{adContact.firstName}} {{adContact.lastName}} à propos de la location de ton logement <a href="{{url('ad_view', {'slug':adContact.ad.slug})}}">{{adContact.ad.title}}</a>.</mj-text>
+     <mj-text> 
+     <hr>
+     <mj-text font-size="20px" color="#F45E43" font-family="helvetica">
+        Son téléphone : <i class="icon-phone3"></i> {{adContact.phone}}
+     </mj-text><br> 
+     <mj-text font-size="20px" color="#F45E43" font-family="helvetica">
+        Son email : <i class="icon-email3"></i> {{adContact.email}}
+     </mj-text><br> 
+     <mj-text font-size="20px" color="#F45E43" font-family="helvetica">
+        Son message : <i class="icon-comment2"></i> "{{adContact.message}}"
+    </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

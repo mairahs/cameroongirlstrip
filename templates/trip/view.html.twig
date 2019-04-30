@@ -23,7 +23,11 @@
 								<li class="breadcrumb-item active" aria-current="page"><i class="icon-image"></i> Détail du trajet</li>
 							</ol>
 						</div>
-						{% for message in app.flashes('success') %}
+					
+                    <i class="icon-sitemap d-block h1 mb-4" style="color:#f8a055; margin-top:20px; margin-left:100px;"></i> 
+                </div>        
+                <div id="single" class="heading-block">
+					{% for message in app.flashes('success') %}
 							<div class="alert alert-success">
 								{{message}}
 							</div>
@@ -33,9 +37,6 @@
 								Erreur lors du remplissage du remplissage du formulaire de contact 
 							</div>
 						{% endif %}
-                    <i class="icon-sitemap d-block h1 mb-4" style="color:#f8a055; margin-top:20px; margin-left:100px;"></i> 
-                </div>        
-                <div id="single" class="heading-block">
                     <h2 style="margin-left:100px;">Trajet {{trip.departure}} - {{trip.arrival}}</h2>
 					{% if app.user is same as (trip.traveller) %}
                     <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; margin-left:100px;">
@@ -221,7 +222,7 @@
 							
 										<a href="{{path('user_view', {'slug': t.slug})}}" class="nobg">
 										
-											{% if trip.fileName %}
+											{% if t.fileName %}
 													<img style="width:200px!important;" src="{{vich_uploader_asset(t, 'avatarFile') | imagine_filter('medium')}}" alt="Avatar de {{t.fullName}}" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
 											{% else %}
 													<img style="width:200px!important;" src="/images/img/avatardefault.jpg" alt="Avatar par défaut de {{t.fullName}}" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
@@ -260,14 +261,14 @@
 							<div class="quick-contact-form-result"></div>
 							<div id="tripContactForm">
 								{{form_start(tripContactForm)}}
-										<div class="form-row">
+										<div class="form-row">					
 											<div class="form-group col-md-12">
-												{{form_row(tripContactForm.firstName, {'label': 'Ton prénom'})}}
+												{{form_row(tripContactForm.firstName, {'label': 'Ton prénom', 'value': app.user.firstName })}}
 											</div>	
 										</div>
 										<div class="form-row">
 											<div class="form-group col-md-12">
-												{{form_row(tripContactForm.lastName, {'label': 'Ton nom'})}}
+												{{form_row(tripContactForm.lastName, {'label': 'Ton nom', 'value': app.user.lastName})}}
 											</div>				
 										</div>
 										<div class="form-row">
