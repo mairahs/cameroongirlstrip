@@ -117,13 +117,21 @@
 									{% if app.user == booking.tripBooker %}
 									<div class="entry-image">
 										<a href="{{path('user_view', {'slug': booking.tripBooker.slug})}}">
-											<img style="width:130px!important;" src="{{booking.tripBooker.picture}}" alt="Avatar de {{booking.tripBooker.fullName}}"  class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
+											{% if booking.tripBooker.fileName %}
+													<img style="width:130px!important;" src="{{vich_uploader_asset(booking.tripBooker, 'avatarFile') | imagine_filter('medium')}}" alt="Avatar de {{booking.tripBooker.fullName}}" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
+											{% else %}
+													<img style="width:130px!important;" src="/images/img/avatardefault.jpg" alt="Avatar par défaut de {{booking.tripBooker.fullName}}" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
+											{% endif %}	
 										</a>
 									</div>
 									{% else %}
 									<div class="entry-image">
-										<a href="{{path('user_view', {'slug': booking.tripBooker.slug})}}">
-											<img style="width:150px!important;" src="{{booking.tripBooker.picture}}" alt="Avatar de {{booking.tripBooker.fullName}}"  class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
+											{% if booking.tripBooker.fileName %}
+													<img style="width:150px!important;" src="{{vich_uploader_asset(booking.tripBooker, 'avatarFile') | imagine_filter('medium')}}" alt="Avatar de {{booking.tripBooker.fullName}}" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
+											{% else %}
+													<img style="width:150px!important;" src="/images/img/avatardefault.jpg" alt="Avatar par défaut de {{booking.tripBooker.fullName}}" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
+											{% endif %}	
+											
 										</a>
 									</div>
 									{% endif %}   
@@ -186,7 +194,12 @@
 									
 									<div class="entry-image">
 										<a href="{{path('user_view', {'slug': tripComment.author.slug})}}">
-											<img style="width:130px!important;" src="{{tripComment.author.picture}}" alt="Avatar de {{tripComment.author.fullName}}"  class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
+										
+											{% if tripComment.author.fileName %}
+													<img style="width:130px!important;" src="{{vich_uploader_asset(tripComment.author, 'avatarFile') | imagine_filter('medium')}}" alt="Avatar de {{tripComment.author.fullName}}" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
+											{% else %}
+													<img style="width:130px!important;" src="/images/img/avatardefault.jpg" alt="Avatar par défaut de {{tripComment.author.fullName}}" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
+											{% endif %}	
 										</a>
 									</div>
 									<div class="entry-c">
@@ -257,9 +270,9 @@
 						</div>
 						<div class="widget quick-contact-widget clearfix">
 
-							<h4 style="margin-top:-0px; font-family:'Cabin Sketch', cursive;font-size:17px;"><a href="#" style="color:#4897d8!important; text-transform:none;" ><i class="icon-comment-alt h1"></i> Contacte {{t.firstName}} </a></h4>                    
+							<h4 id="tripContact" style="margin-top:-0px; font-family:'Cabin Sketch', cursive;font-size:17px;{% if tripContactForm.vars.submitted %}display:none;{% endif %}"><a href="#" style="color:#4897d8!important; text-transform:none;" ><i class="icon-comment-alt h1"></i> Contacte {{t.firstName}}</a></h4>                    
 							<div class="quick-contact-form-result"></div>
-							<div id="tripContactForm">
+							<div id="tripContactForm" {% if not tripContactForm.vars.submitted %}style="display:none;"{% endif %}>
 								{{form_start(tripContactForm)}}
 										<div class="form-row">					
 											<div class="form-group col-md-12">
@@ -348,4 +361,16 @@
 
 </section><!-- #content end -->
 
+{% endblock %}
+{% block javascripts %}
+	<script>
+		$(document).ready(function(){
+		$('#tripContact').click(e=>{
+			e.preventDefault();
+			$('#tripContactForm').slideDown();
+			$('#tripContact').slideUp();
+			}			
+		);
+	});
+	</script>
 {% endblock %}

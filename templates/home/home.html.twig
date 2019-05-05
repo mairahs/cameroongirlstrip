@@ -191,7 +191,8 @@
                 <div class="col-lg-4">
                     <div class="media row">
                         <img style="width:60px!important; height:60px!important;" src="{{vich_uploader_asset(bestAd.ad.author, 'avatarFile') | imagine_filter('thumb')}}" alt="Avatar de {{bestAd.ad.author.fullName}}"  class="alignleft img-circle img-thumbnail nomargin image_fade testi-image"> 
-                        <div class="col-sm-7 media-body mb-5">
+                        <div class="col-sm-12 media-body mb-5">
+                        
                             <h3 class="mb-3" style ="font-size:16px!important; font-family:'Cabin Sketch', cursive; color:#4897d8!important; font-weight:bold;"><i class="icon-map-signs"></i> {{bestAd.ad.title}}</h3>
                             {% if bestAd.ad.adComments |length > 0 %}
 				                <p style:"text-align:center; font-weight:bold;">{% include 'inc/rating.html.twig' with {'rating':bestAd.ad.avgRatings}  %}</p>

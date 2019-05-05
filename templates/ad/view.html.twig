@@ -202,7 +202,12 @@
 									
 									<div class="entry-image">
 										<a href="{{path('user_view', {'slug': adComment.author.slug})}}">
-											<img style="width:130px!important;" src="{{adComment.author.picture}}" alt="Avatar de {{adComment.author.fullName}}"  class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
+								
+											{% if adComment.author.fileName %}
+												<img style="width:130px!important;" src="{{vich_uploader_asset(adComment.author, 'avatarFile') | imagine_filter('medium')}}" alt="Avatar de {{adComment.author.fullName}}" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
+											{% else %}
+												<img style="width:130px!important;" src="/images/img/avatardefault.jpg" alt="Avatar par défaut de {{adComment.author.fullName}}" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image">
+											{% endif %}
 										</a>
 									</div>
 									<div class="entry-c">
@@ -268,9 +273,10 @@
 						</div>
 						<div class="widget quick-contact-widget clearfix">
 
-							<h4 style="margin-top:-0px; font-family:'Cabin Sketch', cursive;font-size:17px;"><a href="#" style="color:#4897d8!important; text-transform:none;" ><i class="icon-comment-alt h1"></i> Contacte {{a.firstName}} </a></h4>                    
+							<h4 id="adContact" style="margin-top:-0px; font-family:'Cabin Sketch', cursive;font-size:17px;"><a href="#" style="color:#4897d8!important; text-transform:none;" ><i class="icon-comment-alt h1"></i> Contacte {{a.firstName}} </a></h4>                    
 							<div class="quick-contact-form-result"></div>
-							<div id="adContactForm">
+							<div id="adContactForm" {% if not adContactForm.vars.submitted %}style="display:none;"{% endif %}>
+							
 								{{form_start(adContactForm)}}
 										<div class="form-row">					
 											<div class="form-group col-md-12">
@@ -367,6 +373,18 @@
 
 </section><!-- #content end -->
 
+{% endblock %}
+{% block javascripts %}
+	<script>
+		$(document).ready(function(){
+		$('#adContact').click(e=>{
+			e.preventDefault();
+			$('#adContactForm').slideDown();
+			$('#adContact').slideUp();
+			}			
+		);
+	});
+	</script>
 {% endblock %}
 
 
