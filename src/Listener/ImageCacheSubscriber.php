@@ -30,7 +30,7 @@ class ImageCacheSubscriber implements EventSubscriber
     public function preRemove(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        if(!$entity instanceof Trip )
+        if(!$entity instanceof Picture )
         {
             return;
         }
@@ -40,7 +40,7 @@ class ImageCacheSubscriber implements EventSubscriber
     public function preUpdate(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        if(!$entity instanceof Trip )
+        if(!$entity instanceof Picture )
         {
             return;
         }

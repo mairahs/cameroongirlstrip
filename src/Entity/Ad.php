@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\User;
+use App\Entity\Picture;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
@@ -106,6 +107,19 @@ class Ad
      * @ORM\ManyToMany(targetEntity="App\Entity\AdOption", inversedBy="ads")
      */
     private $adOptions;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Picture", mappedBy="ad", orphanRemoval=true, cascade={"persist"})
+     */
+    private $pictures;
+    
+    /**
+     * @Assert\All({
+     * @Assert\Image(
+     * mimeTypes = "image/jpeg"
+     * )})
+     */
+    private $pictureFiles;
     
     public function __construct()
     {
@@ -113,6 +127,7 @@ class Ad
         $this->adBookings = new ArrayCollection();
         $this->adComments = new ArrayCollection();
         $this->adOptions = new ArrayCollection();
+        $this->pictures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -422,6 +437,55 @@ class Ad
             $adOption->removeAd($this);
         }
 
+        return $this;
+    }
+
+    /**
+     * @return Collection|Picture[]
+     */
+    public function getPictures(): Collection
+    {
+        return $this->pictures;
+    }
+
+    public function addPicture(Picture $picture): self
+    {
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures[] = $picture;
+            $picture->setAd($this);
+        }
+
+        return $this;
+    }
+
+    public function removePicture(Picture $picture): self
+    {
+        if ($this->pictures->contains($picture)) {
+            $this->pictures->removeElement($picture);
+            // set the owning side to null (unless already changed)
+            if ($picture->getAd() === $this) {
+                $picture->setAd(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPictureFiles()
+    {
+        return $this->pictureFiles;
+    }
+
+    public function setPictureFiles($pictureFiles): self
+    {
+        
+        foreach($pictureFiles as $pictureFile)
+        {
+            $picture = new Picture;
+            $picture->setImageFile($pictureFile);
+            $this->addPicture($picture);           
+        }
+        $this->pictureFiles = $pictureFiles;
         return $this;
     }
 

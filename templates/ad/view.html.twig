@@ -64,19 +64,19 @@
 
                         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                             <ol class="carousel-indicators">
-                                {% for image in ad.images %}
+                                {% for picture in ad.pictures %}
                                 <li data-target="#carouselExampleIndicators" data-slide-to="{{loop.index0}}" class="{% if loop.first %}active{% endif %}"></li>
                                 {% endfor %}
                             </ol>
                              <div class="carousel-inner">
-                             {% for image in ad.images %}
+                             {% for picture in ad.pictures %}
                                 <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                    <img class="d-block w-100" src="{{image.url}}" alt="First slide" style="width:600px; height:400px;">
+                                    <img class="d-block w-100" src="{{vich_uploader_asset(picture, 'imageFile')| imagine_filter('medium')}}" alt="First slide" style="width:600px; height:400px;">
                                      <div class="carousel-caption d-none d-md-block" style="text-shadow: 3px 3px 3px rgba(0,0,0,0.5)!important;
                                          color:#ffffff!important;" >
                                         <h5 style="text-shadow: 3px 3px 3px rgba(0,0,0,0.5)!important;
                                          color:#ffffff!important;font-family:'Cabin Sketch', cursive; font-size:30px!important;">{{ad.title}}</h5>
-                                        <p style="font-family:'Cabin Sketch', cursive; font-size:20px!important;">{{image.legend}}</p>
+                                        {# <p style="font-family:'Cabin Sketch', cursive; font-size:20px!important;">{{picture.fileName}}</p> #}
                                     </div>
                                 </div>
                               {% endfor %}

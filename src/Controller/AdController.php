@@ -66,6 +66,7 @@ class AdController extends AbstractController
             $this->addFlash("success", "Félicitations, l'annonce {$ad->getTitle()} a bien été enregistrée.");
 
             return $this->redirectToRoute('ad_view', [
+                'ad'   => $ad,
                 'slug' => $ad->getSlug()
                 ]);
 
@@ -95,7 +96,7 @@ class AdController extends AbstractController
             $manager->persist($ad);
             $manager->flush();
 
-            $this->addFlash("success", "Félicitations, les mofifications de l'annonce {$ad->getTitle()} ont bien été enregistrées.");
+            $this->addFlash("success", "Félicitations, les modifications de l'annonce {$ad->getTitle()} ont bien été enregistrées.");
 
             return $this->redirectToRoute('ad_view', [
                 'slug' => $ad->getSlug()

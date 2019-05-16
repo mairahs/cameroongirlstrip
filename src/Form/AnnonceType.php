@@ -10,6 +10,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -26,7 +27,6 @@ class AnnonceType extends ApplicationType
             ->add('location', TextType::class, $this->getConfiguration('Localisation du bien', 'Renseigne la ville dans laquelle se situe ton bien'))
             ->add('introduction', TextType::class, $this->getConfiguration('Introduction', 'Renseigne une description sommaire de ton bien (type, localisation..)'))
             ->add('content', TextareaType::class, $this->getConfiguration('Description détaillée', 'Donne une description complète et attractive de ton bien'))
-            ->add('coverImage', TextType::class, $this->getConfiguration('Image de couverture', 'Télécharge une illustration attractive pour ton bien.'))
             ->add('rooms', IntegerType::class, ['attr' => 
                 [
                     'min' => 1,
@@ -40,12 +40,16 @@ class AnnonceType extends ApplicationType
                 'choice_label' => 'name',
                 'multiple'     => true
             ])
-            ->add('images', CollectionType::class, [
-                'entry_type' => ImageType::class,
-                'allow_add'  => true,
-                'allow_delete'  => true
-            ])
-            ;
+            // ->add('images', CollectionType::class, [
+            //     'entry_type' => ImageType::class,
+            //     'allow_add'  => true,
+            //     'allow_delete'  => true
+            // ])
+            ->add('pictureFiles', FileType::class, [
+                'required' => false,
+                'multiple' => true
+            ]);
+            
                  
     }
 
