@@ -5,7 +5,11 @@
 				<div class="entry-image">
              
 					<a href="#">
-						 <img style="width:200px!important; height:200px!important;" src="{{comment.author.picture}}" alt="Avatar de {{comment.author.fullName}}"  class="alignleft img-circle img-thumbnail nomargin image_fade testi-image"> 
+						{% if comment.author.fileName %}
+                        	<img style="width:200px!important; height:200px!important;" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image" src="{{vich_uploader_asset(comment.author, 'avatarFile') | imagine_filter('thumb')}}" alt="Avatar de {{comment.author.fullName}}">             
+					    {% else %}
+                            <img style="width:200px!important; height:200px!important;" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image" src="/images/img/avatardefault.jpg" alt="Avatar par défaut de {{comment.author.fullName}}">
+					    {% endif %} 
                     </a>
                 </div>    
 				<div class="entry-c">

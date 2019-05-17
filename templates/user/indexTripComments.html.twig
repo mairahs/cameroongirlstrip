@@ -17,11 +17,18 @@
             <div class="container clearfix">
                 <div class="heading-block divcenter nobottomborder nobottommargin center">
                     <i class="icon-list1 d-block h1 mb-4" style="color:#f8a055;"></i> 
-                </div>        
+                </div>
+				{% if app.user != user %}        
                 <div class="heading-block center">
-                    <h2>Tous les commentaires sur {{user.firstName}} et ses voyages</h2>
+                    <h2> {{tripCommentsOnUser|length}} commentaires sur {{user.firstName}} et ses voyages</h2>
                     <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">{{app.user.firstName}}, tu trouveras la liste de tous les commentaires sur {{user.firstName}} et ses voyages.</p>
                 </div>
+				{% else %}
+				<div class="heading-block center">
+                    <h2> {{user.firstName}}, il y a  {{tripCommentsOnUser|length}} commentaires sur tes voyages </h2>
+                    <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Tu trouveras la liste de tous les commentaires sur tes voyages.</p>
+                </div>
+				{% endif %}
                 <div class="postcontent nobottommargin">
 
 						<div id="posts" class="events small-thumbs">

@@ -184,23 +184,23 @@
                     <h2>Logements Stars disponibles</h2>
                     <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Girl Tripeuse, voici les offres d'hébergement les mieux notées et enregistrées par la communauté. Appartements, chambres chez l'habitant pour tous les budgets.</p>
                 </div>             
-            </div>                
-            <div class="row justify-content-between">
-            {% for bestAd in bestAds %}
-            
-                <div class="col-lg-4">
+            </div> 
+            <div class="row justify-content-between">        
+            {% for bestAd in bestAds %} 
+                <div class="col-lg-4">  
                     <div class="media row">
-                        <img style="width:60px!important; height:60px!important;" src="{{vich_uploader_asset(bestAd.ad.author, 'avatarFile') | imagine_filter('thumb')}}" alt="Avatar de {{bestAd.ad.author.fullName}}"  class="alignleft img-circle img-thumbnail nomargin image_fade testi-image"> 
-                        <div class="col-sm-12 media-body mb-5">
-                        
-                            <h3 class="mb-3" style ="font-size:16px!important; font-family:'Cabin Sketch', cursive; color:#4897d8!important; font-weight:bold;"><i class="icon-map-signs"></i> {{bestAd.ad.title}}</h3>
-                            {% if bestAd.ad.adComments |length > 0 %}
-				                <p style:"text-align:center; font-weight:bold;">{% include 'inc/rating.html.twig' with {'rating':bestAd.ad.avgRatings}  %}</p>
-				            {% else %}
-				                <p style:"text-align:center; font-weight:bold!important;">Ce logement n'a pas encore été noté.</p>
-				            {% endif %}
-                             <li class="mb-3" style="list-style-type:none;"><i class="icon-user3"></i> <strong>Loué par {{bestAd.ad.author.fullName}}</strong></li>
-                            <li class="mb-3" style="list-style-type:none;"><i class="icon-line-map"></i> <strong>Situé à {{ bestAd.ad.location }}</strong></li>
+                     <div class="entry-image">
+                        {% include 'ad/_carousel.html.twig' with {'ad': bestAd.ad} %}      
+                    </div>             
+                    <div class="col-sm-12 media-body mb-5">
+                        <h3 class="mb-3" style ="font-size:20px!important; font-family:'Cabin Sketch', cursive; color:#4897d8!important; font-weight:bold;"><i class="icon-clipboard2"></i> {{bestAd.ad.title}}</h3>
+                           
+                            {% if bestAd.ad.author.fileName %}
+                                 <li class="mb-3" style="list-style-type:none;"><strong><img style="height:37px!important; width:37px!important;" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image" src="{{vich_uploader_asset(bestAd.ad.author, 'avatarFile') | imagine_filter('thumb')}}" alt="Avatar de {{bestAd.ad.author.fullName}}"> Loué par {{bestAd.ad.author.fullName}}</strong></li>             
+					        {% else %}
+                                 <li class="mb-3" style="list-style-type:none;"><strong><img style="height:37px!important; width:37px!important;" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image" src="/images/img/avatardefault.jpg" alt="Avatar par défaut de {{bestAd.ad.author.fullName}}"> Loué par {{bestAd.ad.author.fullName}}</strong></li> 
+					        {% endif %} 
+                            <li class="mb-3 mt-5" style="list-style-type:none;"><i class="icon-line-map"></i> <strong>Situé à {{ bestAd.ad.location }}</strong></li>
                             <li class="mb-3" style="list-style-type:none;"><i class="icon-bed"></i><strong> {{bestAd.ad.rooms}} chambres disponibles</strong> </li>
                             <li class="mb-3" style="list-style-type:none;"><i class="icon-money"></i><strong> Prix: <span class="badge"> {{bestAd.ad.price|number_format(0,'.',' ')}} FCFA par nuit</span></strong> </li>
                             <li class="mb-3" style="list-style-type:none;" ><a href="#"><i class="icon-line2-speech" style="font-size:15px;"></i><blockquote style="line-height:18px;">{{ bestAd.ad.introduction|truncate(100, false) }}</blockquote></a></li>
@@ -209,13 +209,10 @@
                              <li class="mb-3" style="list-style-type:none;" ><a href="#"><i class="icon-comments"style="font-size:15px;"></i> Il n'y a pas encore de commentaire sur {{ bestAd.ad.author.fullName }}</a></li>
                              {% endif %}
                             <li style="list-style-type:none; margin-top:10px;"><a href="{{ path('ad_view', {'slug' : bestAd.ad.slug}) }}" class="button button-shadow button-rounded t400 ls0 nomargin nott"><i class="icon-signin"></i><span>En savoir plus</span></a></li>
-                            
                         </div>
                     </div>
                 </div>
-            
             {% endfor %}
-
             </div>
             <div class="center">
                   <a href="{{path('ad_index')}}" class="button button-border button-light button-rounded button-reveal button-large topmargin"><i class="icon-signin"></i><span>Voir toutes les offres de location</span></a>
