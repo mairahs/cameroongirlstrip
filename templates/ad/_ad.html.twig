@@ -2,7 +2,7 @@
 	<div class="entry clearfix">
 		<div class="entry-image">
 			<a href="{{url}}">
-				<img src="{{ad.coverImage}}" alt="Photo du voyage {{ad.title}}">							
+				{% include 'ad/_carousel.html.twig' %}							
 			</a>
 		</div>
 		<div class="entry-c">
@@ -13,12 +13,13 @@
 				{% else %}
 				<p style:"text-align:center; font-weight:bold!important;">Cette annonce n'a pas encore été notée.</p>
 				{% endif %}
-			    <p style:"text-align:justify;">{{ad.introduction}}</p>
-			</div>
-			<ul class="entry-meta clearfix">
-				<li><span class="badge badge-warning">{{ad.price| number_format(0,'.',' ')}} FCFA par nuit</span></li>
-				<li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-bed"></i> {{ad.rooms}} pièces </span></li>
+				<ul class="entry-meta clearfix">
+					<li><span class="badge badge-warning">{{ad.price| number_format(0,'.',' ')}} FCFA par nuit</span></li>
+					<li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-bed"></i> {{ad.rooms}} pièces </span></li>
+					<li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-location-arrow1"></i> {{ad.location}} </span></li>
 			</ul>
+			    {# <p style:"text-align:justify;">{{ad.introduction}}</p> #}
+			</div>
 			<div class="entry-content">
 				<p style:"text-align:justify;">{{ad.content|truncate(150, true)| raw}}</p>
                 {% if app.user == ad.author %}

@@ -10,10 +10,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AdRepository")
  * @ORM\HasLifecycleCallbacks()
+ *  @Vich\Uploadable
  * @UniqueEntity(
  * fields={"title"}, message="Une autre annonce possède déjà le même titre. Meri de rectifier STP.")
  */
@@ -66,12 +68,6 @@ class Ad
     private $content;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Url()
-     */
-    private $coverImage;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $rooms;
@@ -120,6 +116,16 @@ class Ad
      * )})
      */
     private $pictureFiles;
+  
+    /**
+     * @ORM\Column(type="float", scale=4, precision=6)
+     */
+    private $lat;
+
+    /**
+     * @ORM\Column(type="float", scale=4, precision=7)
+     */
+    private $lng;
     
     public function __construct()
     {
@@ -203,18 +209,6 @@ class Ad
     public function setContent(string $content): self
     {
         $this->content = $content;
-
-        return $this;
-    }
-
-    public function getCoverImage(): ?string
-    {
-        return $this->coverImage;
-    }
-
-    public function setCoverImage(string $coverImage): self
-    {
-        $this->coverImage = $coverImage;
 
         return $this;
     }
@@ -489,5 +483,28 @@ class Ad
         return $this;
     }
 
-   
+    public function getLat(): ?float
+    {
+        return $this->lat;
+    }
+
+    public function setLat(float $lat): self
+    {
+        $this->lat = $lat;
+
+        return $this;
+    }
+
+    public function getLng(): ?float
+    {
+        return $this->lng;
+    }
+
+    public function setLng(float $lng): self
+    {
+        $this->lng = $lng;
+
+        return $this;
+    }
+  
 }

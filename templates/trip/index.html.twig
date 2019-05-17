@@ -38,6 +38,14 @@
 								{{form_row(tripSearchForm.tripOptions)}}
 							</div>
 						</div>
+						<div class="row nobottommargin">
+							<div class="col-md-6 nobottommargin">
+								{{form_row(tripSearchForm.lat)}}
+							</div>
+							<div class="col-md-6 nobottommargin">
+								{{form_row(tripSearchForm.lng)}}
+							</div>
+						</div>
 						<div class=" col_last nobottommargin">
 							<button class="btn btn-danger btn-block nomargin" type="submit"><i class="icon-search3"></i></button>
 						</div>
@@ -220,5 +228,29 @@
 		);
 	});
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('#departureDate').datepicker({
+			format: 'dd/mm/yyyy',
+			startDate: new Date()
+		}			
+		);
+	});
+</script>
+<script>	
+	let inputArrival= document.querySelector('#arrival');
+	if(inputArrival !== null)
+	{
+		let place = places({
+			container: inputArrival
+		})
+		place.on('change', e => {
+			document.querySelector('#arrival').value = e.suggestion.name
+			document.querySelector('#lat').value = e.suggestion.latlng.lat
+			document.querySelector('#lng').value = e.suggestion.latlng.lng
+		})
+	}
+	</script>
 {% endblock %}
 

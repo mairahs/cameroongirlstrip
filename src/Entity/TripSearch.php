@@ -24,6 +24,16 @@ class TripSearch
     private $price;
 
     /**
+     * @var float|null
+     */
+    private $lat;
+
+    /**
+     * @var float|null
+     */
+    private $lng;
+
+    /**
      * @var ArrayCollection
      */
     private $tripOptions;
@@ -84,5 +94,30 @@ class TripSearch
     {
         $this->tripOptions = $tripOptions;
     }
+
+    public function getLat(): ?float
+    {
+        return $this->lat;
+    }
+
+    public function setLat(float $lat): self
+    {
+        $this->lat = $lat;
+
+        return $this;
+    }
+
+    public function getLng(): ?float
+    {
+        return $this->lng;
+    }
+
+    public function setLng(float $lng): self
+    {
+        $this->lng = $lng;
+
+        return $this;
+    }
+
 
 }

@@ -38,6 +38,14 @@
 								{{form_row(adSearchForm.adOptions)}}
 							</div>
 						</div>
+						<div class="row nobottommargin">
+							<div class="col-md-6 nobottommargin">
+								{{form_row(adSearchForm.lat)}}
+							</div>
+							<div class="col-md-6 nobottommargin">
+								{{form_row(adSearchForm.lng)}}
+							</div>
+						</div>
 						<div class=" col_last nobottommargin">
 							<button class="btn btn-danger btn-block nomargin" type="submit"><i class="icon-search3"></i></button>
 						</div>
@@ -207,6 +215,20 @@
                         
         <div class="container clearfix"></div>       
 </section>
-
-
+{% endblock %}
+{% block javascripts %}
+<script>	
+	let inputLocation= document.querySelector('#location');
+	if(inputLocation !== null)
+	{
+		let place = places({
+			container: inputLocation
+		})
+		place.on('change', e => {
+			document.querySelector('#location').value = e.suggestion.name
+			document.querySelector('#lat').value = e.suggestion.latlng.lat
+			document.querySelector('#lng').value = e.suggestion.latlng.lng
+		})
+	}
+	</script>
 {% endblock %}

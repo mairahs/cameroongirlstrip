@@ -28,6 +28,16 @@ class AdSearch
      */
     private $adOptions;
 
+    /**
+     * @var float|null
+     */
+    private $lat;
+
+    /**
+     * @var float|null
+     */
+    private $lng;
+
     public function __construct()
     {
         $this->adOptions = new ArrayCollection();
@@ -84,6 +94,30 @@ class AdSearch
     public function setAdOptions(ArrayCollection $adOptions): void
     {
         $this->adOptions = $adOptions;
+    }
+
+    public function getLat(): ?float
+    {
+        return $this->lat;
+    }
+
+    public function setLat(float $lat): self
+    {
+        $this->lat = $lat;
+
+        return $this;
+    }
+
+    public function getLng(): ?float
+    {
+        return $this->lng;
+    }
+
+    public function setLng(float $lng): self
+    {
+        $this->lng = $lng;
+
+        return $this;
     }
 
 }

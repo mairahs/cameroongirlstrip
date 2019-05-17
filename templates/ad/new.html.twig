@@ -24,6 +24,7 @@
                     <h2>Crée une annonce de location</h2>
                     <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Tu possèdes un bien que nos voyageuses peuvent louer pendant la durée de leur séjour ? Ceci est ton espace..</p>
                 </div>
+				
                 <div class="postcontent nobottommargin">
 				{{form_start(adForm,{'attr': {'novalidate': 'novalidate'}})}} 
 					<div class="form-row">
@@ -32,6 +33,14 @@
 						</div>
 						<div class="form-group col-md-6">
 							{{form_row(adForm.location)}}
+						</div>					
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							{{form_row(adForm.lat)}}
+						</div>
+						<div class="form-group col-md-6">
+							{{form_row(adForm.lng)}}
 						</div>					
 					</div>
 					<div class="form-row">
@@ -208,5 +217,19 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
 	<script>
 		$('select').select2();
+	</script>
+	<script>	
+		let inputLocation= document.querySelector('#annonce_location');
+	if(inputLocation !== null)
+	{
+		let place = places({
+			container: inputLocation
+		})
+		place.on('change', e => {
+			document.querySelector('#annonce_location').value = e.suggestion.name
+			document.querySelector('#annonce_lat').value = e.suggestion.latlng.lat
+			document.querySelector('#annonce_lng').value = e.suggestion.latlng.lng
+		})
+	}
 	</script>
 {% endblock %}

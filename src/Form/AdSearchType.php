@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class AdSearchType extends AbstractType
@@ -19,7 +20,7 @@ class AdSearchType extends AbstractType
         $builder
             ->add('location', TextType::class, [
                 'required' => false,
-                'label'    => 'Destination '
+                'label'    => 'Ville '
             ])
             ->add('price', MoneyType::class, [
                 'required' => false,
@@ -42,7 +43,9 @@ class AdSearchType extends AbstractType
                 'class'        => AdOption::class,
                 'choice_label' => 'name',
                 'multiple'     => true
-            ]);
+            ])
+            ->add('lat', HiddenType::class)
+            ->add('lng', HiddenType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

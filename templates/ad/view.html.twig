@@ -1,6 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block title %} Détail de la location {{ad.slug}}| {{parent()}}{% endblock %}
+{% block stylesheets %}
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+{% endblock %}
 
 {% block body %}
 
@@ -40,7 +45,7 @@
                     <h2 style="margin-left:100px;">{{ad.title}}</h2>
                     <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold; margin-left:100px;">{{app.user.firstName}}, voici toutes les informations relatives à cet hébergement.</p>
                 </div>
-                <div class="entry-overlay-meta" style="margin-bottom:-80px;">
+                <div class="entry-overlay-meta" style="margin-bottom:-100px;">
 					<h2 style="text-transform:none; font-family:'Cabin Sketch', cursive; font-size:20px;" class="center"><a href="#">{{ad.title}}</a></h2>
 					<ul class="iconlist" style="margin-left:40px; font-family:'Roboto', sans-serif;">
                         <li style="font-size:15px;"><i class="icon-user-alt"></i> <strong>Propriétaire: {{a.firstName}} {{a.lastName}}  </li></strong>
@@ -62,34 +67,7 @@
 						    <p style="margin-top:50px!important; text-align:justify;">{{ad.introduction}}</p>
 						</div>
 
-                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                            <ol class="carousel-indicators">
-                                {% for picture in ad.pictures %}
-                                <li data-target="#carouselExampleIndicators" data-slide-to="{{loop.index0}}" class="{% if loop.first %}active{% endif %}"></li>
-                                {% endfor %}
-                            </ol>
-                             <div class="carousel-inner">
-                             {% for picture in ad.pictures %}
-                                <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                    <img class="d-block w-100" src="{{vich_uploader_asset(picture, 'imageFile')| imagine_filter('medium')}}" alt="First slide" style="width:600px; height:400px;">
-                                     <div class="carousel-caption d-none d-md-block" style="text-shadow: 3px 3px 3px rgba(0,0,0,0.5)!important;
-                                         color:#ffffff!important;" >
-                                        <h5 style="text-shadow: 3px 3px 3px rgba(0,0,0,0.5)!important;
-                                         color:#ffffff!important;font-family:'Cabin Sketch', cursive; font-size:30px!important;">{{ad.title}}</h5>
-                                        {# <p style="font-family:'Cabin Sketch', cursive; font-size:20px!important;">{{picture.fileName}}</p> #}
-                                    </div>
-                                </div>
-                              {% endfor %}
-                            </div>
-                                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="sr-only">Next</span>
-                                </a>
-                        </div>
+						{% include 'ad/_carousel.html.twig' %}
 		                <h3 style="margin-top:20px; font-family:'Cabin Sketch', cursive;font-size:17px;color:#4897d8!important;">Description du logement</h3>
                             <div style="text-align:justify;margin-bottom:30px;">
 								 {{ad.content|raw}} 
@@ -233,6 +211,11 @@
 				</div>
 				<div class="sidebar nobottommargin col_last clearfix">
 					<div class="sidebar-widgets-wrap">
+						<div class="widget clearfix">
+							<h4 style="margin-top:-50px; font-family:'Cabin Sketch', cursive;font-size:17px;"><a href="#" style="color:#4897d8!important; text-transform:none;" ><i class="icon-map-marker2 h1"></i> Position du logement</a></h4>
+							<div id="map" class="parallax entry-overlay-meta" style="width:368px; height:350px; right:38px;" data-lat="{{ad.lat}}" data-lng="{{ad.lng}}">
+							</div>
+						</div>
 						<div class="widget clearfix">
 							<h4 style="margin-top:-50px; font-family:'Cabin Sketch', cursive;font-size:17px;"><a href="#" style="color:#4897d8!important; text-transform:none;" ><i class="icon-user-alt h1"></i> Propriétaire</a></h4>
 							<div id="post-list-footer">
@@ -384,7 +367,27 @@
 			}			
 		);
 	});
-	</script>
+	</script>		
+	<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+	integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+	crossorigin=""></script>
+	<script>
+		let map = document.querySelector('#map');
+    if (map !== null) {
+      let icon = L.icon({
+      iconUrl: '/images/img/marker-icon.png',
+      });
+    	let center = [map.dataset.lat, map.dataset.lng];
+   	 	map = L.map('map').setView(center, 13);
+		let token = 'pk.eyJ1IjoiZ3JhZmlrYXJ0IiwiYSI6ImNqaHoxancyOTBxNXkzcW10MHI3NXZrNjkifQ.yWqQe1qK_RtMA2Z4qABvmg';
+		L.tileLayer(`https://api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=${token}`, {
+		maxZoom: 18,
+		minZoom: 12,
+		attribution: '© <a href="https://www.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+		}).addTo(map)
+		L.marker(center, {icon: icon}).addTo(map)
+    }
+</script>
 {% endblock %}
 
 

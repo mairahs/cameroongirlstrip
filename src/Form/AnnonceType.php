@@ -13,6 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -40,15 +41,12 @@ class AnnonceType extends ApplicationType
                 'choice_label' => 'name',
                 'multiple'     => true
             ])
-            // ->add('images', CollectionType::class, [
-            //     'entry_type' => ImageType::class,
-            //     'allow_add'  => true,
-            //     'allow_delete'  => true
-            // ])
             ->add('pictureFiles', FileType::class, [
                 'required' => false,
                 'multiple' => true
-            ]);
+            ])
+            ->add('lat', HiddenType::class)
+            ->add('lng', HiddenType::class); 
             
                  
     }

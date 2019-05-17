@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use App\Form\DataTransformer\FrenchToDateTimeTransformer;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -54,7 +55,10 @@ class TripType extends ApplicationType
                 'class'        => TripOption::class,
                 'choice_label' => 'name',
                 'multiple'     => true
-            ]); 
+            ])
+            ->add('lat', HiddenType::class)
+            ->add('lng', HiddenType::class); 
+            
         $builder->get('departureDate')->addModelTransformer($this->transformer);
         $builder->get('returnDate')->addModelTransformer($this->transformer);        
     }

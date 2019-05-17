@@ -11,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 class TripSearchType extends AbstractType
 {
         
@@ -41,7 +41,9 @@ class TripSearchType extends AbstractType
                 'class'        => TripOption::class,
                 'choice_label' => 'name',
                 'multiple'     => true
-            ]);
+            ])
+            ->add('lat', HiddenType::class)
+            ->add('lng', HiddenType::class);
            
     }
 

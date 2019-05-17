@@ -225,7 +225,7 @@
 		$('select').select2();
 	</script>
 	<script>
-				//Suppression des images
+		//Suppression des images
 		document.querySelectorAll('[data-delete]').forEach(a=>{
 			a.addEventListener('click', e => {
 				e.preventDefault()
@@ -249,5 +249,19 @@
 
 
 		})
+	</script>
+	{# Gestion de la géolocalisation #}
+	<script>	
+		let inputLocation= document.querySelector('#annonce_location');
+	if(inputLocation !== null)
+	{
+		let place = places({
+			container: inputLocation
+		})
+		place.on('change', e => {
+			document.querySelector('#trip_lat').value = e.suggestion.latlng.lat
+			document.querySelector('#trip_lng').value = e.suggestion.latlng.lng
+		})
+	}
 	</script>
 {% endblock %}

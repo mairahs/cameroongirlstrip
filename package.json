@@ -13,5 +13,7 @@
         "watch": "encore dev --watch",
         "build": "encore production --progress"
     },
-    "dependencies": {}
+    "dependencies": {
+        "places.js": "^1.16.4"
+    }
 }

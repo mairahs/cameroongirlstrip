@@ -216,4 +216,29 @@
 		);
 	});
 </script>
+<script>
+	let inputDeparture = document.querySelector('#trip_departure');
+	if(inputDeparture !== null)
+	{
+		let place = places({
+			container: inputDeparture
+		})
+		place.on('change', e => {
+			document.querySelector('#trip_lat').value = e.suggestion.latlng.lat
+			document.querySelector('#trip_lng').value = e.suggestion.latlng.lng
+		})
+	}
+
+	let inputArrival = document.querySelector('#trip_arrival');
+	if(inputArrival !== null)
+	{
+		let place = places({
+			container: inputArrival
+		})
+		place.on('change', e => {
+			document.querySelector('#trip_lat').value = e.suggestion.latlng.lat
+			document.querySelector('#trip_lng').value = e.suggestion.latlng.lng
+		})
+	}
+</script>
 {% endblock %}
