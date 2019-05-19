@@ -30,9 +30,16 @@
 							
                             <div class="entry clearfix">
                                 <div class="entry-image">
-                                    <a href="">
-                                        <img style="height: 200px!important;" src="{{trip.coverImage}}" alt="Photo de l'image du voyage {{trip.departure}} - {{trip.arrival}}">
-                                    </a>
+									{% if trip.fileName %}
+										<a href="">
+											<img style="height: 200px!important;" src="{{vich_uploader_asset(trip, 'imageFile') | imagine_filter('medium')}}" alt="Photo de l'image du voyage {{trip.departure}} - {{trip.arrival}} ">
+										</a>
+									{% else %}
+										<a href="">
+											<img style="height: 200px!important;" src="/images/img/imagedefault.jpg" alt="Photo de l'image du voyage par défaut {{trip.departure}} - {{trip.arrival}} ">
+										</a>
+									{% endif %}
+                                    
                                 </div>    
                                 <div class="entry-c">
                                     <div class="entry-title">

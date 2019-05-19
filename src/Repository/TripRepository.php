@@ -126,5 +126,19 @@ class TripRepository extends ServiceEntityRepository
                     ->getQuery()
                     ->getResult();
     }
-    
+
+    /**
+     * provide all ads created by a specific user
+     * @param Object User
+     * @return Ad[] Returns an array of Trip objects
+     */
+    public function getAllTripsByUser($traveller)
+    {
+        return $this->createQueryBuilder('t')
+        ->andWhere('t.traveller = :traveller')
+        ->setParameter('traveller', $traveller)
+        ->orderBy('t.createdAt', 'DESC')
+        ->getQuery()
+        ->getResult(); 
+    }       
 }

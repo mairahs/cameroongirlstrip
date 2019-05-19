@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Liste de toutes les réservations de logement de {{app.user.getFullName}}  | {{parent()}}{% endblock %}
+{% block title %} Liste de toutes les locations de {{user.fullName}} | {{parent()}}{% endblock %}
 
 {% block body %}
 
@@ -10,73 +10,26 @@
 		<div class="container clearfix">
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item"><a href="{{path('homepage')}}"><i class="icon-line2-home"></i> Accueil</a></li>
-				<li class="breadcrumb-item active" aria-current="page"><a href="{{path('security_adbookings')}}"><i class="icon-list"></i> Liste des réservations</a></li>
+				<li class="breadcrumb-item active" aria-current="page"><a href="#"><i class="icon-list"></i> Liste de toutes les locations</a></li>
 			</ol>
 		</div>
         <section id="section-about" class="page-section">
             <div class="container clearfix">
                 <div class="heading-block divcenter nobottomborder nobottommargin center">
                     <i class="icon-list1 d-block h1 mb-4" style="color:#f8a055;"></i> 
-                </div>        
-                <div class="heading-block center">
-                    <h2>Tes réservations de logement</h2>
-                    <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">{{app.user.fullName}}, voici la liste de tes réservations de logement actuelles et à venir.</p>
+                </div>                         
+				<div class="heading-block center">
+                    <h2> {{user.firstName}}, voici la liste de tes locations </h2>
+                    <p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Tu trouveras, ci-dessous, les détails de toutes tes locations.</p>
                 </div>
                 <div class="postcontent nobottommargin">
 
-					<div id="posts" class="events small-thumbs">
-                        {% for adBooking in app.user.adBookings %}
-                        {% set ad = adBooking.ad %}
-							
-                            <div class="entry clearfix">
-                                <div class="entry-image">
-                                    <a href="">
-                                        {% include 'ad/_carousel.html.twig' %}
-                                    </a>
-                                </div>    
-                                <div class="entry-c">
-                                    <div class="entry-title">
-                                        <h2><a href=""><i class="icon-realestate-advert"></i> {{ad.title}}</a></h2>
-											{% set adComment = ad.getCommentFromAuthor(app.user) %}
-												{% if adComment is not null %}
-												<strong>
-														Note: {% include 'inc/rating.html.twig' with {'rating': adComment.rating } %}
-												</strong>
-												{% else %}
-												<p style ="font-family:'Roboto', sans-serif; color:#5d3e51; font-weight:bold;">Tu n'as pas encore noté cette annonce.<br>
-													<a href="{{path('adbooking_view', {'id': adBooking.id})}}#adComment">Donne ta note</a>
-												</p>
-												{% endif %}
-                                    </div>
-                                    <ul class="entry-meta clearfix">
-                                        <li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;">Réservation numéro {{adBooking.id}}</span></li>
-                                        <li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-calendar21"></i>Du <strong>{{format_start_date(adBooking)}}</strong> au <strong>{{format_end_date(adBooking)}}</strong></span></li>
-                                        <li><span class="badge badge-warning">{{adBooking.amount | number_format(0,'.',' ')}} FCFA </span></li>
-										 {% if adBooking.comment %}
-                                        <li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-comment2"></i><strong>{{adBooking.comment|nl2br}}</strong></span></li>
-                                        {% else %}
-                                          <li><span style="font-weight:bold; font-size:15px; font-family:'Cabin Sketch', cursive; color:#333;"><i class="icon-comment2"></i><strong>Tu n'a fait aucun commentaire pour cette réservation.</strong></span></li>
-                                        {% endif %}
-                                    </ul>
-                                    <div class="entry-content">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <a href="{{path('adbooking_view', {'id':adBooking.id})}}" class="btn btn-secondary">Plus d'informations</a>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <a href="#" class="btn btn-danger">Modifie ta réservation</a>
-                                            </div>
-											<div class="col-md-4">
-                                                <a href="#" class="btn btn-danger">Supprime ta réservation</a>
-                                            </div>                 
-                                        </div>
-	
-					                </div>
-				                </div>
-			                </div>
-
-                        {% endfor %}
-					</div>
+						 <div id="posts" class="events small-thumbs">
+                            {% for adOnUser in adsOnUser %}
+							{% include 'ad/_ad.html.twig' with {'ad':adOnUser} %}
+                            {% endfor %}
+                        
+						</div> 
 
 						<!-- Pagination
 						============================================= -->

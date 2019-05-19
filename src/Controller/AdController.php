@@ -112,6 +112,8 @@ class AdController extends AbstractController
     /**
      * View one ad
      * @Route("/ad/{slug}", name="ad_view")
+     * @isGranted("ROLE_TRAVELLER", message="Hélas, tu n'as pas accès à cette ressource.")
+     * @isGranted("ROLE_RENTER",  message="Hélas, tu n'as pas accès à cette ressource.")
      * @return Response
      */
     public function view(Ad $ad, AdContactNotification $notification, Request $request)

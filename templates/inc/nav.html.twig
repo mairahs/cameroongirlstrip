@@ -12,16 +12,16 @@
                 <ul>
                     <li><a href="{{path('security_account')}}"><div><i class="icon-dashboard"></i>Mon profil</div></a></li>
                     <li><a href="{{path('security_profile')}}"><div><i class="icon-user-edit"></i>Modifier mon profil</div></a></li>
+                    <li><a href="{{path('user_indexTrips', {'slug':app.user.slug})}}"><div><i class="icon-line2-plane"></i>Mes voyages</div></a></li>
+                    <li><a href="{{path('user_indexAds', {'slug':app.user.slug})}}"><div><i class="icon-line2-home"></i>Mes locations</div></a></li>
+                     <li><a href="{{path('security_tripbookings')}}"><div><i class="icon-archive1"></i>Mes voyages réservés</div></a></li>
                     <li><a href="{{path('security_adbookings')}}"><div><i class="icon-archive1"></i>Mes biens réservés</div></a></li>
-                    <li><a href="{{path('security_tripbookings')}}"><div><i class="icon-archive1"></i>Mes voyages réservés</div></a></li>
-                    <li><a href="#"><div><i class="icon-line2-plane"></i>Mes voyages</div></a></li>
-                    <li><a href="#"><div><i class="icon-line2-home"></i>Mes locations</div></a></li>
                     <div class="dropdown-divider"></div>
                     <li><a href="{{path('security_logout')}}"><div><i class="icon-line2-logout"></i>Déconnexion</div></a></li>
                 </ul>
             </li>
          
-                  {% if app.user.fileName %}
+                  {% if app.user.fileName %} 
                         <img src="{{vich_uploader_asset(app.user, 'avatarFile') | imagine_filter('thumb')}}" class="alignleft img-circle img-thumbnail nomargin image_fade testi-image" alt="Avatar">
 					{% else %}
 						<img class="alignleft img-circle img-thumbnail nomargin image_fade testi-image" src="/images/img/avatardefault.jpg" alt="Photo de l'avatar par défaut de l'utilisatrice {{app.user.fullName}}">  

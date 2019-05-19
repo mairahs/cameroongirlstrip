@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Ad;
+use App\Entity\User;
 use App\Entity\AdSearch;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -57,9 +58,10 @@ class AdRepository extends ServiceEntityRepository
     public function getBestAds($limit)
     {
         return $this->createQueryBuilder('a')
-                    ->select('a as ad, AVG(adc.rating) as avgRatings')
+                    ->select('a as ad, AVG(adc.rating) as avgRatings, pic as picture')
                     ->join('a.author', 'auth')
                     ->join('a.adComments', 'adc')
+                    ->join('a.pictures', 'pic')
                     ->groupBy('a')
                     ->orderBy('avgRatings', 'DESC')
                     ->setMaxResults($limit)
@@ -115,4 +117,20 @@ class AdRepository extends ServiceEntityRepository
         return $query->getQuery();
         
     }
+
+    /**
+     * provide all ads created by a specific user
+     * @param Object  $user of specific user
+     * @return Ad[] Returns an array of Trip objects
+     */
+    public function getAllAdsByUser(User $author)
+    {
+        return $this->createQueryBuilder('a')
+        ->andWhere('a.author = :author')
+        ->setParameter('author', $author)
+        ->orderBy('a.price', 'DESC')
+        ->getQuery()
+        ->getResult(); 
+    }
+
 }
